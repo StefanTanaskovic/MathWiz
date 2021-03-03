@@ -25,9 +25,7 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
       ),
-      body: Container(
-        height: size.height,
-        width: double.infinity,
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -59,10 +57,10 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               child:TextField(
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue)
+                  borderSide: BorderSide(color: kPrimaryColor)
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue)
+                  borderSide: BorderSide(color: kPrimaryColor)
                 ),
                 hintText: 'Description'
               ),

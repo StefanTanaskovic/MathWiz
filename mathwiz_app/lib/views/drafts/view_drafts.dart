@@ -6,6 +6,7 @@ import 'package:mathwiz_app/widgets/text_field_container.dart';
 import '../../constants.dart';
 
 class ViewDraftsScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _ViewDraftsScreenState();
@@ -14,6 +15,7 @@ class ViewDraftsScreen extends StatefulWidget {
     
 
 class _ViewDraftsScreenState extends State<ViewDraftsScreen> {
+  final List<String> classList = <String>['Homework #2 Draft', 'R2P Draft', 'Math Quiz Draft'];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context)
@@ -25,39 +27,72 @@ class _ViewDraftsScreenState extends State<ViewDraftsScreen> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: size.height * 0.025,color: Colors.black),
             ),
       ),
-      body: Container(
-        height: size.height,
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              height:size.height * 0.1,
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey[500],width: 2.0)),
-              padding: const EdgeInsets.all(5),
+      body: SafeArea(
+          child: ListView.separated(
+            padding: const EdgeInsets.all(8),
+            itemCount: classList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+              height: size.height * 0.08,
+              margin: EdgeInsets.all(3),
               child:Row(children: [            
-              Container(
-              width: size.width * 0.61,
-              height: size.height * 0.22,
-              child:Column(children: [
               Expanded(
-              child:Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-              Text("Draft Activity #1",style: TextStyle(fontWeight: FontWeight.bold, fontSize: size.height * 0.02)),
-              ElevatedButton(
-                child:Text("Publish"),
-                onPressed: () {},
-                )
-              ],)
+                  flex: 5,
+                  child: Container(
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${classList[index]}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: size.height * 0.02))
+                  ],
+                  ),
+                ),
               ),
-              ],)
-              ),],)
-            ),
-          ],
-        ),
-      ),
-    );
+              Expanded(
+                  child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    IconButton(
+                    icon: Icon(Icons.edit, color:Colors.blue),
+                    onPressed: () {},
+                    )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    IconButton(
+                    icon: Icon(Icons.check_box, color:Colors.green),
+                    onPressed: () {},
+                    )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    IconButton(
+                    icon: Icon(Icons.delete_rounded,color:Colors.red),
+                    onPressed: () {},
+                    )
+                    ],
+                  ),
+                ),
+              )
+              ],
+              )
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+          ),
+            ));
   }
 }
