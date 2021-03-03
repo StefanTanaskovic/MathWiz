@@ -25,9 +25,7 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: size.height * 0.025,color: Colors.black),
             ),
       ),
-      body: Container(
-        height: size.height,
-        width: double.infinity,
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
