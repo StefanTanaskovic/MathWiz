@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/views/drafts/view_drafts.dart';
 import 'package:mathwiz_app/views/welcome_screen.dart';
 
 import 'constants.dart';

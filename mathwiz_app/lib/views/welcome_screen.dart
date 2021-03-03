@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 
 import '../constants.dart';
@@ -40,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return HomepageStudentScreen();
+                      return LoginScreen();
                     },
                   ),
                 );
