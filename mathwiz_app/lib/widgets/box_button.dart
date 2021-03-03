@@ -26,6 +26,8 @@ class BoxButton extends StatelessWidget {
           child: Text(text),
           style: ElevatedButton.styleFrom(
               primary: color,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50.0)),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
               textStyle: TextStyle(color: textColor))),
     );
