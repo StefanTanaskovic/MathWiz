@@ -28,7 +28,10 @@ final List<Widget> items = [HomeworkCheckHomepageBox(),RaceToTopHomepageBox(),Tr
     Size size = MediaQuery.of(context).size; 
     
     return Scaffold(
-      appBar: AppBar(title: Text("Math Class Grade 8 - Mr. Stefan", style: TextStyle(fontSize: 16, ))),
+      appBar: AppBar(
+        title: Text("Math Class Grade 8 - Mr. Stefan",  style: TextStyle(fontSize: 16, )),
+        backgroundColor: kPrimaryColor,
+        ),
       drawer:HamMenu(size: size),
       body: Container(
         height: size.height,

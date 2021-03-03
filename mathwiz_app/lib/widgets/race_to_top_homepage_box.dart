@@ -11,16 +11,16 @@ class RaceToTopHomepageBox extends StatelessWidget {
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(vertical:3 ,horizontal:10),
-
                       decoration: BoxDecoration(
                         color: kSecondaryColor
                       ),
                       child: ElevatedButton(
                             child: Text('$i'),
-                            style: ElevatedButton.styleFrom(
-                                primary: kPrimaryColor,
+                          style: ElevatedButton.styleFrom(
+                                primary: Colors.white,
+                                onPrimary: Colors.black,
                                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                                textStyle: TextStyle(color: Colors.white)), 
+                                ), 
                                 onPressed: () {  
 
                                 },
@@ -38,15 +38,17 @@ class RaceToTopHomepageBox extends StatelessWidget {
       return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
-
         decoration: BoxDecoration(
-          color: kSecondaryColor
+          border: Border.all(
+            color: kPrimaryColor,
+          ),
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.all(Radius.circular(20))
         ),
         child: Column(
-          
           children:  <Widget>[
             SizedBox(height: 10),
-            Text('Race to the Top',textAlign: TextAlign.center ,style: TextStyle(fontSize: 24.0,decoration: TextDecoration.underline,)),
+            Text('Race to the Top',textAlign: TextAlign.center ,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24.0,color: Colors.white)),
             SizedBox(height: 10),
             for(var item in activtyList ) Container(child: item),
             
