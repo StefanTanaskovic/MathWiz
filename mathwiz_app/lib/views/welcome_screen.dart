@@ -40,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return HomepageStudentScreen();
+                      return LoginScreen();
                     },
                   ),
                 );

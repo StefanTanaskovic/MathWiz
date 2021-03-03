@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/views/login/login_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/box_pass_field.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/homework_check_homepage_box.dart';
 import 'package:mathwiz_app/widgets/race_to_top_homepage_box.dart';
 import 'package:mathwiz_app/widgets/trivia_homepage_box.dart';
@@ -27,68 +29,7 @@ final List<Widget> items = [HomeworkCheckHomepageBox(),RaceToTopHomepageBox(),Tr
     
     return Scaffold(
       appBar: AppBar(title: Text("Math Class Grade 8 - Mr. Stefan", style: TextStyle(fontSize: 16, ))),
-      drawer:Drawer(
-        child: 
-        ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          Container(
-          height: size.height * 0.115,
-          child: DrawerHeader(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('MathWiz',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
-                ],
-                ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    
-                    // image: DecorationImage(
-                    //   image: AssetImage("assets/images/math_logo.png"),
-                    //   scale: 3,
-                    //   fit: BoxFit.scaleDown,
-                    // ),
-                  ),
-                ),
-            ),
-          ListTile(
-            leading: Icon(Icons.list_alt),
-            title: Align(
-              child: new Text('Classes' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              alignment: Alignment(-1.3, 0),
-            ),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Align(
-              child: new Text('Home' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              alignment: Alignment(-1.3, 0),
-            ),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              },
-            ),
-          ListTile(
-            leading: Icon(Icons.shopping_cart),
-              title: Align(
-              child: new Text('Shop' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              alignment: Alignment(-1.3, 0),
-            ),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer:HamMenu(size: size),
       body: Container(
         height: size.height,
         width: double.infinity,
@@ -156,3 +97,5 @@ final List<Widget> items = [HomeworkCheckHomepageBox(),RaceToTopHomepageBox(),Tr
     );
   }
 }
+
+

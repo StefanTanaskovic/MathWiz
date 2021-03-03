@@ -11,7 +11,7 @@ class BoxButton extends StatelessWidget {
     Key key,
     this.text,
     this.press,
-    this.color = kPrimaryColor,
+    this.color,
     this.textColor = Colors.black,
   }) : super(key: key);
 
@@ -25,7 +25,7 @@ class BoxButton extends StatelessWidget {
           onPressed: press,
           child: Text(text),
           style: ElevatedButton.styleFrom(
-              primary: color,
+              primary: kPrimaryColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50.0)),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
