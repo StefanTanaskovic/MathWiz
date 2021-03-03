@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Colors.blue;
-var kPrimaryLightColor = Colors.blue[50];
-var kSecondaryColor = Colors.blue[200];
+const kPrimaryColor = Colors.purple;
+const kPrimaryLightColor = Colors.white;
+var kSecondaryColor = Colors.purple[200];

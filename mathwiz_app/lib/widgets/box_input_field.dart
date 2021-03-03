@@ -25,7 +25,6 @@ class BoxInputFeild extends StatelessWidget {
             color: kPrimaryColor,
           ),
           hintText: hintText,
-          border: InputBorder.none,
         ),
       ),
     );

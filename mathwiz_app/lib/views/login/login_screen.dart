@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/box_pass_field.dart';
@@ -49,7 +50,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             BoxButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ClassListScreen();
+                    },
+                  ),
+                );
+              },
             ),
             SizedBox(
               height: size.height * 0.03,
