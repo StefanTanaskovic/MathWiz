@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 
 import '../constants.dart';
+import 'homepage/homepage_student.dart';
 import 'login/login_screen.dart';
 import 'signup/signup_screen.dart';
+import 'trivia/race_to_top.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -38,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginScreen();
+                      return HomepageStudentScreen();
                     },
                   ),
                 );

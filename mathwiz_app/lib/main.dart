@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Nevvon',
+      title: 'MathWiz',
       theme: ThemeData(
           primaryColor: kPrimaryColor,
           scaffoldBackgroundColor: kPrimaryLightColor),
