@@ -20,16 +20,9 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "WELCOME TO",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
             Image.asset(
               "assets/images/math_logo.png",
-              height: size.height * 0.25,
+              height: 200,
             ),
             SizedBox(
               height: size.height * 0.15,
@@ -49,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             BoxButton(
               text: "SIGN UP",
-              color: kSecondaryColor,
+              color: kSeonndaryLightColor,
               press: () {
                 Navigator.push(
                   context,

@@ -27,7 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Text(
               "LOGIN TO",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: kSeonndaryColor),
             ),
             SizedBox(
               height: size.height * 0.05,
@@ -69,14 +70,14 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 Text(
                   "Don't have an Account?  ",
-                  style: TextStyle(color: kPrimaryColor),
+                  style: TextStyle(color: kSeonndaryColor),
                 ),
                 GestureDetector(
                   onTap: () {},
                   child: Text(
                     "Sign Up",
                     style: TextStyle(
-                        color: kPrimaryColor, fontWeight: FontWeight.bold),
+                        color: kSeonndaryColor, fontWeight: FontWeight.bold),
                   ),
                 )
               ],

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'MathWiz',
       theme: ThemeData(
           primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: kPrimaryLightColor),
+          scaffoldBackgroundColor: kBackgroundColor),
       home: WelcomeScreen(),
     );
   }

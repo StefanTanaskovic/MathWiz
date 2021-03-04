@@ -94,7 +94,7 @@ class ShopScreen extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Container(
-                  color: kPrimaryLightColor,
+                  color: kBackgroundColor,
                   child: TabBarView(
                     children: [
                       GridView.count(
