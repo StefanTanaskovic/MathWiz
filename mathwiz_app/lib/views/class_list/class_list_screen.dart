@@ -3,6 +3,7 @@ import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/views/shop/shop_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
+import 'package:mathwiz_app/widgets/ham_menu.dart';
 
 class ClassListScreen extends StatelessWidget {
   final List<String> classList = <String>['Class A', 'Class B', 'Class C'];
@@ -13,10 +14,10 @@ class ClassListScreen extends StatelessWidget {
         .size; // provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.menu),
         title: Text('Class List'),
         backgroundColor: kPrimaryColor,
       ),
+      drawer:HamMenu(size: size),
       body: SafeArea(
           child: Column(children: <Widget>[
         Expanded(

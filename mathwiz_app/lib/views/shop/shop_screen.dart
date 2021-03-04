@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
+import 'package:mathwiz_app/widgets/ham_menu.dart';
 
 class ShopScreen extends StatelessWidget {
   final List<String> classList = <String>['Thing A', 'Thing B', 'Thing C'];
@@ -13,10 +14,10 @@ class ShopScreen extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            leading: Icon(Icons.menu),
             title: Text('Shop'),
             backgroundColor: kPrimaryColor,
           ),
+          drawer:HamMenu(size: size),
           body: SafeArea(
               child: Column(
             children: [
@@ -25,7 +26,7 @@ class ShopScreen extends StatelessWidget {
                 child: Row(children: [
                   Expanded(
                     flex: 2,
-                    child: Image.asset("assets/images/math_logo.png"),
+                    child: Image.asset("assets/images/avatar.png"),
                   ),
                   Expanded(
                     child: Column(
