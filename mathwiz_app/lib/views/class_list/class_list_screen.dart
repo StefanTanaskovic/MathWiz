@@ -15,9 +15,9 @@ class ClassListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Class List'),
-        backgroundColor: Colors.teal,
+        backgroundColor: kPrimaryColor,
       ),
-      drawer:HamMenu(size: size),
+      drawer: HamMenu(size: size),
       body: SafeArea(
           child: Column(children: <Widget>[
         Expanded(
@@ -28,7 +28,7 @@ class ClassListScreen extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: kPrimaryColor,
+                    color: kSecondaryColor,
                   ),
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -38,7 +38,7 @@ class ClassListScreen extends StatelessWidget {
                     child: Text(
                   '${classList[index]}',
                   style: TextStyle(
-                      color: kPrimaryColor, fontWeight: FontWeight.bold),
+                      color: kSecondaryColor, fontWeight: FontWeight.bold),
                 )),
               );
             },
@@ -52,7 +52,7 @@ class ClassListScreen extends StatelessWidget {
         ),
         BoxButton(
           text: "Add Class",
-          color: Colors.teal,
+          color: kPrimaryColor,
           press: () {
             Navigator.push(
               context,
@@ -63,6 +63,9 @@ class ClassListScreen extends StatelessWidget {
               ),
             );
           },
+        ),
+        SizedBox(
+          height: size.height * 0.05,
         ),
       ])),
     );

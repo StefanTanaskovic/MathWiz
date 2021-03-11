@@ -22,7 +22,7 @@ class BoxPassFeild extends StatelessWidget {
             hintText: hintText,
             icon: Icon(
               Icons.lock,
-              color: kPrimaryColor,
+              color: kSecondaryColor,
             ),
             suffixIcon: Icon(
               Icons.visibility,

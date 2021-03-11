@@ -27,10 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Text(
               "LOGIN TO",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: size.height * 0.05,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: kSecondaryColor),
             ),
             Image.asset(
               "assets/images/math_logo.png",

@@ -12,16 +12,16 @@ class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 
+// Primary is Teal
+const kPrimaryColor = Colors.teal;
+var kPrimaryLightColor = Colors.teal[100];
 
-//var kSecondaryColor = Colors.purple[600];
-const kPrimaryLightColor = Colors.white;
-//var kSecondaryColor = Colors.purple[200];
+// Secondary is Purple
+const kSecondaryColor = Colors.purple;
+var kSecondaryLightColor = Colors.purple[200];
 
-Color  teal = HexColor("#009688");
-Color  tealLight = HexColor("#5CFFEF");
-Color  purp = HexColor("#9c27b0");
-//Color  kPrimaryColor = HexColor("#3B3355");
-Color  kSecondaryColor = HexColor("#8A7E72");
-Color  kPrimaryColor = HexColor("#724CF9");
-Color  white = HexColor("#FEFCFD");
+// Background is White
+const kBackgroundColor = Colors.white;
 
+// Test Colors
+Color testColorPurple = HexColor("#724CF9");
