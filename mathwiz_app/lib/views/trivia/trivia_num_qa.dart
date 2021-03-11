@@ -26,7 +26,7 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
      
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: teal,
+          backgroundColor: kPrimaryColor,
         title: const Text('Race to the Top Creator'),
       ),
       body: Container(
@@ -61,8 +61,8 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
                 ),
                 gradient: new LinearGradient(
                 colors: [
-                  teal,
-                  tealLight,
+                  kPrimaryColor,
+                  kPrimaryLightColor,
                 ],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 1.00),
@@ -98,8 +98,8 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
                         child: Center(
                           child: SliderTheme(
                             data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: purp,
-                              inactiveTrackColor: purp.withOpacity(.5),
+                              activeTrackColor: kSecondaryColor,
+                              inactiveTrackColor: kSecondaryColor.withOpacity(.5),
                               trackHeight: 4.0,
                               thumbShape: CustomSliderThumbCircle(
                                 thumbRadius: 50 * .4,
@@ -145,11 +145,11 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
                 borderRadius: new BorderRadius.all(
                   Radius.circular((15)),
                 ),
-                color: teal,
+                color: kPrimaryColor,
                 gradient: new LinearGradient(
                   colors: [
-                  teal,
-                  tealLight,
+                  kPrimaryColor,
+                  kPrimaryLightColor,
                   ],
                   begin: const FractionalOffset(0.0, 0.0),
                   end: const FractionalOffset(1.0, 1.00),
@@ -182,8 +182,8 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
                         child: Center(
                           child: SliderTheme(
                             data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: purp,
-                              inactiveTrackColor: purp.withOpacity(.5),
+                              activeTrackColor: kSecondaryColor,
+                              inactiveTrackColor: kSecondaryColor.withOpacity(.5),
                               trackHeight: 4.0,
                               thumbShape: CustomSliderThumbCircle(
                                 thumbRadius: 50 * .4,

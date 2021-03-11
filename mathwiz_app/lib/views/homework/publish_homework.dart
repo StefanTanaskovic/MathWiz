@@ -20,65 +20,69 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
         .size; // provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
-      title:Text(
-              "Create Homework",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+        title: Text("Create Homework",
+            style: TextStyle(
+              fontSize: 20,
+            )),
+        backgroundColor: kPrimaryColor,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "assets/images/add_image.png",
-              height: size.height * 0.20,
-            ),
-            BoxInputFeild(
-              hintText: "Title",
-              icon: Icons.title,
-              onChanged: (value) {},
-            ),
-            // Slider(
-            //   value: _currentSliderValue, 
-            //   min: 0, 
-            //   max:100, 
-            //   onChanged: (double value){
-            //   setState(() {
-            //     _currentSliderValue = value;
-            //   });
-            // },),
-            BoxInputFeild(
-              hintText: "Coins",
-              icon: Icons.attach_money,
-              onChanged: (value) {},
-            ),
-            Container(
-              width: size.width * 0.8,
-              child:TextField(
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: kPrimaryColor)
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: kPrimaryColor)
-                ),
-                hintText: 'Description'
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              IconButton(
+                iconSize: 100, 
+                icon: Icon(Icons.add_a_photo), 
+                onPressed: (){
+              }),
+              BoxInputFeild(
+                hintText: "Title",
+                icon: Icons.title,
+                onChanged: (value) {},
               ),
-              maxLines: 5,
-            ),
-            ),
-            BoxButton(
-              text: "Save To Drafts",
-              press: () {},
-            ),
-            BoxButton(
-              text: "Publish",
-              press: () {},
-            ),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
-          ],
+              // Slider(
+              //   value: _currentSliderValue, 
+              //   min: 0, 
+              //   max:100, 
+              //   onChanged: (double value){
+              //   setState(() {
+              //     _currentSliderValue = value;
+              //   });
+              // },),
+              BoxInputFeild(
+                hintText: "Coins",
+                icon: Icons.attach_money,
+                onChanged: (value) {},
+              ),
+              Container(
+                width: size.width * 0.8,
+                child:TextField(
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: kPrimaryColor)
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: kPrimaryColor)
+                  ),
+                  hintText: 'Description'
+                ),
+                maxLines: 5,
+              ),
+              ),
+              BoxButton(
+                text: "Save To Drafts",
+                press: () {},
+              ),
+              BoxButton(
+                text: "Publish",
+                press: () {},
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+            ],
+          ),
         ),
       ),
     );

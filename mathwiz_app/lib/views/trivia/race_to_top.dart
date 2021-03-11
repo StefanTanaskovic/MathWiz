@@ -38,7 +38,7 @@ class _RaceScreenState extends State<RaceScreen> {
      
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: teal,
+          backgroundColor: kPrimaryColor,
         title: const Text('Race to the Top Creator'),
         actions: <Widget>[
           IconButton(
@@ -54,7 +54,6 @@ class _RaceScreenState extends State<RaceScreen> {
                     print("-------------");
                 }
               }
-
               setState(() {
                 
               });
@@ -116,7 +115,6 @@ class _RaceScreenState extends State<RaceScreen> {
                   border: InputBorder.none,
                 ),
               ),
-
           );
         },
         body: ListTile(

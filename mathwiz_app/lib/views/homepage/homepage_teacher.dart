@@ -132,14 +132,14 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
       // onClose: () => print('DIAL CLOSED'),
       tooltip: 'Speed Dial',
       heroTag: 'speed-dial-hero-tag',
-      backgroundColor: teal,
+      backgroundColor: kPrimaryColor,
       foregroundColor: Colors.white,
       elevation: 8.0,
       shape: CircleBorder(),
       children: [
         SpeedDialChild(
           child: Icon(Icons.assignment_outlined, color: Colors.white,),
-          backgroundColor: teal,
+          backgroundColor: kPrimaryColor,
           label: 'Homework Checker',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () => Navigator.push(context,
@@ -152,7 +152,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
         ),
         SpeedDialChild(
           child: Icon(Icons.question_answer_outlined, color: Colors.white,),
-          backgroundColor: teal,
+          backgroundColor: kPrimaryColor,
           label: 'Trivia',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () => Navigator.push(context,
@@ -165,7 +165,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
         ),
         SpeedDialChild(
           child: Icon(Icons.access_alarms_outlined, color: Colors.white,),
-          backgroundColor: teal,
+          backgroundColor: kPrimaryColor,
           label: 'Race to the Top',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () => print('THIRD CHILD'),

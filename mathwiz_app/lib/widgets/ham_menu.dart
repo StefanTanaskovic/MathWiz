@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/views/homepage/homepage_student.dart';
+import 'package:mathwiz_app/views/homepage/homepage_teacher.dart';
 import 'package:mathwiz_app/views/login/login_screen.dart';
 import 'package:mathwiz_app/views/shop/shop_screen.dart';
 
@@ -74,7 +75,7 @@ class HamMenu extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return HomepageStudentScreen();
+                    return HomepageTeacherScreen();
                   },
                 ),
               );
