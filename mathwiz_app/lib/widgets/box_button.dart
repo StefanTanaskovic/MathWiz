@@ -11,7 +11,7 @@ class BoxButton extends StatelessWidget {
     Key key,
     this.text,
     this.press,
-    this.color = kSeonndaryColor,
+    this.color = kSecondaryColor,
     this.textColor = kBackgroundColor,
   }) : super(key: key);
 

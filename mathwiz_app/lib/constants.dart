@@ -17,8 +17,8 @@ const kPrimaryColor = Colors.teal;
 var kPrimaryLightColor = Colors.teal[100];
 
 // Secondary is Teal
-const kSeonndaryColor = Colors.purple;
-var kSeonndaryLightColor = Colors.purple[200];
+const kSecondaryColor = Colors.purple;
+var kSecondaryLightColor = Colors.purple[200];
 
 // Background is White
 const kBackgroundColor = Colors.white;

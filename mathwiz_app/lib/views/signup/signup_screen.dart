@@ -18,7 +18,8 @@ class SignUpScreen extends StatelessWidget {
         children: <Widget>[
           Text(
             "SIGN UP WITH",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style:
+                TextStyle(fontWeight: FontWeight.bold, color: kSecondaryColor),
           ),
           Image.asset(
             "assets/images/math_logo.png",

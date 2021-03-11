@@ -22,7 +22,7 @@ class BoxInputFeild extends StatelessWidget {
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: kSeonndaryColor,
+            color: kSecondaryColor,
           ),
           hintText: hintText,
         ),

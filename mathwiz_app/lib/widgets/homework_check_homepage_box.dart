@@ -14,7 +14,7 @@ class HomeworkCheckHomepageBox extends StatelessWidget {
           child: ElevatedButton(
             child: Text('$i'),
             style: ElevatedButton.styleFrom(
-              primary: kSecondaryColor,
+              primary: kBackgroundColor,
               onPrimary: Colors.black,
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
             ),
@@ -45,7 +45,7 @@ class HomeworkCheckHomepageBox extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,
-                    color: Colors.white)),
+                    color: kBackgroundColor)),
             SizedBox(height: 10),
             for (var item in activtyList) Container(child: item),
           ],

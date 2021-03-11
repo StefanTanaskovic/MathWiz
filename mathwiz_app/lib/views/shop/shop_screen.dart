@@ -17,7 +17,7 @@ class ShopScreen extends StatelessWidget {
             title: Text('Shop'),
             backgroundColor: kPrimaryColor,
           ),
-          drawer:HamMenu(size: size),
+          drawer: HamMenu(size: size),
           body: SafeArea(
               child: Column(
             children: [
@@ -33,35 +33,28 @@ class ShopScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            //padding: EdgeInsets.symmetric(horizontal: 10),
                             alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
                                 Expanded(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color: kPrimaryColor,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    padding: EdgeInsets.all(3),
+                                        border:
+                                            Border.all(color: kSecondaryColor),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    height: 50,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    alignment: Alignment.center,
                                     child: Text(
-                                      " Gold: ",
+                                      "Gold:",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.yellow[600]),
+                                          color: kSecondaryColor),
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      " 1500 ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),
@@ -72,7 +65,7 @@ class ShopScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.bottomCenter,
                             child: RaisedButton(
-                              color: kPrimaryColor,
+                              color: kSecondaryColor,
                               textColor: Colors.white,
                               child: Text("Buy"),
                               onPressed: () {},
@@ -90,7 +83,8 @@ class ShopScreen extends StatelessWidget {
                   Tab(text: 'Shop', icon: Icon(Icons.account_balance_rounded)),
                   Tab(text: 'Inventory', icon: Icon(Icons.face)),
                 ],
-                labelColor: kPrimaryColor,
+                labelColor: kSecondaryColor,
+                indicatorColor: kSecondaryColor,
               ),
               Expanded(
                 flex: 2,
@@ -109,7 +103,7 @@ class ShopScreen extends StatelessWidget {
                               height: 100,
                               width: 100,
                               child: Card(
-                                color: Colors.white,
+                                color: kPrimaryLightColor,
                                 semanticContainer: true,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                               ),
@@ -117,7 +111,25 @@ class ShopScreen extends StatelessWidget {
                           );
                         }),
                       ),
-                      Icon(Icons.backpack),
+                      GridView.count(
+                        padding: EdgeInsets.all(10),
+                        mainAxisSpacing: 0,
+                        crossAxisSpacing: 0,
+                        crossAxisCount: 5,
+                        children: List.generate(40, (index) {
+                          return Align(
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              child: Card(
+                                color: kSecondaryLightColor,
+                                semanticContainer: true,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
                     ],
                   ),
                 ),

@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             BoxButton(
               text: "SIGN UP",
-              color: kSeonndaryLightColor,
+              color: kSecondaryLightColor,
               press: () {
                 Navigator.push(
                   context,
