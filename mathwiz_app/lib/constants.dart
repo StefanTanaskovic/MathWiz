@@ -17,7 +17,9 @@ class HexColor extends Color {
 const kPrimaryLightColor = Colors.white;
 //var kSecondaryColor = Colors.purple[200];
 
-Color  richBlackFogra = HexColor("#000505");
+Color  teal = HexColor("#009688");
+Color  tealLight = HexColor("#5CFFEF");
+Color  purp = HexColor("#9c27b0");
 //Color  kPrimaryColor = HexColor("#3B3355");
 Color  kSecondaryColor = HexColor("#8A7E72");
 Color  kPrimaryColor = HexColor("#724CF9");

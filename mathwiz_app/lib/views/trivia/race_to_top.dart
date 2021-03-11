@@ -1,46 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mathwiz_app/widgets/answer_question.dart';
-
 import 'package:mathwiz_app/widgets/box_input_field.dart';
-import 'package:mathwiz_app/widgets/box_pass_field.dart';
-import 'package:mathwiz_app/widgets/trivia_answer_box.dart';
-import 'package:mathwiz_app/widgets/trivia_question_box.dart';
-
+import 'package:mathwiz_app/widgets/custom_slider.dart';
 import '../../constants.dart';
 
 class RaceScreen extends StatefulWidget {
+  final int amountQuestions;
+  final int amountAnswers;
+  final String quizTitle;
+  RaceScreen({this.amountQuestions, this.amountAnswers, this.quizTitle});
+
   @override
   State<StatefulWidget> createState() {
-    return _RaceScreenState();
+    return _RaceScreenState(amountAnswers: amountAnswers, amountQuestions: amountQuestions, quizTitle: quizTitle);
   }
 }
 
-//final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-//final SnackBar snackBar = const SnackBar(content: Text('Showing Snackbar'));
-
-List<TrivaQuestionAnswer> questions = [TrivaQuestionAnswer(answers: ["omg lol"], question: "duuude cmon"),TrivaQuestionAnswer(answers: ["omg lol"], question: "wtf")];
-
+List<TrivaQuestionAnswer> questions = [];
+List<Widget> children;
 class _RaceScreenState extends State<RaceScreen> {
+  final int amountQuestions;
+  final int amountAnswers;
+  final String quizTitle;
+  final _formKey = GlobalKey<FormState>();
+
+  _RaceScreenState({this.amountQuestions, this.amountAnswers,this.quizTitle});
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context)
-        .size; // provides total hieght and width of screen
-        
+
+    questions = List.generate(
+    amountQuestions,
+    (int i) =>TrivaQuestionAnswer(id: i,
+                question: "",
+                answers: [])); 
+     
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: teal,
         title: const Text('Race to the Top Creator'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Add Question',
+            icon: const Icon(Icons.save),
+            tooltip: 'Save Quiz',
             onPressed: () {
-              for(var i = 0; i < questions.length; i++){
-                questions[i].isExpanded = false;
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                for(var i = 0; i < questions.length; i++){
+                    print("-------------");
+                    print(questions[i].question);
+                    print(questions[i].answers);
+                    print("-------------");
+                }
               }
-              questions.add(TrivaQuestionAnswer(
-                question: "",
-                answers: [""]
-              ));
+
               setState(() {
                 
               });
@@ -51,82 +65,84 @@ class _RaceScreenState extends State<RaceScreen> {
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            BoxInputFeild(
-              hintText: "Quiz Title",
-              icon: Icons.title_rounded,
-              onChanged: (value) {},
-            ),    
-            _buildPanel(),
-            ],    
-        ),
+            Text(quizTitle, textAlign: TextAlign.center, 
+              style: TextStyle(fontSize: 20,  color: Colors.grey[900],fontWeight: FontWeight.w700),
+            ),
+            SizedBox(height: 10),
+            Form(
+              key: _formKey,
+              child: Container(
+                child:
+                  _buildPanel(),  
+              ),
+            )
+          ]
+        )
       ),
     );
   }
 
   Widget _buildPanel() {
-    return ExpansionPanelList(
+    return ExpansionPanelList.radio(
+      initialOpenPanelValue: 0,
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          questions[index].isExpanded = !isExpanded;
+          questions[index].isExpanded = !isExpanded;  
         });
-        
       },
-      children: questions.map<ExpansionPanel>((TrivaQuestionAnswer item) {
-        
-        return ExpansionPanel(
+      children: questions.map<ExpansionPanelRadio>((TrivaQuestionAnswer item) {
+        return ExpansionPanelRadio(
+          value: item.id,
           headerBuilder: (BuildContext context, bool isExpanded) {
-            
             return ListTile(
-              title:Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      questions.removeAt(questions.indexOf(item));
-                      print(item.question);
-                      setState(() {
-                      });
-                    }),
-                  Expanded(
-                    child: TriviaQuestionBox(
-                  ),
-                  ),
-                ],
+              title: TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your question';
+                  }
+                  return null;
+                },
+                onSaved: (String value){
+                  item.question = (value);
+                },
+                initialValue: item.question,
+                onChanged: (text){
+                  item.question = text;
+                },
+                decoration: InputDecoration(
+                  hintText: "Enter Question",
+                  border: InputBorder.none,
+                ),
               ),
-            );
-          },
-          body: Container(
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                getTriviaAnswerBox(item.answers),
-                IconButton(
-                 icon: const Icon(Icons.add),
-                 onPressed: () {
-                   item.answers.add("");
-                   getTriviaAnswerBox(item.answers);
-                  setState(() {
-                    
-                  });
-                 })
-                ])
-            ),
-          isExpanded: item.isExpanded,
+
+          );
+        },
+        body: ListTile(
+          title: Column(children: List<Widget>.generate(amountAnswers, (i) => TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter an answer';
+              }
+              return null;
+            },
+            onSaved: (String value){
+              item.answers.add(value);
+            },
+            decoration: InputDecoration(
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(top:10.0),
+                child:Text("-", style: TextStyle(color: Colors.black)),
+              ),
+              hintText: "Enter Answer",
+              border: InputBorder.none,
+            ),)
+            )
+          ),
+        )
         );
       }).toList(),
-      
     );
   }
 }
-
- Widget getTriviaAnswerBox (List<String> strings)
-  {
-    return new Column(children: strings.map((item) => new TriviaAnswerBox()).toList());
-  }
-
-
-
