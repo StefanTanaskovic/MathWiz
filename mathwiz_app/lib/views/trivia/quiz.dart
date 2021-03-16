@@ -29,7 +29,6 @@ class _QuizScreenState extends State<QuizScreen> {
   Random random = new Random();
   int colorIndex = 0;
   int questionIndex = 0;
-  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,27 +40,32 @@ class _QuizScreenState extends State<QuizScreen> {
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildQuiz(questionIndex, status)
+          children: _buildQuiz(questionIndex)
 
         ),
       ),
     );
   }
 
-List <Widget> _buildQuiz(int i, bool status) {
+List <Widget> _buildQuiz(int i) {
   Size size = MediaQuery.of(context).size;
-  print("--------------");
-  print("this is the status");
-  print(status);
-  print("--------------");
-
   if(questionIndex == quiz.questions.length){
     return <Widget>[
-      Text("$finalScore")
+      Text("Congrats!",
+        textAlign: TextAlign.center,        
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: kSecondaryColor),
+      ),
+      Text(
+        "Your final score is $finalScore/${quiz.questions.length} and you came in 1st place.",
+        textAlign: TextAlign.center,  
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 24),
+      ),
     ];
   }
   else{
       return <Widget>[
+          Text("Question: ${questionIndex + 1}/${quiz.questions.length}"),
           Text(
             quiz.questions[i].question,
             style: TextStyle(
@@ -81,8 +85,7 @@ List <Widget> _buildQuiz(int i, bool status) {
                     setState(() {
                       if (questionIndex == quiz.questions.length -1){
                         checkAnswer(i, index);
-                        print("finished quiz");
-                        status = true;
+                        questionIndex += 1;
                       }else{
                         checkAnswer(i, index);
                         questionIndex += 1;
