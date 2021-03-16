@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
-
 import '../constants.dart';
-import 'homepage/homepage_student.dart';
 import 'login/login_screen.dart';
 import 'signup/signup_screen.dart';
-import 'trivia/race_to_top.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override

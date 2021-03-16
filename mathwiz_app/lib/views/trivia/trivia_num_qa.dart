@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mathwiz_app/views/trivia/race_to_top.dart';
+import 'package:mathwiz_app/views/trivia/race_to_top_creator.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
-import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/custom_slider.dart';
 import 'package:mathwiz_app/widgets/text_field_container.dart';
 import '../../constants.dart';
@@ -104,12 +103,12 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
                               thumbShape: CustomSliderThumbCircle(
                                 thumbRadius: 50 * .4,
                                 min: 2,
-                                max: 10,
+                                max: 8,
                               ),
                             ),
                             child: Slider(
                                 min: 2,
-                                max: 10,
+                                max: 8,
                                 divisions: 8,
                                 value: _currentSliderValueQuestions,
                                 onChanged: (value) {
@@ -124,7 +123,7 @@ class _RaceScreenPickerState extends State<RaceScreenPicker> {
                         width: 60 * .1,
                       ),
                       Text(
-                        '10',
+                        '8',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 18,  color: Colors.grey[900],fontWeight: FontWeight.w700  
