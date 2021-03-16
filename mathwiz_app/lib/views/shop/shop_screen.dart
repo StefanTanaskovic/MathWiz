@@ -3,8 +3,6 @@ import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 
 class ShopScreen extends StatelessWidget {
-  final List<String> classList = <String>['Thing A', 'Thing B', 'Thing C'];
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context)
