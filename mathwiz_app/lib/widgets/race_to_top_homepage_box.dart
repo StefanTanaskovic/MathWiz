@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/views/trivia/quiz.dart';
 
 import '../constants.dart';
 
@@ -18,7 +19,16 @@ class RaceToTopHomepageBox extends StatelessWidget {
               onPrimary: Colors.black,
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return QuizScreen();
+                    },
+                  ),
+                );
+            },
           ),
         );
       },

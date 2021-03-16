@@ -50,9 +50,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
         backgroundColor: kPrimaryColor,
         ),
       drawer:HamMenu(size: size),
-      body: Container(
-        height: size.height,
-        width: double.infinity,
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -132,7 +130,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
       // onClose: () => print('DIAL CLOSED'),
       tooltip: 'Speed Dial',
       heroTag: 'speed-dial-hero-tag',
-      backgroundColor: kPrimaryColor,
+      backgroundColor: kSecondaryColor,
       foregroundColor: Colors.white,
       elevation: 8.0,
       shape: CircleBorder(),
@@ -152,7 +150,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
         ),
         SpeedDialChild(
           child: Icon(Icons.question_answer_outlined, color: Colors.white,),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: kSecondaryColor,
           label: 'Trivia',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () => Navigator.push(context,
@@ -168,7 +166,13 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
           backgroundColor: kPrimaryColor,
           label: 'Race to the Top',
           labelStyle: TextStyle(fontSize: 18.0),
-          onTap: () => print('THIRD CHILD'),
+          onTap: () => Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return RaceScreenPicker();
+                    },
+                  ),
+                ),
         ),
       ],
     );

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mathwiz_app/widgets/answer_question.dart';
-import 'package:mathwiz_app/widgets/box_input_field.dart';
-import 'package:mathwiz_app/widgets/custom_slider.dart';
+import 'package:mathwiz_app/model/answer_question.dart';
 import '../../constants.dart';
 
 class RaceScreen extends StatefulWidget {
@@ -17,28 +15,30 @@ class RaceScreen extends StatefulWidget {
   }
 }
 
-List<TrivaQuestionAnswer> questions = [];
+List<QuestionAnswer> questions = [];
 List<Widget> children;
+
 class _RaceScreenState extends State<RaceScreen> {
+  Map selected = new Map();
   final int amountQuestions;
   final int amountAnswers;
   final String quizTitle;
   final _formKey = GlobalKey<FormState>();
-
+  
   _RaceScreenState({this.amountQuestions, this.amountAnswers,this.quizTitle});
 
   @override
   Widget build(BuildContext context) {
-
     questions = List.generate(
     amountQuestions,
-    (int i) =>TrivaQuestionAnswer(id: i,
+    (int i) =>QuestionAnswer(id: i,
                 question: "",
-                answers: [])); 
+                answers: [],
+                correctAnswer: 0)); 
      
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kPrimaryColor,
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         title: const Text('Race to the Top Creator'),
         actions: <Widget>[
           IconButton(
@@ -48,9 +48,10 @@ class _RaceScreenState extends State<RaceScreen> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 for(var i = 0; i < questions.length; i++){
-                    print("-------------");
+                    questions[i].correctAnswer = selected[i] + 1;
                     print(questions[i].question);
                     print(questions[i].answers);
+                    print(questions[i].correctAnswer);
                     print("-------------");
                 }
               }
@@ -91,7 +92,7 @@ class _RaceScreenState extends State<RaceScreen> {
           questions[index].isExpanded = !isExpanded;  
         });
       },
-      children: questions.map<ExpansionPanelRadio>((TrivaQuestionAnswer item) {
+      children: questions.map<ExpansionPanelRadio>((QuestionAnswer item) {
         return ExpansionPanelRadio(
           value: item.id,
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -130,13 +131,25 @@ class _RaceScreenState extends State<RaceScreen> {
             },
             decoration: InputDecoration(
               prefixIcon: Padding(
-                padding: EdgeInsets.only(top:10.0),
-                child:Text("-", style: TextStyle(color: Colors.black)),
+                padding: EdgeInsets.only(right:10),
+                child:
+                Radio(
+                  value: i, 
+                  groupValue: selected[item.id] != null ? selected[item.id] : "",
+                  onChanged: (value) {
+                    setState(() {
+                      selected[item.id] = value; 
+                    });
+                  },
+                )
               ),
               hintText: "Enter Answer",
               border: InputBorder.none,
-            ),)
+            ),
             )
+
+            )
+            
           ),
         )
         );
@@ -144,3 +157,7 @@ class _RaceScreenState extends State<RaceScreen> {
     );
   }
 }
+
+
+
+
