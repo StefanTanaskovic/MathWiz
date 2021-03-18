@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
-import 'package:mathwiz_app/widgets/text_field_container.dart';
 import '../../constants.dart';
 
 class PublishHomeworkScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _PublishHomeworkScreenState();
-      }
-    }
-    
+  }
+}
 
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
   @override
   Widget build(BuildContext context) {
-    double _currentSliderValue = 20;
     Size size = MediaQuery.of(context)
         .size; // provides total hieght and width of screen
     return Scaffold(
@@ -32,19 +29,18 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
           child: Column(
             children: [
               IconButton(
-                iconSize: 100, 
-                icon: Icon(Icons.add_a_photo), 
-                onPressed: (){
-              }),
+                  iconSize: 100,
+                  icon: Icon(Icons.add_a_photo),
+                  onPressed: () {}),
               BoxInputFeild(
                 hintText: "Title",
                 icon: Icons.title,
                 onChanged: (value) {},
               ),
               // Slider(
-              //   value: _currentSliderValue, 
-              //   min: 0, 
-              //   max:100, 
+              //   value: _currentSliderValue,
+              //   min: 0,
+              //   max:100,
               //   onChanged: (double value){
               //   setState(() {
               //     _currentSliderValue = value;
@@ -57,18 +53,15 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               ),
               Container(
                 width: size.width * 0.8,
-                child:TextField(
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: kPrimaryColor)
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: kPrimaryColor)
-                  ),
-                  hintText: 'Description'
+                child: TextField(
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: kPrimaryColor)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: kPrimaryColor)),
+                      hintText: 'Description'),
+                  maxLines: 5,
                 ),
-                maxLines: 5,
-              ),
               ),
               BoxButton(
                 text: "Save To Drafts",

@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/views/welcome_screen.dart';
 
 import 'constants.dart';
 
+import 'package:firebase_core/firebase_core.dart'; // new
+import 'package:firebase_auth/firebase_auth.dart'; // new
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart'; // new
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  //SharedPreferences.getInstance().then((prefs) {});
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => ClassListNotifier()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  //final SharedPreferences prefs;
-
-  //const MyApp({Key key, this.prefs}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
