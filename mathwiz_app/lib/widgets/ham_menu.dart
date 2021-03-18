@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/views/homepage/homepage_teacher.dart';
 import 'package:mathwiz_app/views/shop/shop_screen.dart';
+import 'package:mathwiz_app/views/drafts/view_drafts.dart';
 
 import '../constants.dart';
 
@@ -93,6 +94,23 @@ class HamMenu extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) {
                     return ShopScreen();
+                  },
+                ),
+              );
+            },
+          ),
+        ListTile(
+          leading: Icon(Icons.edit),
+            title: Align(
+            child: new Text('Drafts' ,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            alignment: Alignment(-1.3, 0),
+          ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ViewDraftsScreen();
                   },
                 ),
               );
