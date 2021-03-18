@@ -1,23 +1,30 @@
-/*
-
-- Class ID
-- Title / Class Name
-- Description
-- Teachers Name
-
-*/
-
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
+import 'package:mathwiz_app/controllers/class_list_notifier.dart';
+import 'package:mathwiz_app/model/class_model.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
-import 'package:mathwiz_app/widgets/box_input_field.dart';
-import 'package:mathwiz_app/widgets/ham_menu_start.dart';
+import 'package:mathwiz_app/widgets/text_field_container.dart';
+import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
+import 'dart:math' show Random;
 
-class CreateClassScreen extends StatelessWidget {
+class CreateClassScreen extends StatefulWidget {
+  @override
+  _CreateClassScreenState createState() => _CreateClassScreenState();
+}
+
+class _CreateClassScreenState extends State<CreateClassScreen> {
+  final _classFormKey = GlobalKey<FormState>();
+
+  String _title;
+  String _description;
+  String _teacher;
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context)
-        .size; // provides total hieght and width of screen
+    ClassListNotifier classListNotifier =
+        Provider.of<ClassListNotifier>(context);
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Create New Class'),
@@ -26,25 +33,89 @@ class CreateClassScreen extends StatelessWidget {
         body: SafeArea(
           child: Align(
             alignment: Alignment.center,
-            child: Column(children: <Widget>[
-              BoxInputFeild(
-                icon: Icons.assignment,
-                hintText: 'Teachers Name',
-              ),
-              BoxInputFeild(
-                icon: Icons.assignment,
-                hintText: 'Class Name',
-              ),
-              BoxInputFeild(
-                icon: Icons.assignment,
-                hintText: 'Class Description',
-              ),
-              BoxButton(
-                text: "Create Class",
-                color: kPrimaryColor,
-                press: () {},
-              ),
-            ]),
+            child: Form(
+              key: _classFormKey,
+              child: Column(children: [
+                TextFeildContainer(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter a Title';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _title = value;
+                    },
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.assignment,
+                        color: kPrimaryColor,
+                      ),
+                      hintText: "Title",
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                TextFeildContainer(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter a Description';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _description = value;
+                    },
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.assignment,
+                        color: kPrimaryColor,
+                      ),
+                      hintText: "Description",
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                TextFeildContainer(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter a Teacher Name';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _teacher = value;
+                    },
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.person,
+                        color: kPrimaryColor,
+                      ),
+                      hintText: "Teacher's Name",
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                BoxButton(
+                    text: "Create Class",
+                    press: () {
+                      if (!_classFormKey.currentState.validate()) return;
+
+                      _classFormKey.currentState.save();
+
+                      classListNotifier.addClass(ClassModel(
+                          id: randomAlpha(6),
+                          title: _title,
+                          description: _description,
+                          teacher: _teacher));
+
+                      Navigator.of(context).pop();
+                    }),
+              ]),
+            ),
           ),
         ));
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
-import 'package:mathwiz_app/views/homepage/homepage_teacher.dart';
 import 'package:mathwiz_app/views/shop/shop_screen.dart';
 
 import '../constants.dart';
