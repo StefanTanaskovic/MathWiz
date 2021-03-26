@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/model/avatar/tops_model.dart';
+import 'package:mathwiz_app/services/avatar_api.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import '../constants.dart';
 import 'login/login_screen.dart';
 import 'signup/signup_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context)
@@ -54,5 +61,23 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void fetchMethod() async {
+    print('Tapped');
+    APIService apiService = new APIService();
+
+    apiService.fetchAssets().then((value) {
+      if (value != null) {
+        var test = topsModelFromJson(value);
+        print(test.tops[1]);
+
+        // setState(() {
+        //   image = test.tops[1].thumbSrc;
+        // });
+      } else {
+        print('Error!');
+      }
+    });
   }
 }
