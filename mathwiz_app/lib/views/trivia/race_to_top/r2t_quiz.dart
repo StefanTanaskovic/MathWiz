@@ -1,34 +1,40 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/model/answer_question.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
-import '../../constants.dart';
+import '../../../constants.dart';
 
-class QuizScreen extends StatefulWidget {
+
+class RaceQuizScreen extends StatefulWidget {
+
+  final RaceTopModel quiz;
+  RaceQuizScreen({this.quiz});
+
   @override
   State<StatefulWidget> createState() {
-    return _QuizScreenState();
+    return _RaceQuizScreenState(quiz: quiz);
   }
 }
 
-class _QuizScreenState extends State<QuizScreen> {
-
-  RaceTop quiz = RaceTop(title: "Quiz 5", questions: [
-    QuestionAnswer(id: 0,
-                question: "What is 10x1",
-                answers: ["10","2","4","7"],
-                correctAnswer: 1),
-    QuestionAnswer(id: 1,
-                question: "What is 10x5",
-                answers: ["10","20","40","50"],
-                correctAnswer: 4)
-  ]);
-
+class _RaceQuizScreenState extends State<RaceQuizScreen> {
+  RaceTopModel quiz;
   int finalScore = 0;
   List colors = [Colors.red, kPrimaryColor, kSecondaryColor, Colors.blue];
   Random random = new Random();
   int colorIndex = 0;
   int questionIndex = 0;
+  String status = "Start Time" ;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 11;
+  _RaceQuizScreenState({this.quiz});
+
+  void onEnd() {
+    if (this.mounted) {
+    setState(() {
+      status = "Start Quiz";
+    });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +44,54 @@ class _QuizScreenState extends State<QuizScreen> {
         title: Text(quiz.title),
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildQuiz(questionIndex)
-
+        child: Builder(builder: (BuildContext context){
+          switch(status) { 
+            case "Waiting": {  
+              return 
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("The quiz will start once the teacher starts it. Be ready as this is a race to the top.",
+                    textAlign: TextAlign.center,        
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, ),
+                  ),
+                ),
+              );
+            } 
+            break; 
+          
+            case "Start Time": {  
+              return Center(
+                child: CountdownTimer(
+                  endTime: endTime,
+                  widgetBuilder: (_, CurrentRemainingTime time) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Starting in:',
+                          style: TextStyle(fontSize: 24, ),),
+                        Text('${time.sec}',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color: kSecondaryColor ),
+                        ),
+                      ]
+                    );
+                  },
+                  onEnd: onEnd,
+                ),
+              );
+            } 
+            break; 
+            
+            case "Start Quiz": {  
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _buildQuiz(questionIndex));
+            }
+            break; 
+          } 
+        return Text("This is dumb");
+        })
         ),
-      ),
     );
   }
 
@@ -102,7 +150,7 @@ List <Widget> _buildQuiz(int i) {
 }
 
 void checkAnswer(int question, int answerPicked){
-  if (quiz.questions[question].correctAnswer == answerPicked + 1){
+  if (quiz.questions[question].correctAnswer == answerPicked){
     finalScore += 1;
   }
 }

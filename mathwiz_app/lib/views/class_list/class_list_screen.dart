@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/views/class_list/create_class_screen.dart';
+import 'package:mathwiz_app/views/homepage/homepage_teacher.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/ham_menu_start.dart';
@@ -25,7 +26,16 @@ class ClassListScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           itemCount: context.watch<ClassListNotifier>().classList.length,
           itemBuilder: (BuildContext context, int index) => InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomepageTeacherScreen();
+                    },
+                  ),
+                );
+            },
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -53,7 +63,8 @@ class ClassListScreen extends StatelessWidget {
           ),
           separatorBuilder: (BuildContext context, int index) =>
               const Divider(),
-        )),
+        )
+        ),
         BoxInputFeild(
           icon: Icons.assignment,
           hintText: 'Class Code',

@@ -24,7 +24,51 @@ class ShopScreen extends StatelessWidget {
                 child: Row(children: [
                   Expanded(
                     flex: 2,
-                    child: Image.asset("assets/images/avatar.png"),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        //avatar
+                        Positioned(
+                          left: 60,
+                          child: Image.asset(
+                              "assets/images/avatar3.png",
+                              //height: 200,
+                              scale: 1.2,
+                            ),
+                        ),
+                        //hair
+                        Positioned(
+                          left: 63,
+                          top: 32,
+                          child: Image.asset(
+                            "assets/images/24.png",
+                            //scale: 0.7,
+                            //height: 200,
+                          ),
+                        ),
+                        //bottom
+                        Positioned(
+                          left: 72,
+                          top: 126,
+                          child: Image.asset(
+                            "assets/images/127.png",
+                            scale: 1.3,
+                            //height: 200,
+                          ),
+                          
+                        ),
+                        //Top
+                        Positioned(
+                          left: 67,
+                          top: 100,
+                          child: Image.asset(
+                            "assets/images/333.png",
+                            scale: 0.98,
+                            //height: 200,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: Column(

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/homework_check_homepage_box.dart';
-import 'package:mathwiz_app/widgets/race_to_top_homepage_box.dart';
-import 'package:mathwiz_app/widgets/trivia_homepage_box.dart';
+import 'package:mathwiz_app/widgets/race_to_top_homepage_box_student.dart';
 import '../../constants.dart';
 
 class HomepageStudentScreen extends StatefulWidget {
@@ -17,8 +16,8 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
   int _current = 0;
   final List<Widget> items = [
     HomeworkCheckHomepageBox(),
-    RaceToTopHomepageBox(),
-    TriviaHomepageBox()
+    RaceToTopHomepageBoxStudent(),
+    //TriviaHomepageBoxTeacherStudent()
   ];
 
   @override

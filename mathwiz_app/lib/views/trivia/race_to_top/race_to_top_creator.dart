@@ -1,64 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mathwiz_app/controllers/race_to_top_creator_notifier.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
-import '../../constants.dart';
+import 'package:mathwiz_app/model/race_to_top.dart';
+import 'package:mathwiz_app/views/homepage/homepage_teacher.dart';
+import '../../../constants.dart';
+import 'package:provider/provider.dart';
 
 class RaceScreen extends StatefulWidget {
+  final int goldFirst;
+  final int goldMin;
   final int amountQuestions;
   final int amountAnswers;
   final String quizTitle;
-  RaceScreen({this.amountQuestions, this.amountAnswers, this.quizTitle});
+
+  RaceScreen({this.amountQuestions, this.amountAnswers, this.quizTitle, this.goldFirst, this.goldMin});
 
   @override
   State<StatefulWidget> createState() {
-    return _RaceScreenState(amountAnswers: amountAnswers, amountQuestions: amountQuestions, quizTitle: quizTitle);
+    return _RaceScreenState(
+      amountAnswers: amountAnswers, 
+      amountQuestions: amountQuestions, 
+      quizTitle: quizTitle, 
+      goldFirst:goldFirst, 
+      goldMin: goldMin
+    );
   }
 }
 
-List<QuestionAnswer> questions = [];
 List<Widget> children;
 
 class _RaceScreenState extends State<RaceScreen> {
   Map selected = new Map();
+  final int goldFirst;
+  final int goldMin;
   final int amountQuestions;
   final int amountAnswers;
   final String quizTitle;
   final _formKey = GlobalKey<FormState>();
   
-  _RaceScreenState({this.amountQuestions, this.amountAnswers,this.quizTitle});
+  _RaceScreenState({this.amountQuestions, 
+                    this.amountAnswers,
+                    this.quizTitle, 
+                    this.goldFirst, 
+                    this.goldMin});
 
   @override
   Widget build(BuildContext context) {
-    questions = List.generate(
-    amountQuestions,
-    (int i) =>QuestionAnswer(id: i,
-                question: "",
-                answers: [],
-                correctAnswer: 0)); 
+
+  RaceListNotifier raceListNotifier =
+         Provider.of<RaceListNotifier>(context,listen: false);
+
+    raceListNotifier.setQuestions(amountQuestions);
      
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: const Text('Race to the Top Creator'),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.save),
-            tooltip: 'Save Quiz',
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                for(var i = 0; i < questions.length; i++){
-                    questions[i].correctAnswer = selected[i] + 1;
-                    print(questions[i].question);
-                    print(questions[i].answers);
-                    print(questions[i].correctAnswer);
-                    print("-------------");
+          Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: DropdownButton<String>(
+              hint: Padding(padding: EdgeInsets.only(left: 5),
+              child: Text("Save", style: TextStyle(color: Colors.white),)),
+              icon: Padding(padding: EdgeInsets.only(right: 10),
+              child: const Icon(Icons.save,  color: Colors.white)),
+              iconSize: 22,
+              elevation: 16,
+              underline: Container(
+                height: 2,
+                color: kSecondaryColor,
+              ),
+              onChanged: (String value) {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  raceListNotifier.setCorrectAns(raceListNotifier.questions);
+                  raceListNotifier.save(
+                    value, 
+                    RaceTopModel(
+                    title: quizTitle, 
+                    questions: raceListNotifier.questions,
+                    minReward: goldMin,
+                    firstReward: goldFirst)
+                  );
                 }
-              }
-              setState(() {
-                
-              });
-            },
+              },
+              items: <String>['Publish', 'Drafts']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
           ),
         ],
       ),
@@ -75,7 +109,7 @@ class _RaceScreenState extends State<RaceScreen> {
               key: _formKey,
               child: Container(
                 child:
-                  _buildPanel(),  
+                  _buildCreator(),  
               ),
             )
           ]
@@ -84,15 +118,15 @@ class _RaceScreenState extends State<RaceScreen> {
     );
   }
 
-  Widget _buildPanel() {
+  Widget _buildCreator() {
+    RaceListNotifier raceListNotifier =
+         Provider.of<RaceListNotifier>(context);
     return ExpansionPanelList.radio(
       initialOpenPanelValue: 0,
       expansionCallback: (int index, bool isExpanded) {
-        setState(() {
-          questions[index].isExpanded = !isExpanded;  
-        });
+        raceListNotifier.expansion(raceListNotifier.questions[index], isExpanded);
       },
-      children: questions.map<ExpansionPanelRadio>((QuestionAnswer item) {
+      children: raceListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswer item) {
         return ExpansionPanelRadio(
           value: item.id,
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -135,11 +169,9 @@ class _RaceScreenState extends State<RaceScreen> {
                 child:
                 Radio(
                   value: i, 
-                  groupValue: selected[item.id] != null ? selected[item.id] : "",
+                  groupValue: raceListNotifier.selected[item.id] != null ? raceListNotifier.selected[item.id] : "",
                   onChanged: (value) {
-                    setState(() {
-                      selected[item.id] = value; 
-                    });
+                    raceListNotifier.radioValueChanged(item.id, value);
                   },
                 )
               ),
@@ -147,9 +179,7 @@ class _RaceScreenState extends State<RaceScreen> {
               border: InputBorder.none,
             ),
             )
-
             )
-            
           ),
         )
         );

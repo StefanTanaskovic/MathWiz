@@ -23,5 +23,6 @@ var kSecondaryLightColor = Colors.purple[200];
 // Background is White
 const kBackgroundColor = Colors.white;
 
-// Test Colors
-Color testColorPurple = HexColor("#724CF9");
+// Gold Colors
+Color goldColorGold = HexColor("#ffbf00");
+Color goldColorGoldlight = HexColor("#FFEBAD");

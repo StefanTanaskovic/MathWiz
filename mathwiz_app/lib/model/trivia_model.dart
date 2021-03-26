@@ -1,12 +1,13 @@
 import 'answer_question.dart';
 
-class RaceTopModel {
-  RaceTopModel({
+class TriviaModel {
+  TriviaModel({
     this.title,
     this.questions,
     this.minReward,
     this.firstReward,
-    this.status
+    this.status,
+    this.timer
 
   });
 
@@ -15,4 +16,5 @@ class RaceTopModel {
   int minReward;
   int firstReward;
   String status;
+  int timer;
 }

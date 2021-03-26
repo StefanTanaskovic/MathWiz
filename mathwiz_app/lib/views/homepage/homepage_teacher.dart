@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:mathwiz_app/views/Trivia/trivia_num_qa.dart';
 import 'package:mathwiz_app/views/homework/publish_homework.dart';
+import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
+import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_prev.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/homework_check_homepage_box.dart';
-import 'package:mathwiz_app/widgets/race_to_top_homepage_box.dart';
-import 'package:mathwiz_app/widgets/trivia_homepage_box.dart';
+import 'package:mathwiz_app/widgets/race_to_top_homepage_box_teacher.dart';
+import 'package:mathwiz_app/widgets/trivia_homepage_box_teacher.dart';
 import '../../constants.dart';
 
 class HomepageTeacherScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class HomepageTeacherScreen extends StatefulWidget {
 
 class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
   int _current = 0;
-  final List<Widget> items = [HomeworkCheckHomepageBox(),RaceToTopHomepageBox(),TriviaHomepageBox()];
+  final List<Widget> items = [HomeworkCheckHomepageBox(),RaceToTopHomepageBoxTeacher(),TriviaHomepageBoxTeacher()];
   bool dialVisible = true;
   ScrollController scrollController;
     @override
@@ -61,7 +62,6 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
                 mainAxisSpacing: 1,
                 crossAxisSpacing: 1,
                 crossAxisCount: 6,
-                //childAspectRatio: 6/4,
                   children: List.generate(30,(index){
                     return Align(
                       child: Container(
@@ -82,7 +82,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
           ),
             CarouselSlider(
               options: CarouselOptions(
-                height: 250.0,
+                height: 260.0,
                 onPageChanged: (index, reason) {
                   setState(() {
                     _current = index;
@@ -156,7 +156,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
           onTap: () => Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return RaceScreenPicker();
+                      return TriviaScreenPicker();
                     },
                   ),
                 ),
