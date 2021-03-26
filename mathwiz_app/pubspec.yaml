@@ -29,9 +29,9 @@ dependencies:
   firebase_auth: ^1.0.0
   google_fonts: ^2.0.0
   provider: ^5.0.0
-  random_string: ^2.1.0
-  http:
-
+  random_string: ^2.1.0  
+  flutter_countdown_timer: ^4.0.0
+  https:
 
 
   # The following adds the Cupertino Icons font to your application.
