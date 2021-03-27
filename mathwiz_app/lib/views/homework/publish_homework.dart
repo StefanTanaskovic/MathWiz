@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+import 'package:image_picker/image_picker.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import '../../constants.dart';
+import 'package:http/http.dart' as http;
 
 class PublishHomeworkScreen extends StatefulWidget {
   @override
@@ -11,10 +15,33 @@ class PublishHomeworkScreen extends StatefulWidget {
 }
 
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async{
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
+  Future getData() async{
+    var response = await http.get(
+      Uri.encodeFull("https://mathwizocr.cognitiveservices.azure.com"),
+      headers: {
+        "key": "d8c7258c660d4ae5b24d352e66e240c2",
+        "Accept": "application/json"
+      }
+    );
+    print(response.body);
+  }
+  
+  String _textValue = " ";
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context)
-        .size; // provides total hieght and width of screen
+    ui.Size size = MediaQuery.of(context)
+        .size;// provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Homework",
@@ -28,24 +55,19 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
           alignment: Alignment.center,
           child: Column(
             children: [
+              Center(
+                child:Text("Click below to capture image")
+              ),
               IconButton(
                   iconSize: 100,
                   icon: Icon(Icons.add_a_photo),
-                  onPressed: () {}),
+                  onPressed: getImage),
+              Text(_textValue),
               BoxInputFeild(
                 hintText: "Title",
                 icon: Icons.title,
                 onChanged: (value) {},
               ),
-              // Slider(
-              //   value: _currentSliderValue,
-              //   min: 0,
-              //   max:100,
-              //   onChanged: (double value){
-              //   setState(() {
-              //     _currentSliderValue = value;
-              //   });
-              // },),
               BoxInputFeild(
                 hintText: "Coins",
                 icon: Icons.attach_money,
