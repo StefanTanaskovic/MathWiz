@@ -24,11 +24,12 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
     setState(() {
       _image = File(pickedFile.path);
     });
+    getData();
   }
 
   Future getData() async{
-    var response = await http.get(
-      Uri.encodeFull("https://mathwizocr.cognitiveservices.azure.com"),
+    var response = await http.post(
+      Uri.https("https://mathwizocr.cognitiveservices.azure.com", _image.path),
       headers: {
         "key": "d8c7258c660d4ae5b24d352e66e240c2",
         "Accept": "application/json"

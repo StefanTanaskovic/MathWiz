@@ -1,14 +1,18 @@
 import 'answer_question.dart';
 
-class RaceTop {
-  RaceTop({
-    this.id,
+class RaceTopModel {
+  RaceTopModel({
     this.title,
     this.questions,
+    this.minReward,
+    this.firstReward,
+    this.status
 
   });
-  String title;
-  int id;
-  List<QuestionAnswer> questions;
 
+  String title;
+  List<QuestionAnswer> questions;
+  int minReward;
+  int firstReward;
+  String status;
 }

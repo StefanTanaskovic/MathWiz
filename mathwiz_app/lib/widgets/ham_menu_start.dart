@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/services/auth.dart';
 import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/views/shop/shop_screen.dart';
 
@@ -13,8 +14,10 @@ class HamMenuStart extends StatelessWidget {
 
   final Size size;
 
+
   @override
   Widget build(BuildContext context) {
+    final AuthService _auth = AuthService();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -71,6 +74,17 @@ class HamMenuStart extends StatelessWidget {
                   },
                 ),
               );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Align(
+              child: new Text('Sign Out',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red)),
+              alignment: Alignment(-1.3, 0),
+            ),
+            onTap: () async{
+              await _auth.signOut();
             },
           ),
         ],
