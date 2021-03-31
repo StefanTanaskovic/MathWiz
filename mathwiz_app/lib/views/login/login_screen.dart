@@ -15,12 +15,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
-  String _email; 
-  String _password; 
-  
+  String _email;
+  String _password;
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;//provides total hieght and width of screen
+    Size size =
+        MediaQuery.of(context).size; //provides total hieght and width of screen
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (value.isEmpty) {
                     return 'Please enter your password';
                   }
-                    return null;
+                  return null;
                 },
                 onSaved: (value) {
                   _password = value.toString();
@@ -74,22 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 press: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    dynamic result =  await _auth.signInEmail(_email, _password);
-                    if(result == null){
+                    dynamic result = await _auth.signInEmail(_email, _password);
+                    if (result == null) {
                       print("error");
-                    }else{
-                      print("signed in");
-                      print(result);
+                    } else {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     }
                   }
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return ClassListScreen();
-                  //     },
-                  //   ),
-                  // );
                 },
               ),
               SizedBox(

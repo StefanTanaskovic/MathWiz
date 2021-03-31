@@ -26,8 +26,8 @@ class _ShopScreenState extends State<ShopScreen> {
           if (snapshot.hasData) {
             MasterItemsModel masterItemsModel = snapshot.data;
 
-            return MaterialApp(
-              home: DefaultTabController(
+            return Scaffold(
+              body: DefaultTabController(
                 length: 2,
                 child: Scaffold(
                   appBar: AppBar(

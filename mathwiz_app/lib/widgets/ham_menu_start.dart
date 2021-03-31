@@ -14,7 +14,6 @@ class HamMenuStart extends StatelessWidget {
 
   final Size size;
 
-
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
@@ -80,10 +79,14 @@ class HamMenuStart extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Align(
               child: new Text('Sign Out',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.red)),
               alignment: Alignment(-1.3, 0),
             ),
-            onTap: () async{
+            onTap: () async {
+              Navigator.of(context).popUntil((route) => route.isFirst);
               await _auth.signOut();
             },
           ),
