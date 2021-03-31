@@ -10,6 +10,10 @@ import 'constants.dart';
 import 'controllers/race_to_top_creator_notifier.dart';
 import 'controllers/trivia_activity_notifier.dart';
 
+import 'package:firebase_core/firebase_core.dart'; // new
+import 'package:firebase_auth/firebase_auth.dart'; // new
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart'; // new
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

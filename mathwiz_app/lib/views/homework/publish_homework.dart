@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import '../../constants.dart';
 
 class PublishHomeworkScreen extends StatefulWidget {
+  final String text;
+  PublishHomeworkScreen(this.text);
   @override
   State<StatefulWidget> createState() {
     return _PublishHomeworkScreenState();
@@ -13,11 +16,11 @@ class PublishHomeworkScreen extends StatefulWidget {
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context)
-        .size; // provides total hieght and width of screen
+    ui.Size size = MediaQuery.of(context)
+        .size;// provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Homework",
+        title: Text("Publish Homework",
             style: TextStyle(
               fontSize: 20,
             )),
@@ -28,24 +31,12 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              IconButton(
-                  iconSize: 100,
-                  icon: Icon(Icons.add_a_photo),
-                  onPressed: () {}),
+              SelectableText(widget.text.isEmpty ? 'No text found': widget.text),
               BoxInputFeild(
                 hintText: "Title",
                 icon: Icons.title,
                 onChanged: (value) {},
               ),
-              // Slider(
-              //   value: _currentSliderValue,
-              //   min: 0,
-              //   max:100,
-              //   onChanged: (double value){
-              //   setState(() {
-              //     _currentSliderValue = value;
-              //   });
-              // },),
               BoxInputFeild(
                 hintText: "Coins",
                 icon: Icons.attach_money,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:mathwiz_app/views/homework/publish_homework.dart';
+import 'package:mathwiz_app/views/homework/create_homework.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
 import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_prev.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
@@ -143,7 +143,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
           onTap: () => Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PublishHomeworkScreen();
+                      return CreateHomeworkScreen();
                     },
                   ),
                 ),

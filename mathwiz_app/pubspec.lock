@@ -148,6 +148,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  firebase_ml_vision:
+    dependency: "direct main"
+    description:
+      name: firebase_ml_vision
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -159,7 +166,21 @@ packages:
       name: flutter_countdown_timer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.2"
+  flutter_exif_rotation:
+    dependency: "direct main"
+    description:
+      name: flutter_exif_rotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_speed_dial:
     dependency: "direct main"
     description:
@@ -185,7 +206,7 @@ packages:
     source: hosted
     version: "2.0.0"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -198,6 +219,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.3"
+  image_picker_for_web:
+    dependency: transitive
+    description:
+      name: image_picker_for_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   intl:
     dependency: transitive
     description:
@@ -328,7 +370,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   stack_trace:
     dependency: transitive
     description:
