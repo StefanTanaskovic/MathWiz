@@ -1,13 +1,15 @@
 class HomeworkModel {
   final String ocrtext;
   final String title;
-  final int coins;
+  final int gold;
   final String description;
+  String status;
 
  HomeworkModel({
     this.ocrtext,
     this.title,
-    this.coins,
+    this.gold,
     this.description,
+    this.status,
   });
 }

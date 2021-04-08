@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
+import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
 import 'package:mathwiz_app/model/class_model.dart';
 import 'package:mathwiz_app/model/user.dart';
 import 'package:mathwiz_app/services/auth.dart';
@@ -21,6 +22,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
     ChangeNotifierProvider(create: (_) => RaceListNotifier()),
     ChangeNotifierProvider(create: (_) => TriviaListNotifier()),
+    ChangeNotifierProvider(create: (_) => HomeworkListNotifier()),
   ], child: MyApp()));
 }
 

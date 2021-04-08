@@ -25,7 +25,7 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
 
   final picker = ImagePicker();
   Future getImage() async{
-    var pickedFile = await picker.getImage(source: ImageSource.camera);
+    var pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(pickedFile.path);

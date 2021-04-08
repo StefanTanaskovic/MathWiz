@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/model/homework_model.dart';
+import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
 import 'dart:ui' as ui;
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
+import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 class PublishHomeworkScreen extends StatefulWidget {
   final String text;
   PublishHomeworkScreen({Key key, @required this.text}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _PublishHomeworkScreenState();
   }
 }
 
+List<Widget> children;
+
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
+  
+  Map selected = new Map();
+  final String text;
+  int goldAmount;
+  String homeworkDescription;
+  String homeworkTitle;
+
+  final _formKey = GlobalKey<FormState>();
+
+  _PublishHomeworkScreenState({this.text});
   @override
   Widget build(BuildContext context) {
+    HomeworkListNotifier homeworkListNotifier =
+    Provider.of<HomeworkListNotifier>(context,listen: false); 
+
     ui.Size size = MediaQuery.of(context)
         .size;// provides total hieght and width of screen
     return Scaffold(
@@ -36,12 +55,18 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               BoxInputFeild(
                 hintText: "Title",
                 icon: Icons.title,
-                onChanged: (value) {},
+                onChanged: (value) {
+                homeworkTitle = value;
+                print(goldAmount);
+                },
               ),
               BoxInputFeild(
                 hintText: "Coins",
                 icon: Icons.attach_money,
-                onChanged: (value) {},
+                onChanged: (value) {
+                goldAmount = int.parse(value);
+                print(goldAmount);
+                },
               ),
               Container(
                 width: size.width * 0.8,
@@ -53,15 +78,35 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                           borderSide: BorderSide(color: kPrimaryColor)),
                       hintText: 'Description'),
                   maxLines: 5,
+                  onChanged: (value) {}
                 ),
               ),
               BoxButton(
                 text: "Save To Drafts",
-                press: () {},
+                press: () {
+                    homeworkListNotifier.save(
+                    "Drafts", 
+                    HomeworkModel(
+                    title: homeworkTitle, 
+                    status: "Drafts",
+                    gold:goldAmount, 
+                    description: homeworkDescription)
+                  );
+                }
               ),
               BoxButton(
                 text: "Publish",
-                press: () {},
+                press: () {
+                    homeworkTitle = 
+                    homeworkListNotifier.save(
+                    "Publish", 
+                    HomeworkModel(
+                    title: homeworkTitle, 
+                    status: "Publish",
+                    gold:goldAmount, 
+                    description: homeworkDescription)
+                  );
+                },
               ),
               SizedBox(
                 height: size.height * 0.03,
@@ -71,5 +116,7 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
         ),
       ),
     );
+  
   }
+
 }
