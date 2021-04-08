@@ -1,10 +1,10 @@
 import 'dart:collection';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/class_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 
 class ClassListNotifier extends ChangeNotifier {
+  
   List<ClassModel> _classList = [];
 
   UnmodifiableListView<ClassModel> get classList =>

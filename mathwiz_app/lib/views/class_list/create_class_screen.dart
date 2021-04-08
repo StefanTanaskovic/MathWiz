@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/model/class_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/text_field_container.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,8 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ClassListNotifier classListNotifier =
-        Provider.of<ClassListNotifier>(context);
+    FirestoreDatabaseService databaseServiceNotifier =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(
@@ -61,27 +62,6 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                   child: TextFormField(
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please Enter a Description';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _description = value;
-                    },
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.assignment,
-                        color: kPrimaryColor,
-                      ),
-                      hintText: "Description",
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-                TextFeildContainer(
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value.isEmpty) {
                         return 'Please Enter a Teacher Name';
                       }
                       return null;
@@ -106,12 +86,12 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
 
                       _classFormKey.currentState.save();
 
-                      classListNotifier.addClass(ClassModel(
+                      databaseServiceNotifier.addClass(ClassModel(
                           id: randomAlpha(6),
                           title: _title,
-                          description: _description,
-                          teacher: _teacher));
-
+                          teacher: _teacher
+                          ));
+                      
                       Navigator.of(context).pop();
                     }),
               ]),

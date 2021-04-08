@@ -1,4 +1,4 @@
-import '../constants.dart';
+import '../../../constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mathwiz_app/controllers/trivia_activity_notifier.dart';
