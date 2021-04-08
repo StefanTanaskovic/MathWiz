@@ -4,9 +4,11 @@ import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/model/user.dart';
 import 'package:mathwiz_app/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
+
 import 'controllers/race_to_top_creator_notifier.dart';
 import 'controllers/trivia_activity_notifier.dart';
 
@@ -18,7 +20,7 @@ void main() async {
         value: AuthService().user,
         initialData: null,
         updateShouldNotify: (_, __) => true),
-    ChangeNotifierProvider(create: (_) => ClassListNotifier()),
+    ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
     ChangeNotifierProvider(create: (_) => RaceListNotifier()),
     ChangeNotifierProvider(create: (_) => TriviaListNotifier()),
     ChangeNotifierProvider(create: (_) => AvatarNotifier()),

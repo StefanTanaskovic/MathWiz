@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/controllers/race_to_top_creator_notifier.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_quiz.dart';
 import 'package:provider/provider.dart';
-import '../constants.dart';
+import '../../../constants.dart';
 
 class RaceToTopHomepageBoxTeacher extends StatefulWidget {
   @override

@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:mathwiz_app/controllers/race_to_top_creator_notifier.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
-import 'package:mathwiz_app/views/homepage/homepage_teacher.dart';
+import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 
