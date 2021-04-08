@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,19 +17,17 @@ class CreateHomeworkScreen extends StatefulWidget {
 
 class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
   File _image;
- // FirebaseVisionTextDetector detector = FirebaseVisionTextDetector.instance;
+  // FirebaseVisionTextDetector detector = FirebaseVisionTextDetector.instance;
   String _text = '';
   final picker = ImagePicker();
-  Future getImage() async{
+  Future getImage() async {
     var pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
       _image = File(pickedFile.path);
-
     });
-
   }
-
+/*
   Future scanText() async{
     final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(_image);
     TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
@@ -55,13 +52,12 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublishHomeworkScreen(_text)));
     }
   }
+*/
 
-
-  
   @override
   Widget build(BuildContext context) {
     ui.Size size = MediaQuery.of(context)
-        .size;// provides total hieght and width of screen
+        .size; // provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Homework",
@@ -76,20 +72,19 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
           child: Column(
             children: [
               Center(
-                child:Text("Click below to capture image"),
+                child: Text("Click below to capture image"),
               ),
               IconButton(
-                iconSize: 100,
-                icon: Icon(Icons.add_a_photo),
-                onPressed: getImage),
+                  iconSize: 100,
+                  icon: Icon(Icons.add_a_photo),
+                  onPressed: getImage),
               ElevatedButton(
-                child:Text("Scan"),
+                child: Text("Scan"),
                 onPressed: () {
-                  scanText();
+                  //scanText();
                 },
               ),
-              _image != null ?
-              Image.asset(_image.path) : Container(),
+              _image != null ? Image.asset(_image.path) : Container(),
               Text(_text),
             ],
           ),
