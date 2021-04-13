@@ -6,7 +6,7 @@ import '../../constants.dart';
 
 class PublishHomeworkScreen extends StatefulWidget {
   final String text;
-  PublishHomeworkScreen(this.text);
+  PublishHomeworkScreen({Key key, @required this.text}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _PublishHomeworkScreenState();
@@ -31,7 +31,8 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              SelectableText(widget.text.isEmpty ? 'No text found': widget.text),
+              Text(widget.text.isEmpty ? 'No text found': widget.text,
+              style: TextStyle(fontSize: 20),),
               BoxInputFeild(
                 hintText: "Title",
                 icon: Icons.title,
