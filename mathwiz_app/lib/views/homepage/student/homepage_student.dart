@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mathwiz_app/controllers/homepage_student_controller.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/homework_check_homepage_box.dart';
-import 'package:mathwiz_app/widgets/race_to_top_homepage_box_student.dart';
-import '../../constants.dart';
+import 'package:mathwiz_app/views/homepage/student/race_to_top_homepage_box_student.dart';
+import 'package:mathwiz_app/views/homepage/student/trivia_homepage_box_student.dart';
+import 'package:provider/provider.dart';
+import '../../../constants.dart';
 
 class HomepageStudentScreen extends StatefulWidget {
   @override
@@ -17,13 +20,12 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
   final List<Widget> items = [
     HomeworkCheckHomepageBox(),
     RaceToTopHomepageBoxStudent(),
-    //TriviaHomepageBoxTeacherStudent()
+    TriviaHomepageBoxStudent()
   ];
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Math Class Grade 8 - Mr. Stefan",

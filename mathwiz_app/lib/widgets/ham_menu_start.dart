@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/services/auth.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/views/shop/shop_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
@@ -17,6 +19,8 @@ class HamMenuStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
+        FirestoreDatabaseService databaseServiceNotifier =
+        Provider.of<FirestoreDatabaseService>(context,listen: false);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -86,6 +90,7 @@ class HamMenuStart extends StatelessWidget {
               alignment: Alignment(-1.3, 0),
             ),
             onTap: () async {
+              databaseServiceNotifier.clearClassList();
               Navigator.of(context).popUntil((route) => route.isFirst);
               await _auth.signOut();
             },

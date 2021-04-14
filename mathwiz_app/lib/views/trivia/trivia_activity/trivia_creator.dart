@@ -32,7 +32,6 @@ class TriviaScreen extends StatefulWidget {
 List<Widget> children;
 
 class _TriviaScreenState extends State<TriviaScreen> {
-  Map selected = new Map();
   final int timer;
   final int goldFirst;
   final int goldMin;
@@ -81,6 +80,7 @@ class _TriviaScreenState extends State<TriviaScreen> {
                   triviaListNotifier.save(
                     value, 
                     TriviaModel(
+                    id: "OCgLkR3W9j32lnFUhW4x",
                     title: quizTitle, 
                     questions: triviaListNotifier.questions,
                     minReward: goldMin,
