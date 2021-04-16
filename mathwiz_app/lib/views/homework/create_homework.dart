@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:dio/dio.dart';
 import 'package:mathwiz_app/views/homework/publish_homework.dart';
 
 import '../../constants.dart';
@@ -17,42 +18,70 @@ class CreateHomeworkScreen extends StatefulWidget {
 
 class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
   File _image;
-  // FirebaseVisionTextDetector detector = FirebaseVisionTextDetector.instance;
-  String _text = '';
+  final OCRURL = 'https://api.ocrestful.com/k0qyj/res';
+  var getOCR;
+  var OCRText;
+  var progress = 0;
+
   final picker = ImagePicker();
   Future getImage() async {
-    var pickedFile = await picker.getImage(source: ImageSource.camera);
+    var pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
 
     setState(() {
       _image = File(pickedFile.path);
     });
   }
-/*
-  Future scanText() async{
-    final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(_image);
-    TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
-    final VisionText visionText = await textRecognizer.processImage(visionImage);
 
-    String text = visionText.text;
-    print(text);
-    for (TextBlock block in visionText.blocks){
-      final Rect boundingBox = block.boundingBox;
-      final List<Offset> cornerPoints = block.cornerPoints;
-      final String text = block.text;
-      final List<RecognizedLanguage> languages = block.recognizedLanguages;
+  Future uploadFile() async {
+    var fileName = _image.path.split('/').last;
+    try {
+      FormData data = FormData.fromMap({
+        "file": await MultipartFile.fromFile(
+          _image.path,
+          filename: fileName,
+        ),
+      });
 
-      for (TextLine line in block.lines) {
-        for (TextElement element in line.elements){
-          _text += element.text;
-        }
-      }
-    }
-    print(_text);
-    if (_text != ""){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublishHomeworkScreen(_text)));
+      Dio dio = new Dio();
+      dio.options.headers['secret'] = 'WtDBTE5I4zjrNSbKCZPSnu';
+      dio.options.headers['accept'] = "application/json";
+      dio.post(OCRURL, data: data).then((response) {
+        print("File upload response: " + response.toString());
+        var apiResponse = jsonDecode(response.toString());
+        getOCR = apiResponse['handle'];
+      });
+    } catch (e) {
+      print("Exception Caught:" + e);
     }
   }
-*/
+
+  Future getFile() async {
+    try {
+      Dio dio = new Dio();
+      dio.options.headers['secret'] = 'WtDBTE5I4zjrNSbKCZPSnu';
+      dio.options.headers['accept'] = "application/json";
+      var newUrl = OCRURL + "/" + getOCR + ".txt";
+      dio.get(newUrl).then((response) {
+        print("GET response: " + response.toString());
+        setState(() {
+          OCRText = response.toString();
+        });
+      });
+    } catch (e) {
+      print("Exception Caught:" + e);
+    }
+  }
+
+  sendToPublish() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PublishHomeworkScreen(
+            text: OCRText,
+          ),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,15 +106,41 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
               IconButton(
                   iconSize: 100,
                   icon: Icon(Icons.add_a_photo),
+                  color: kPrimaryColor,
                   onPressed: getImage),
               ElevatedButton(
-                child: Text("Scan"),
+                child: Text("Convert Picture To Text"),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(kSecondaryColor)),
                 onPressed: () {
-                  //scanText();
+                  uploadFile();
                 },
               ),
+              ElevatedButton(
+                  child: Text("Preview Text"),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(kSecondaryColor)),
+                  onPressed: () {
+                    getFile();
+                  }),
+              OCRText != null
+                  ? Text("Preview: " + OCRText,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ))
+                  : Container(),
               _image != null ? Image.asset(_image.path) : Container(),
-              Text(_text),
+              ElevatedButton(
+                child: Text("Continue to Publish"),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(kSecondaryColor)),
+                onPressed: () {
+                  sendToPublish();
+                },
+              )
             ],
           ),
         ),
