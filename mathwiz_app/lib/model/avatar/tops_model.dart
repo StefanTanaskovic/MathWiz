@@ -38,7 +38,7 @@ class TopsModel {
     final data = TopsModel(
       id: jsonMap["id"],
       type: jsonMap["type"],
-      thumbSrc: jsonMap["thumbnailSrc"],
+      description: jsonMap["description"],
     );
     return data;
   }

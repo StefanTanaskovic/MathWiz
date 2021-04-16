@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
+import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/model/avatar/items_model.dart';
+import 'package:provider/provider.dart';
 
 class ShopTab extends StatefulWidget {
   final MasterItemsModel items;
@@ -75,21 +77,71 @@ class _ShopTabState extends State<ShopTab> {
                     crossAxisCount: 2,
                     children: List.generate(assets.length, (index) {
                       return Align(
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          child: Card(
-                            color: kPrimaryLightColor,
-                            semanticContainer: true,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: Image.asset(assets[index]),
+                          child: Container(
+                        height: 100,
+                        width: 100,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          elevation: 3,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: new DecorationImage(
+                                image: AssetImage(assets[index]),
+                              ),
+                              border: Border.all(
+                                color: kPrimaryColor,
+                              ),
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                  splashColor: kSecondaryColor,
+                                  onTap: () {
+                                    tryAvatarItem(
+                                        count, index, widget, context);
+                                  }),
+                            ),
                           ),
                         ),
-                      );
+                      ));
                     }),
                   ),
                 ),
               ]));
         });
+  }
+
+  tryAvatarItem(count, index, widget, context) {
+    var tapped;
+    if (count == 0) {
+      tapped = widget.items.faces[index];
+    } else if (count == 1) {
+      tapped = widget.items.hairs[index];
+    } else if (count == 2) {
+      tapped = widget.items.hats[index];
+    } else if (count == 3) {
+      tapped = widget.items.tops[index];
+    } else if (count == 4) {
+      tapped = widget.items.bottoms[index];
+    } else if (count == 5) {
+      tapped = widget.items.shoes[index];
+    } else if (count == 6) {
+      tapped = widget.items.accessories[index];
+    } else if (count == 7) {
+      tapped = widget.items.extras[index];
+    } else if (count == 8) {
+      tapped = widget.items.eyes[index];
+    } else if (count == 9) {
+      tapped = widget.items.backgrounds[index];
+    }
+    print(tapped);
+    tapped = tapped.replaceAll(new RegExp(r'[^0-9]'), '');
+
+    AvatarNotifier avatarNotifier =
+        Provider.of<AvatarNotifier>(context, listen: false);
+    avatarNotifier.updateAvatar('DM1800598KZRELL', tapped);
   }
 }

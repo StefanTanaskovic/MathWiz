@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
+import 'package:mathwiz_app/model/avatar/tops_model.dart';
+import 'package:mathwiz_app/services/avatar_api.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +21,8 @@ class _ShopScreenState extends State<ShopScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AvatarNotifier avatarNotifier = Provider.of<AvatarNotifier>(context);
+    AvatarNotifier avatarNotifier =
+        Provider.of<AvatarNotifier>(context, listen: false);
     avatarNotifier.getItems(context);
 
     Size size = MediaQuery.of(context).size;
@@ -47,8 +50,10 @@ class _ShopScreenState extends State<ShopScreen> {
                     Expanded(
                       flex: 2,
                       child: Image.network(
-                          //"https://www.doppelme.com/transparent/DM1800598BLMKKC/avatar.png"
-                          "https://www.doppelme.com/transparent/DM1800598KZRELL/avatar.png"),
+                        //"https://www.doppelme.com/transparent/DM1800598BLMKKC/avatar.png"
+                        //"https://www.doppelme.com/transparent/DM1800598KZRELL/avatar.png"
+                        context.watch<AvatarNotifier>().avatarURL,
+                      ),
                     ),
                     Expanded(
                       child: Column(
@@ -87,8 +92,24 @@ class _ShopScreenState extends State<ShopScreen> {
                               padding: EdgeInsets.symmetric(vertical: 10),
                               alignment: Alignment.bottomCenter,
                               child: ElevatedButton(
-                                child: Text("TestAvatar"),
-                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  primary: kPrimaryColor, // background
+                                  onPrimary: Colors.white, // foreground
+                                ),
+                                child: Text("Buy"),
+                                onPressed: () async {
+                                  APIService service = new APIService();
+
+                                  await service
+                                      .getItemInfo('face')
+                                      .then((value) {
+                                    value.tops.forEach((element) {
+                                      print(element.id +
+                                          ' : ' +
+                                          element.description);
+                                    });
+                                  });
+                                },
                               ),
                             ),
                           ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/avatar/items_model.dart';
 import 'package:mathwiz_app/services/avatar_api.dart';
+import 'package:random_string/random_string.dart';
 
 class AvatarNotifier extends ChangeNotifier {
-  String _avatarURL = "";
+  String _avatarURL =
+      "https://www.doppelme.com/transparent/DM1800598KZRELL/avatar.png";
 
   String get avatarURL => _avatarURL;
 
@@ -20,7 +22,7 @@ class AvatarNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void createAvatarTest() async {
+  void createAvatar() async {
     APIService apiService = new APIService();
 
     apiService.createAvatar().then((value) {
@@ -32,12 +34,15 @@ class AvatarNotifier extends ChangeNotifier {
     });
   }
 
-  void updateAvatarTest(String avatarKey, String itemID) async {
+  void updateAvatar(String avatarKey, String itemID) async {
     APIService apiService = new APIService();
+
+    print(itemID);
 
     apiService.updateAvatar(avatarKey, itemID).then((value) {
       if (value != null) {
-        print(value);
+        _avatarURL = value + '#' + randomAlpha(2);
+        notifyListeners();
       } else {
         print('Error!');
       }
