@@ -15,7 +15,7 @@ class TriviaModel {
   String id;
   bool published;
   String title;
-  List<QuestionAnswer> questions;
+  List<QuestionAnswerModel> questions;
   int minReward;
   int firstReward;
   String status;

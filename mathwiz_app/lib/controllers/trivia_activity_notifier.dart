@@ -6,13 +6,13 @@ import 'package:mathwiz_app/model/trivia_model.dart';
 class TriviaListNotifier extends ChangeNotifier {
   List<TriviaModel> _triviaList = [];
   Map _selected = Map();
-  List<QuestionAnswer> questions = [];
+  List<QuestionAnswerModel> questions = [];
 
     
   setQuestions(value){
     questions = List.generate(
     value,
-    (int i) =>QuestionAnswer(id: i,
+    (int i) =>QuestionAnswerModel(id: i,
                 question: "",
                 answers: [],
                 correctAnswer: 0));

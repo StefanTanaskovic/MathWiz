@@ -6,13 +6,13 @@ import '../model/race_to_top.dart';
 class RaceListNotifier extends ChangeNotifier {
   List<RaceTopModel> _raceQuizList = [];
   Map _selected = Map();
-  List<QuestionAnswer> questions = [];
+  List<QuestionAnswerModel> questions = [];
 
     
   setQuestions(value){
     questions = List.generate(
     value,
-    (int i) =>QuestionAnswer(id: i,
+    (int i) =>QuestionAnswerModel(id: i,
                 question: "",
                 answers: [],
                 correctAnswer: 0));

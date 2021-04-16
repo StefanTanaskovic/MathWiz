@@ -130,7 +130,7 @@ class _TriviaScreenState extends State<TriviaScreen> {
       expansionCallback: (int index, bool isExpanded) {
         triviaListNotifier.expansion(triviaListNotifier.questions[index], isExpanded);
       },
-      children: triviaListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswer item) {
+      children: triviaListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswerModel item) {
         return ExpansionPanelRadio(
           value: item.id,
           headerBuilder: (BuildContext context, bool isExpanded) {

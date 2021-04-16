@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mathwiz_app/model/class_model.dart';
-import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,11 +35,11 @@ class FirestoreDatabaseService extends ChangeNotifier {
         uid: snapshot.data()['id'],
         classList: snapshot.data()['class_list'],
       );
+      setClassList();
     });
-    setClassList();
   }
 
-  setClassList() async {
+  setClassList() {
     _user.classList.forEach((element) async {
       await FirebaseFirestore.instance
           .collection('classrooms')
@@ -57,7 +56,6 @@ class FirestoreDatabaseService extends ChangeNotifier {
         });
       });
     });
-    print(classList);
     notifyListeners();
   }
 

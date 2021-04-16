@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:mathwiz_app/controllers/race_to_top_creator_notifier.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
-import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 
@@ -126,7 +125,7 @@ class _RaceScreenState extends State<RaceScreen> {
       expansionCallback: (int index, bool isExpanded) {
         raceListNotifier.expansion(raceListNotifier.questions[index], isExpanded);
       },
-      children: raceListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswer item) {
+      children: raceListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswerModel item) {
         return ExpansionPanelRadio(
           value: item.id,
           headerBuilder: (BuildContext context, bool isExpanded) {
