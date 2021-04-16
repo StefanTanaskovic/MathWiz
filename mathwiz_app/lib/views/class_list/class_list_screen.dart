@@ -14,79 +14,78 @@ class ClassListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final classList = Provider.of<List<ClassModel>>(context) ?? [];
-    
-    if(classList.isEmpty){
-      return Scaffold(
-        appBar: AppBar(
-        title: Text('Class List'),
-        backgroundColor: kPrimaryColor,
-      ),
-      drawer: HamMenuStart(size: size),
-      body: LoadingIndicator(),
-      );
-    }else{
+
+    if (classList.isEmpty) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Class List'),
           backgroundColor: kPrimaryColor,
         ),
         drawer: HamMenuStart(size: size),
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
+        body: LoadingIndicator(),
+      );
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Class List'),
+            backgroundColor: kPrimaryColor,
+          ),
+          drawer: HamMenuStart(size: size),
+          body: SafeArea(
+              child: Column(children: <Widget>[
             SizedBox(
               height: size.height * 0.01,
             ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 5,right: 5),
-                child: ListView.separated(
-                separatorBuilder: (context, index){
-                  return SizedBox(
-                    height: size.height * 0.01,
-                  );
-                },
-                itemCount: classList.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return HomepageTeacherScreen();
-                          },
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: kSecondaryColor,
-                        ),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                    height: size.height * 0.11,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Title: ${classList[index].title}',
-                          style: TextStyle(
-                              color: kSecondaryColor, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Class Code: ${classList[index].code}',
-                          style: TextStyle(
-                              color: kSecondaryColor, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )
-                  );
-                }),
-              )
-            ),
+                child: Padding(
+              padding: EdgeInsets.only(left: 5, right: 5),
+              child: ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: size.height * 0.01,
+                    );
+                  },
+                  itemCount: classList.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return HomepageTeacherScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: kSecondaryColor,
+                            ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          height: size.height * 0.11,
+                          child: Column(
+                            children: [
+                              Text(
+                                'Title: ${classList[index].title}',
+                                style: TextStyle(
+                                    color: kSecondaryColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'Class Code: ${classList[index].code}',
+                                style: TextStyle(
+                                    color: kSecondaryColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ));
+                  }),
+            )),
             BoxInputFeild(
               icon: Icons.assignment,
               hintText: 'Class Code',
@@ -99,7 +98,6 @@ class ClassListScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-
                       return CreateClassScreen();
                     },
                   ),
@@ -109,9 +107,7 @@ class ClassListScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.05,
             ),
-          ]
-        )
-      ));
+          ])));
     }
   }
 }
