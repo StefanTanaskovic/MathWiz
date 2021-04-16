@@ -1,5 +1,5 @@
-class QuestionAnswer {
-  QuestionAnswer({
+class QuestionAnswerModel {
+  QuestionAnswerModel({
     this.id,
     this.isExpanded = false,
     this.title,
@@ -11,7 +11,7 @@ class QuestionAnswer {
   });
   String title;
   int id;
-  List<String> answers;
+  List answers;
   String question;
   bool isExpanded;
   int answersAmount;

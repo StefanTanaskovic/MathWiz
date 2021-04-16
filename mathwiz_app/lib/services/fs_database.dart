@@ -33,11 +33,11 @@ class FirestoreDatabaseService extends ChangeNotifier{
         uid: snapshot.data()['id'],
         classList: snapshot.data()['class_list'],
       );
+      setClassList();
     });
-    setClassList();
   }
 
-  setClassList() async{
+  setClassList(){
     _user.classList.forEach((element) async {
       await FirebaseFirestore.instance.collection('classrooms').where('class_id', isEqualTo: element)
         .get().then((QuerySnapshot querySnapshot){
@@ -54,14 +54,12 @@ class FirestoreDatabaseService extends ChangeNotifier{
             });
         });
     });
-    print(classList);
     notifyListeners();
   }
 
   clearClassList(){
     _classList = [];
   }
-
 
   addClass(ClassModel newClass) {
     _classList.add(newClass);

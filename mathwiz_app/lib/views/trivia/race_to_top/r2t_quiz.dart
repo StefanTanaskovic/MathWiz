@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'dart:math';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
+import 'package:mathwiz_app/model/user.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 
@@ -18,26 +22,23 @@ class RaceQuizScreen extends StatefulWidget {
 }
 
 class _RaceQuizScreenState extends State<RaceQuizScreen> {
+  final fb = FirebaseDatabase.instance;
+  int score = 0;
+
   RaceTopModel quiz;
   int finalScore = 0;
   List colors = [Colors.red, kPrimaryColor, kSecondaryColor, Colors.blue];
   Random random = new Random();
   int colorIndex = 0;
   int questionIndex = 0;
-  String status = "Start Time" ;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 11;
   _RaceQuizScreenState({this.quiz});
-
-  void onEnd() {
-    if (this.mounted) {
-    setState(() {
-      status = "Start Quiz";
-    });
-    }
-  }
-
+  int _counter = 0;
+  Timer _timer;
+  bool timerFlag = false;
   @override
   Widget build(BuildContext context) {
+    final raceList = Provider.of<List<RaceTopModel>>(context) ?? [];
+    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 11;  
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
@@ -45,7 +46,7 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
       ),
       body: SafeArea(
         child: Builder(builder: (BuildContext context){
-          switch(status) { 
+          switch(raceList[0].status) { 
             case "Waiting": {  
               return 
               Center(
@@ -76,20 +77,29 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
                       ]
                     );
                   },
-                  onEnd: onEnd,
+                  onEnd:(){
+                    if (this.mounted) {
+                      setState(() {
+                        raceList[0].status = "Start Quiz";                                   
+                      });
+                    }
+                  },
                 ),
               );
             } 
             break; 
             
             case "Start Quiz": {  
+              if (timerFlag ==  false){
+              _startTimer();
+              }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: _buildQuiz(questionIndex));
             }
             break; 
           } 
-        return Text("This is dumb");
+        return Text("");
         })
         ),
     );
@@ -97,17 +107,26 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
 
 List <Widget> _buildQuiz(int i) {
   Size size = MediaQuery.of(context).size;
+  final raceList = Provider.of<List<RaceTopModel>>(context) ?? [];
+  UserModel user = Provider.of<UserModel>(context);
   if(questionIndex == quiz.questions.length){
+    _timer.cancel();
     return <Widget>[
       Text("Congrats!",
         textAlign: TextAlign.center,        
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: kSecondaryColor),
       ),
       Text(
-        "Your final score is $finalScore/${quiz.questions.length} and you came in 1st place.",
+       "Your final score is $score and you got $finalScore/${quiz.questions.length} correct. You also earned ",
         textAlign: TextAlign.center,  
         style: TextStyle(
             fontWeight: FontWeight.bold, fontSize: 24),
+      ),
+      Text(
+       "${quiz.minReward} gold.",
+        textAlign: TextAlign.center,  
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 24, color: goldColorGold),
       ),
     ];
   }
@@ -132,10 +151,10 @@ List <Widget> _buildQuiz(int i) {
                   onPressed: () {  
                     setState(() {
                       if (questionIndex == quiz.questions.length -1){
-                        checkAnswer(i, index);
+                        checkAnswer(i, index, raceList[0].id, user.uid);
                         questionIndex += 1;
                       }else{
-                        checkAnswer(i, index);
+                        checkAnswer(i, index, raceList[0].id, user.uid);
                         questionIndex += 1;
                       }
                     });
@@ -149,10 +168,23 @@ List <Widget> _buildQuiz(int i) {
   }
 }
 
-void checkAnswer(int question, int answerPicked){
+void checkAnswer(int question, int answerPicked, quizID, userID){
+  final ref = fb.reference();
   if (quiz.questions[question].correctAnswer == answerPicked){
+    print(_counter);
+    score += 10 * (10 ~/_counter);
+    ref.child("race").child(quizID).child(userID).child("score").set(score);
     finalScore += 1;
   }
 }
+
+  void _startTimer() {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          _counter += 1;
+        });
+      });
+      timerFlag = true;
+  }
 
 }

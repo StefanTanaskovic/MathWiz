@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/controllers/race_to_top_creator_notifier.dart';
-import 'package:mathwiz_app/views/trivia/race_to_top/r2t_quiz.dart';
-import 'package:provider/provider.dart';
+import 'package:mathwiz_app/views/homepage/student/race_list.dart';
 import '../../../constants.dart';
 
 class RaceToTopHomepageBoxStudent extends StatefulWidget {
@@ -31,43 +29,7 @@ class _RaceToTopHomepageBoxStudentState extends State<RaceToTopHomepageBoxStuden
                     fontSize: 24.0,
                     color: Colors.white)),
 
-            Expanded(
-              child: ListView.builder(
-                itemCount: context.watch<RaceListNotifier>().raceQuizList.length,
-                itemBuilder: (context, index) {
-                  if(context.read<RaceListNotifier>().raceQuizList[index].status == "Publish"){
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10,right: 10),
-                            child: ElevatedButton(
-                              child: Text('${context.watch<RaceListNotifier>().raceQuizList[index].title}'),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                onPrimary: Colors.black,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return RaceQuizScreen(quiz: context.watch<RaceListNotifier>().raceQuizList[index]);
-                                    },
-                                  ),
-                                );
-                              },
-                          ),
-                          ),
-                        ),
-                      ]
-                    );
-                  }else{
-                    return null;
-                  }
-                }
-            ),
-            ),
+            RaceList(),
             SizedBox(height: 10),
           ],
         )

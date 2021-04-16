@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/model/trivia_model.dart';
-import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_quiz_screen.dart';
+import 'package:mathwiz_app/model/race_to_top.dart';
+import 'package:mathwiz_app/views/trivia/race_to_top/r2t_quiz.dart';
 import 'package:provider/provider.dart';
 
-class TriviaList extends StatefulWidget {
+class RaceList extends StatefulWidget {
   @override
-  _TriviaListState createState() => _TriviaListState();
+  _RaceListState createState() => _RaceListState();
 }
 
-class _TriviaListState extends State<TriviaList> {
+class _RaceListState extends State<RaceList> {
   @override
   Widget build(BuildContext context) {
     
-   final triviaList = Provider.of<List<TriviaModel>>(context) ?? [];
+   final raceList = Provider.of<List<RaceTopModel>>(context) ?? [];
 
     return Expanded(
       child: ListView.builder(
-      itemCount: triviaList.length,
+      itemCount: raceList.length,
       itemBuilder: (context, index) {
-        if (triviaList[index].published == false){
+         if (raceList[index].published == false){
            return null;
          }
-         else if(triviaList[index].status == "Start Time"){
+         else if(raceList[index].status == "Start Time"){
            return Row(
             children: [
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(left: 10,right: 10),
                   child: ElevatedButton(
-                    child: Text('${triviaList[index].title}'),
+                    child: Text('${raceList[index].title}'),
                     style: ElevatedButton.styleFrom(
                         primary: Colors.white.withOpacity(0.7),
                         onPrimary: Colors.black,
@@ -47,7 +47,7 @@ class _TriviaListState extends State<TriviaList> {
                 child: Padding(
                   padding: EdgeInsets.only(left: 10,right: 10),
                   child: ElevatedButton(
-                    child: Text('${triviaList[index].title}'),
+                    child: Text('${raceList[index].title}'),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
                       onPrimary: Colors.black,
@@ -57,7 +57,7 @@ class _TriviaListState extends State<TriviaList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return TriviaQuizScreen(quiz: triviaList[index]);
+                            return RaceQuizScreen(quiz: raceList[index]);
                           },
                         ),
                       );

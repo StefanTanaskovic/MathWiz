@@ -6,7 +6,7 @@ import 'package:mathwiz_app/views/homework/create_homework.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
 import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_prev.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
-import 'package:mathwiz_app/widgets/homework_check_homepage_box.dart';
+import 'package:mathwiz_app/views/homepage/teacher/homework_check_homepage_box.dart';
 import 'package:mathwiz_app/views/homepage/teacher/race_to_top_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/trivia_homepage_box_teacher.dart';
 import '../../../constants.dart';

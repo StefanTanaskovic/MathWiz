@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/model/class_model.dart';
-import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/text_field_container.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +22,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
 
   @override
   Widget build(BuildContext context) {
-    FirestoreDatabaseService databaseServiceNotifier =
-        Provider.of<FirestoreDatabaseService>(context, listen: false);
-
+  final classList = Provider.of<List<ClassModel>>(context) ?? [];
     return Scaffold(
         appBar: AppBar(
           title: Text('Create New Class'),
@@ -83,16 +80,21 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                     text: "Create Class",
                     press: () {
                       if (!_classFormKey.currentState.validate()) return;
-
                       _classFormKey.currentState.save();
-
-                      databaseServiceNotifier.addClass(ClassModel(
-                          id: randomAlpha(6),
+                      classList.add(ClassModel(
+                          code: randomAlpha(6),
                           title: _title,
-                          teacher: _teacher
-                          ));
-                      
-                      Navigator.of(context).pop();
+                          teacher: _teacher,
+                          stundetIDs: []
+                      ));
+                      ClassModel newClass = ClassModel(
+                          code: randomAlpha(6),
+                          title: _title,
+                          teacher: _teacher,
+                          stundetIDs: []
+                          );
+                      classList.add(newClass);
+                      ClassListNotifier().addClass(newClass);
                     }),
               ]),
             ),
