@@ -23,4 +23,12 @@ class HomepageTeacherController {
       break; 
     } 
   }
+  startRace(String id){
+     DocumentReference doc = FirebaseFirestore.instance.collection('classrooms')
+    .doc(classID).collection('races').doc(id);
+    doc.set({
+      "race_status" : 'Start Time'
+    }, SetOptions(merge: true));
+
+  }
 }

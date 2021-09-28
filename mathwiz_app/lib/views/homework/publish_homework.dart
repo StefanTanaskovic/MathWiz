@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/homework_model.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
+import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
 import 'dart:ui' as ui;
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
@@ -92,6 +93,14 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                     gold:goldAmount, 
                     description: homeworkDescription)
                   );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomepageTeacherScreen();
+                        },
+                      ),
+                    );
                 }
               ),
               BoxButton(
@@ -106,6 +115,14 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                     gold:goldAmount, 
                     description: homeworkDescription)
                   );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomepageTeacherScreen();
+                        },
+                      ),
+                    );
                 },
               ),
               SizedBox(

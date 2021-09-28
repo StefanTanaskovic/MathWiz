@@ -84,6 +84,7 @@ class _RaceToTopHomepageBoxTeacherState extends State<RaceToTopHomepageBoxTeache
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
+                              HomepageTeacherController().startRace(raceList[index].id);
                               },
                             ),
                           ),
