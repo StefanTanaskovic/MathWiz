@@ -22,13 +22,11 @@ List<Widget> children;
 
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
   
-  Map selected = new Map();
   final String text;
   int goldAmount;
   String homeworkDescription;
   String homeworkTitle;
 
-  final _formKey = GlobalKey<FormState>();
 
   _PublishHomeworkScreenState({this.text});
   @override

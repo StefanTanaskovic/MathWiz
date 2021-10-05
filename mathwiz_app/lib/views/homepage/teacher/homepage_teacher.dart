@@ -3,12 +3,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mathwiz_app/views/homework/create_homework.dart';
+import 'package:mathwiz_app/views/achievements/create_achievement.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
 import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_prev.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/views/homepage/teacher/homework_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/race_to_top_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/trivia_homepage_box_teacher.dart';
+import 'package:mathwiz_app/views/homepage/teacher/achievement_homepage_box_teacher.dart';
 import '../../../constants.dart';
 
 class HomepageTeacherScreen extends StatefulWidget {
@@ -23,7 +25,9 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
   final List<Widget> items = [
     HomeworkHomepageBoxTeacher(),
     RaceToTopHomepageBoxTeacher(),
-    TriviaHomepageBoxTeacher()
+    TriviaHomepageBoxTeacher(),
+    AchievementHomepageBoxTeacher()
+
   ];
   bool dialVisible = true;
   ScrollController scrollController;
@@ -139,6 +143,23 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
       elevation: 8.0,
       shape: CircleBorder(),
       children: [
+        SpeedDialChild(
+          child: Icon(
+            Icons.auto_awesome,
+            color: Colors.white,
+          ),
+          backgroundColor: kPrimaryColor,
+          label: 'Achievements',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CreateAchievementScreen();
+              },
+            ),
+          ),
+        ),
         SpeedDialChild(
           child: Icon(
             Icons.assignment_outlined,

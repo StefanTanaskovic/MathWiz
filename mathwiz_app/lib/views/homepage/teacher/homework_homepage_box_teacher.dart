@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:mathwiz_app/views/homework/publish_homework.dart';
 import '../../../constants.dart';
 
 class HomeworkHomepageBoxTeacher extends StatefulWidget {
@@ -90,7 +91,15 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                                   primary: Colors.white.withOpacity(0.7),
                                   onPrimary: Colors.black,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => PublishHomeworkScreen(
+                                //         text: context.watch<HomeworkListNotifier>().homeworksList[index].title,
+                                //       ),
+                                //     ));
+                                },
                             ),
                             ),
                           ),
