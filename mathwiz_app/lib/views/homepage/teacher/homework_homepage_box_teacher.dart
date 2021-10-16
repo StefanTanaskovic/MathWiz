@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/controllers/homepage_teacher_controller.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
+import 'package:mathwiz_app/model/homework_model.dart';
 import 'package:provider/provider.dart';
-import 'package:mathwiz_app/views/homework/publish_homework.dart';
 import '../../../constants.dart';
 
 class HomeworkHomepageBoxTeacher extends StatefulWidget {
@@ -12,6 +13,7 @@ class HomeworkHomepageBoxTeacher extends StatefulWidget {
 class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher> {
   @override
   Widget build(BuildContext context) {
+    final homeworkList = Provider.of<List<HomeworkModel>>(context) ?? [];
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -73,7 +75,7 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                context.read<HomeworkListNotifier>().deleteHomework(index);
+                                HomepageTeacherController().changeStatusHomework("Drafts",homeworkList[index].id);
                               },
                             ),
                           ),
@@ -112,7 +114,7 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                context.read<HomeworkListNotifier>().changeStatus("Publish", index);
+                                HomepageTeacherController().changeStatusHomework("Publish",homeworkList[index].id);
 
                               },
                             ),
