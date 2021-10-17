@@ -86,6 +86,7 @@ class HomepageStudentController {
         id: doc.id,
         title: doc.data()['homework_title'] ,
         ocrtext: doc.data()['homework_text'],
+        description: doc.data()['homework_description'],
         gold: doc.data()['homework_gold'],
         status: doc.data()['homework_status'],
         published:doc.data()['homework_published']

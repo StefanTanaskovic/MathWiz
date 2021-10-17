@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:mathwiz_app/views/homework/completed_homework.dart';
 import 'package:mathwiz_app/views/homework/create_homework.dart';
 import 'package:mathwiz_app/views/achievements/create_achievement.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
@@ -143,6 +144,23 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
       elevation: 8.0,
       shape: CircleBorder(),
       children: [
+          SpeedDialChild(
+          child: Icon(
+            Icons.assignment_outlined,
+            color: Colors.white,
+          ),
+          backgroundColor: kPrimaryColor,
+          label: 'Completed Homework',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CompletedHomeworkScreen();
+              },
+            ),
+          ),
+        ),
         SpeedDialChild(
           child: Icon(
             Icons.auto_awesome,

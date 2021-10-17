@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class CompletedHomeworkScreen extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Viktor Lampert",
+                                Text("Viktor:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: size.height * 0.022)),
@@ -53,10 +54,29 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
                     Container(
                         child: Column(
                       children: [
-                        Image.asset(
-                          "assets/images/math-placeholder.jpg",
-                          height: size.height * 0.2,
-                        )
+                        FutureBuilder(
+                          future: _getImage(context, "face.jpg"),
+                          builder: (context, snapshot) {
+                            if(snapshot.connectionState == ConnectionState.done) {
+                              return Container(
+                                width:  MediaQuery.of(context).size.width / 3,
+                                height:  MediaQuery.of(context).size.width / 3,
+                                child: snapshot.data,
+                              );
+                            }
+
+                            if(snapshot.connectionState == ConnectionState.waiting) {
+                              return Container(
+                                width:  MediaQuery.of(context).size.width / 1.2,
+                                height:  MediaQuery.of(context).size.width / 1.2,
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            return Container();
+                          }
+                        ),
+                        
                       ],
                     ))
                   ],
@@ -68,5 +88,23 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
         ),
       ),
     );
+  }
+
+  Future<Widget> _getImage(BuildContext context, String imageName) async{
+    Image image;
+    await FireStorageService.loadImage(context, imageName).then((value) {
+      image = Image.network(
+        value.toString(), 
+        fit:BoxFit.scaleDown,
+      );
+    });
+    return image;
+  }
+}
+
+class FireStorageService extends ChangeNotifier{
+  FireStorageService();
+  static Future<dynamic> loadImage(BuildContext context, String Image) async {
+    return await FirebaseStorage.instance.ref().child(Image).getDownloadURL();
   }
 }

@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
+import 'package:mathwiz_app/model/homework_model.dart';
+import 'package:provider/src/provider.dart';
 
 class AssignedHomeworkScreen extends StatefulWidget {
+
+  final HomeworkModel homework;
+  AssignedHomeworkScreen({this.homework});
   @override
   State<StatefulWidget> createState() {
-    return _AssignedHomeworkScreenState();
+    return _AssignedHomeworkScreenState(homework:homework);
   }
 }
 
 class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
+
+  HomeworkModel homework;
+  _AssignedHomeworkScreenState({this.homework});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context)
@@ -42,7 +51,23 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(" Homework #",
+                                    Text('${homework.title}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: size.height * 0.019)),
+                                  ],
+                                )
+                              ],
+                            )),
+                            SizedBox(
+                              height: size.height * 0.02,
+                            ),
+                                                        Container(
+                                child: Stack(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text('${homework.ocrtext}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: size.height * 0.019)),
@@ -54,17 +79,22 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               height: size.height * 0.02,
                             ),
                             Container(
-                                child: Row(
+                                child: Stack(
                               children: [
-                                Icon(Icons.assignment_late,
-                                    color: Colors.orange,
-                                    size: size.height * 0.04),
-                                SizedBox(
-                                  width: size.width * 0.02,
-                                ),
-                                Icon(Icons.assignment_turned_in,
-                                    color: Colors.green,
-                                    size: size.height * 0.04),
+                                Row(
+                                  children: [
+                                    Text('${homework.gold}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: size.height * 0.019)),
+                                    SizedBox(
+                                      width: size.width * 0.02,
+                                    ),
+                                    Icon(Icons.attach_money,
+                                        color: Colors.yellow[800],
+                                        size: size.height * 0.02),
+                                  ],
+                                )
                               ],
                             )),
                             SizedBox(
@@ -75,16 +105,10 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text("30",
+                                    Text('${homework.description}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: size.height * 0.03)),
-                                    SizedBox(
-                                      width: size.width * 0.02,
-                                    ),
-                                    Icon(Icons.attach_money,
-                                        color: Colors.yellow[800],
-                                        size: size.height * 0.04),
+                                            fontSize: size.height * 0.019)),
                                   ],
                                 )
                               ],
@@ -93,7 +117,7 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               height: size.height * 0.02,
                             ),
                             Container(
-                                child: Stack(
+                              child: Stack(
                               children: [
                                 Row(
                                   children: [

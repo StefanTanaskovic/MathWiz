@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/controllers/homepage_teacher_controller.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
 import 'package:mathwiz_app/model/homework_model.dart';
+import 'package:mathwiz_app/views/homework/publish_homework.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
@@ -37,7 +38,7 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
               child: ListView.builder(
                 itemCount: context.watch<HomeworkListNotifier>().homeworksList.length,
                 itemBuilder: (context, index) {
-                  if(context.read<HomeworkListNotifier>().homeworksList[index].status == "Publish"){
+                  if(homeworkList[index].published == true){
                     return Row(
                       children: [
                         Expanded(
@@ -49,7 +50,9 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                                 primary: Colors.white,
                                 onPrimary: Colors.black,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                
+                              },
                           ),
                           ),
                         ),
@@ -62,7 +65,8 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                               onPrimary: Colors.black,
                             ),
                             onPressed: () {
-                              context.read<HomeworkListNotifier>().changeStatus("Drafts", index);
+                              HomepageTeacherController().changeStatusHomework("Drafts",homeworkList[index].id);
+                              
                             },
                           ),
                         ),
@@ -75,7 +79,7 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                HomepageTeacherController().changeStatusHomework("Drafts",homeworkList[index].id);
+                                context.read<HomeworkListNotifier>().deleteHomework(index);
                               },
                             ),
                           ),
@@ -88,19 +92,20 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
                             child: Padding(
                               padding: EdgeInsets.only(left: 10,right: 10),
                               child: ElevatedButton(
-                                child: Text('${context.watch<HomeworkListNotifier>().homeworksList[index].title}'),
+                                child: Text('${homeworkList[index].id}'),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.white.withOpacity(0.7),
                                   onPrimary: Colors.black,
                                 ),
                                 onPressed: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => PublishHomeworkScreen(
-                                //         text: context.watch<HomeworkListNotifier>().homeworksList[index].title,
-                                //       ),
-                                //     ));
+                                  Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return PublishHomeworkScreen(homework: homeworkList[index]);
+                                    },
+                                  ),
+                                );
                                 },
                             ),
                             ),

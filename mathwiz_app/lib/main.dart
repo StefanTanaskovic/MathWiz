@@ -17,6 +17,7 @@ import 'constants.dart';
 import 'controllers/homepage_student_controller.dart';
 import 'controllers/race_to_top_creator_notifier.dart';
 import 'controllers/trivia_activity_notifier.dart';
+import 'model/homework_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,8 @@ void main() async {
         value: HomepageStudentController().triviaList, initialData: null),
     StreamProvider<List<RaceTopModel>>.value(
         value: HomepageStudentController().raceList, initialData: null),
+    StreamProvider<List<HomeworkModel>>.value(
+        value: HomepageStudentController().homeworksList, initialData: null),
     StreamProvider<List<ClassModel>>.value(
         value: ClassListNotifier().classList, initialData: null),
     ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
