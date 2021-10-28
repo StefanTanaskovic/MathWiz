@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mathwiz_app/model/homework_model.dart';
-import 'package:provider/src/provider.dart';
+import '../../constants.dart';
 
 class AssignedHomeworkScreen extends StatefulWidget {
 
@@ -14,6 +17,22 @@ class AssignedHomeworkScreen extends StatefulWidget {
 }
 
 class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
+  String imageURL;
+  var count = 1;
+  uploadImage() async {
+    PickedFile _image;
+    final picker = ImagePicker();
+
+    _image = await picker.getImage(source: ImageSource.camera, imageQuality: 65);
+    var file = File(_image.path);
+    FirebaseStorage storage = FirebaseStorage.instance;
+    var snapshot = await storage.ref().child('homework/${homework.title}/Submitted:' + DateTime.now().toString()).putFile(file);
+    var downloadURL = await snapshot.ref.getDownloadURL();
+
+    setState(() {
+      imageURL = downloadURL;
+    });
+  }
 
   HomeworkModel homework;
   _AssignedHomeworkScreenState({this.homework});
@@ -51,7 +70,7 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('${homework.title}',
+                                    Text('Title - ${homework.title}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: size.height * 0.019)),
@@ -67,10 +86,10 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('${homework.ocrtext}',
+                                    Flexible(child:Text('Questions:${homework.ocrtext}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: size.height * 0.019)),
+                                            fontSize: size.height * 0.019)),),
                                   ],
                                 )
                               ],
@@ -83,13 +102,10 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('${homework.gold}',
+                                    Text('Reward - ${homework.gold}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: size.height * 0.019)),
-                                    SizedBox(
-                                      width: size.width * 0.02,
-                                    ),
                                     Icon(Icons.attach_money,
                                         color: Colors.yellow[800],
                                         size: size.height * 0.02),
@@ -105,31 +121,10 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('${homework.description}',
+                                    Flexible(child:Text('Description:${homework.description}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: size.height * 0.019)),
-                                  ],
-                                )
-                              ],
-                            )),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-                            Container(
-                              child: Stack(
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.thumb_up,
-                                        color: Colors.blue[800],
-                                        size: size.height * 0.04),
-                                    SizedBox(
-                                      width: size.width * 0.02,
-                                    ),
-                                    Icon(Icons.thumb_down,
-                                        color: Colors.red,
-                                        size: size.height * 0.04),
+                                            fontSize: size.height * 0.019))),
                                   ],
                                 )
                               ],
@@ -139,10 +134,20 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                     Container(
                         child: Column(
                       children: [
-                        Image.asset(
-                          "assets/images/math-placeholder.jpg",
-                          height: size.height * 0.2,
+                        (imageURL == null)
+                        ?IconButton(
+                            iconSize: 100,
+                            icon: Icon(Icons.add_a_photo),
+                            color: kPrimaryColor,
+                            onPressed: () => uploadImage()
                         )
+                      : Placeholder(fallbackHeight: 0, fallbackWidth: 0),
+                      Container( height: 170,
+                      width: 130,
+                      child:(imageURL != null)
+                      ? Image.network(imageURL)
+                      : Placeholder(fallbackHeight: 10, fallbackWidth: 10),
+                      ),
                       ],
                     ))
                   ],
@@ -156,3 +161,8 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
     );
   }
 }
+
+
+
+
+

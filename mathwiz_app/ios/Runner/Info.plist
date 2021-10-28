@@ -6,6 +6,8 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>MathWiz wants to access your camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>MathWiz wants to access your library</string>
 	<key>CFBundleIdentifier</key>
