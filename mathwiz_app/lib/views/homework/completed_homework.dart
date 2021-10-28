@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:mathwiz_app/constants.dart';
+import 'package:mathwiz_app/model/firebasefile_model.dart';
 
 class CompletedHomeworkScreen extends StatefulWidget {
   @override
@@ -9,7 +13,39 @@ class CompletedHomeworkScreen extends StatefulWidget {
 }
 
 class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
+  Future<List<FirebaseFile>> futureFiles;
+
   @override
+  void initState(){
+    super.initState();
+
+    futureFiles = listAll();
+  }
+  static Future<List<String>> _getDownloadLinks(List<Reference> refs) => 
+  Future.wait(refs.map((ref) => ref.getDownloadURL()).toList());
+
+  static Future<List<FirebaseFile>> listAll() async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    final ref = storage.ref().child("homework");
+    final result = await ref.listAll();
+
+    final urls = await _getDownloadLinks(result.items);
+
+    return urls
+    .asMap()
+    .map((index, url){
+      final ref = result.items[index];
+      final name = ref.name;
+      final file = FirebaseFile(ref: ref, name: name, url: url);
+
+      return MapEntry(index, file);
+    })
+    .values
+    .toList();
+  }
+  final List<String> homeworkURLs = [];
+  var fb = FirebaseStorage.instance.ref("homework");
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context)
         .size; // provides total hieght and width of screen
@@ -43,7 +79,7 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("Viktor:",
+                                Text("Homework:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: size.height * 0.022)),
@@ -51,34 +87,37 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
                             )),
                           ],
                         )),
-                    Container(
-                        child: Column(
+                    SizedBox(height: 200,child:
+                    Column(
                       children: [
-                        FutureBuilder(
-                          future: _getImage(context, "face.jpg"),
-                          builder: (context, snapshot) {
-                            if(snapshot.connectionState == ConnectionState.done) {
-                              return Container(
-                                width:  MediaQuery.of(context).size.width / 3,
-                                height:  MediaQuery.of(context).size.width / 3,
-                                child: snapshot.data,
-                              );
-                            }
+                        FutureBuilder<List<FirebaseFile>>(future: futureFiles,
+                          builder: (context,snapshot){
+                            switch (snapshot.connectionState){
+                              case ConnectionState.waiting:
+                                return Center(child: CircularProgressIndicator());
+                              default:
+                                if (snapshot.hasError){
+                                  return Center(child: Text("Some error has occurred!"));
+                                }
+                                else {
+                                final files = snapshot.data;
 
-                            if(snapshot.connectionState == ConnectionState.waiting) {
-                              return Container(
-                                width:  MediaQuery.of(context).size.width / 1.2,
-                                height:  MediaQuery.of(context).size.width / 1.2,
-                                child: CircularProgressIndicator(),
-                              );
+                                return Expanded(
+                                    child: new ListView.builder(
+                                    itemCount: files.length,
+                                    itemBuilder: (context, index){
+                                      final file = files[index];
+                                      print(file);
+                                      return buildFile(context,file);
+                                    },
+                                    ),
+                                  );
+                                }
                             }
-
-                            return Container();
-                          }
-                        ),
-                        
-                      ],
-                    ))
+                          }) 
+                      ]
+                    )
+                    )
                   ],
                 )),
             SizedBox(
@@ -90,16 +129,18 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
     );
   }
 
-  Future<Widget> _getImage(BuildContext context, String imageName) async{
-    Image image;
-    await FireStorageService.loadImage(context, imageName).then((value) {
-      image = Image.network(
-        value.toString(), 
-        fit:BoxFit.scaleDown,
-      );
-    });
-    return image;
-  }
+
+    Widget buildFile(BuildContext context, FirebaseFile file) => ListTile(
+      title: Text(
+        file.name,
+        style: TextStyle(fontWeight: FontWeight.bold,
+        decoration: TextDecoration.underline,
+        color: kPrimaryColor,
+        ),
+      )
+    );
+
+
 }
 
 class FireStorageService extends ChangeNotifier{
