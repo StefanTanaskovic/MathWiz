@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/model/firebasefile_model.dart';
 import 'package:mathwiz_app/views/imagepage/image_page.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+
 
 class CompletedHomeworkScreen extends StatefulWidget {
   @override
@@ -12,11 +15,16 @@ class CompletedHomeworkScreen extends StatefulWidget {
     return _CompletedHomeworkScreenState();
   }
 
-  static Future downloadFile(Reference ref) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/${ref.name}');
-    await ref.writeToFile(file);
-  }
+  static void saveImage(String url) async {
+    var uri = Uri.parse(url);
+    var response = await http
+        .get(uri);
+
+
+    var filePath = await ImagePickerSaver.saveFile(
+        fileData: response.bodyBytes);
+    var savedFile = File.fromUri(Uri.file(filePath));
+    }
 }
 
 class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {

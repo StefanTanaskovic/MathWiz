@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mathwiz_app/views/homepage/student/achievement_homepage_box_student.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/views/homepage/student/homework_check_homepage_box_student.dart';
 import 'package:mathwiz_app/views/homepage/student/race_to_top_homepage_box_student.dart';
@@ -18,7 +19,8 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
   final List<Widget> items = [
     HomeworkCheckHomepageBoxStudent(),
     RaceToTopHomepageBoxStudent(),
-    TriviaHomepageBoxStudent()
+    TriviaHomepageBoxStudent(),
+    AchievementHomepageBoxStudent()
   ];
 
   @override

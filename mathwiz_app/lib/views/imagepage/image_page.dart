@@ -17,8 +17,7 @@ class ImagePage extends StatelessWidget {
     actions: [
       IconButton(icon: Icon(Icons.file_download),
       onPressed: () async {
-        await CompletedHomeworkScreen.downloadFile(file.ref);
-
+        await CompletedHomeworkScreen.saveImage(file.url);
         final snackBar = SnackBar(content: Text('Downloaded ${file.name}'),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);

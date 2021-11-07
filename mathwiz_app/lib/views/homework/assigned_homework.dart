@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mathwiz_app/controllers/achievement_notifier.dart';
 import 'package:mathwiz_app/model/homework_model.dart';
+import 'package:provider/src/provider.dart';
 import '../../constants.dart';
 
 class AssignedHomeworkScreen extends StatefulWidget {
@@ -38,6 +40,8 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
   _AssignedHomeworkScreenState({this.homework});
   @override
   Widget build(BuildContext context) {
+    AchievementNotifier achievementNotifier =
+    Provider.of<AchievementNotifier>(context,listen: false); 
     Size size = MediaQuery.of(context)
         .size; // provides total hieght and width of screen
     return Scaffold(
@@ -139,7 +143,10 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                             iconSize: 100,
                             icon: Icon(Icons.add_a_photo),
                             color: kPrimaryColor,
-                            onPressed: () => uploadImage()
+                            onPressed: () {
+                              uploadImage();
+                              achievementNotifier.addPointsHomework();
+                            }
                         )
                       : Placeholder(fallbackHeight: 0, fallbackWidth: 0),
                       Container( height: 170,

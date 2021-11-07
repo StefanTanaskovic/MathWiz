@@ -21,7 +21,17 @@ class AchievementNotifier extends ChangeNotifier {
       notifyListeners();
     }
 
-    addPoints(index){
-      _achievementList[index].currentPoints += 1;
+    addPointsActivity(){
+      _achievementList.forEach((element) {
+      element.currentPoints += 3;
+      });
+      notifyListeners();
+    }
+
+    addPointsHomework(){
+      _achievementList.forEach((element) {
+      element.currentPoints += 1;
+      });
+      notifyListeners();
     }
 }

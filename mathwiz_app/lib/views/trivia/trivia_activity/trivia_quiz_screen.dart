@@ -7,6 +7,7 @@ import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/model/user.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
+import 'package:mathwiz_app/controllers/achievement_notifier.dart';
 
 
 class TriviaQuizScreen extends StatefulWidget {
@@ -110,11 +111,14 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
   }
 
 List <Widget> _buildQuiz(int i) {
+  AchievementNotifier achievementNotifier =
+  Provider.of<AchievementNotifier>(context,listen: false); 
   final triviaList = Provider.of<List<TriviaModel>>(context) ?? [];
   UserModel user = Provider.of<UserModel>(context);
   Size size = MediaQuery.of(context).size;
   timer = DateTime.now().millisecondsSinceEpoch + 1000 * quiz.timer;
   if(questionIndex == quiz.questions.length){
+    achievementNotifier.addPointsHomework().addPointsActivity();
     return <Widget>[
       Text("Congrats!",
         textAlign: TextAlign.center,        

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mathwiz_app/model/achievement_model.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
 import 'package:mathwiz_app/model/homework_model.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
@@ -90,6 +91,24 @@ class HomepageStudentController {
         gold: doc.data()['homework_gold'],
         status: doc.data()['homework_status'],
         published:doc.data()['homework_published']
+      );
+    }).toList();
+  }
+
+
+    Stream<List<AchievementModel>> get achievementList{
+    CollectionReference achievementListCollection = FirebaseFirestore.instance.collection('classrooms')
+    .doc(classID).collection('achievements');
+    return achievementListCollection.snapshots().map(_achievementList);
+  }
+
+  List<AchievementModel> _achievementList (QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return AchievementModel(
+        id: doc.id,
+        title: doc.data()['achievement_title'],
+        currentPoints: doc.data()['achievement_current'],
+        pointsMax: doc.data()['achievement_goal']
       );
     }).toList();
   }
