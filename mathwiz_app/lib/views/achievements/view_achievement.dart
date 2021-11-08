@@ -1,6 +1,5 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../constants.dart';
 
@@ -61,6 +60,7 @@ class _ViewAchievementScreenState extends State<ViewAchievementScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
+              if (this.currentPoints > this.pointsMax)
               Text("${this.currentPoints} / ${this.pointsMax}",style: TextStyle(fontSize: 30)),
               SizedBox(
                 height: size.height * 0.03,

@@ -54,7 +54,7 @@ class ClassListScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return HomepageTeacherScreen();
+                                return HomepageStudentScreen();
                               },
                             ),
                           );

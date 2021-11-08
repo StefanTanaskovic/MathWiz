@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:mathwiz_app/model/firebasefile_model.dart';
-import 'package:mathwiz_app/views/homework/completed_homework.dart';
+import 'package:http/http.dart' as http;
 
 class ImagePage extends StatelessWidget {
   final FirebaseFile file;
@@ -10,6 +13,22 @@ class ImagePage extends StatelessWidget {
     this.file,
   }) : super(key: key);
 
+    static void saveImage(String url) async {
+      try {
+        var uri = Uri.parse(url);
+        var response = await http
+        .get(uri);
+
+
+    var filePath = await ImagePickerSaver.saveFile(
+        fileData: response.bodyBytes);
+    var savedFile = File.fromUri(Uri.file(filePath));
+      }
+      catch (e){
+        print("An Error Occurred:" + e.toString());
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(title: Text(file.name),
@@ -17,10 +36,7 @@ class ImagePage extends StatelessWidget {
     actions: [
       IconButton(icon: Icon(Icons.file_download),
       onPressed: () async {
-        await CompletedHomeworkScreen.saveImage(file.url);
-        final snackBar = SnackBar(content: Text('Downloaded ${file.name}'),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        await saveImage(file.url);
       },
       ),
       const SizedBox(width: 12),
