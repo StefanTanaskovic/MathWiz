@@ -171,7 +171,6 @@ List <Widget> _buildQuiz(int i) {
 void checkAnswer(int question, int answerPicked, quizID, userID){
   final ref = fb.reference();
   if (quiz.questions[question].correctAnswer == answerPicked){
-    print(_counter);
     score += 10 * (10 ~/_counter);
     ref.child("race").child(quizID).child(userID).child("score").set(score);
     finalScore += 1;

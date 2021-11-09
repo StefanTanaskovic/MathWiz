@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
+import 'package:mathwiz_app/model/asteroid_model.dart';
 import 'package:mathwiz_app/model/class_model.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
@@ -32,6 +33,8 @@ void main() async {
         updateShouldNotify: (_, __) => true),
     StreamProvider<List<TriviaModel>>.value(
         value: HomepageStudentController().triviaList, initialData: null),
+    StreamProvider<List<AsteroidModel>>.value(
+        value: HomepageStudentController().asteroidsList, initialData: null),
     StreamProvider<List<RaceTopModel>>.value(
         value: HomepageStudentController().raceList, initialData: null),
     StreamProvider<List<ClassModel>>.value(

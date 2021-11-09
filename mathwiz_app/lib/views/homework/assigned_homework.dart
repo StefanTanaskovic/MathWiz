@@ -42,10 +42,6 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Text("Class Name -",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: size.height * 0.019)),
                                     Text(" Homework #",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
