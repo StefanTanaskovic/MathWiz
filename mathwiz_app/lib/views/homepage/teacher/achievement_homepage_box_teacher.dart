@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/controllers/homepage_teacher_controller.dart';
-import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
-import 'package:mathwiz_app/model/homework_model.dart';
-import 'package:mathwiz_app/views/homepage/teacher/homework_list.dart';
-import 'package:mathwiz_app/views/homework/publish_homework.dart';
+import 'package:mathwiz_app/controllers/achievement_notifier.dart';
+import 'package:mathwiz_app/views/achievements/view_achievement.dart';
+import 'package:mathwiz_app/views/homepage/teacher/achievement_list.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
-class HomeworkHomepageBoxTeacher extends StatefulWidget {
+class AchievementHomepageBoxTeacher extends StatefulWidget {
   @override
-  _HomeworkHomepageBoxTeacherState createState() => _HomeworkHomepageBoxTeacherState();
+  _AchievementHomepageBoxTeacherState createState() => _AchievementHomepageBoxTeacherState();
 }
 
-class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher> {
+class _AchievementHomepageBoxTeacherState extends State<AchievementHomepageBoxTeacher> {
   @override
   Widget build(BuildContext context) {
-    final homeworkList = Provider.of<List<HomeworkModel>>(context) ?? [];
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -28,13 +25,13 @@ class _HomeworkHomepageBoxTeacherState extends State<HomeworkHomepageBoxTeacher>
         child: Column(
           children: <Widget>[
             SizedBox(height: 10),
-            Text('Homework Check',
+            Text('Achievements',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,
                     color: Colors.white)),
-                HomeworkList(),
+                    AchievementList(),
             SizedBox(height: 10),
           ],
         )

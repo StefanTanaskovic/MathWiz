@@ -6,7 +6,6 @@ class HomeworkListNotifier extends ChangeNotifier {
   List<HomeworkModel> _homeworksList = [];
   Map _selected = Map();
 
-  
 
   Map get selected => _selected;
   UnmodifiableListView<HomeworkModel> get homeworksList =>
@@ -39,4 +38,6 @@ deleteHomework(index){
   _homeworksList.removeAt(index);
   notifyListeners();
 }
+
+
 }
