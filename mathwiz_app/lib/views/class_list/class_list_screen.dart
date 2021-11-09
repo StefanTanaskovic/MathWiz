@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/model/class_model.dart';
 import 'package:mathwiz_app/views/class_list/create_class_screen.dart';
+import 'package:mathwiz_app/views/homepage/student/homepage_student.dart';
 import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
@@ -53,7 +54,7 @@ class ClassListScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return HomepageTeacherScreen();
+                                return HomepageStudentScreen();
                               },
                             ),
                           );

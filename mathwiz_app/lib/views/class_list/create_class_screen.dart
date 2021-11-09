@@ -81,12 +81,6 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                     press: () {
                       if (!_classFormKey.currentState.validate()) return;
                       _classFormKey.currentState.save();
-                      classList.add(ClassModel(
-                          code: randomAlpha(6),
-                          title: _title,
-                          teacher: _teacher,
-                          stundetIDs: []
-                      ));
                       ClassModel newClass = ClassModel(
                           code: randomAlpha(6),
                           title: _title,
