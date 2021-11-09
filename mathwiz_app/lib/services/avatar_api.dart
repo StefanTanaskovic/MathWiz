@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:mathwiz_app/model/avatar/avatar_model.dart';
 import 'package:mathwiz_app/model/avatar/tops_model.dart';
 
 class APIService {
@@ -8,7 +9,7 @@ class APIService {
   static const API_HOST = 'doppelme-avatars.p.rapidapi.com';
 
   // --- Create an Avatar --- //
-  Future<String> createAvatar() async {
+  Future<AvatarModel> createAvatar() async {
     // Headers
     final Map<String, String> headers = {
       'x-rapidapi-key': API_KEY,
@@ -21,23 +22,35 @@ class APIService {
 
     if (response.statusCode == 200) {
       final String responseString = response.body;
-      return responseString;
+      return avatarModelFromJson(responseString);
     } else {
       return null;
     }
   }
 
   // --- Update Avatar --- //
-  Future<String> updateAvatar(String avatarKey, String itemID) async {
+  Future<String> updateAvatar(
+      String avatarKey, String itemID, String itemType) async {
+    // Initialize Response
+    var response;
+
     // Headers
     final Map<String, String> headers = {
       'x-rapidapi-key': API_KEY,
       'x-rapidapi-host': API_HOST
     };
 
-    // URI
-    var uri = Uri.https(API_HOST, '/avatar/' + avatarKey + '/' + itemID);
-    var response = await http.put(uri, headers: headers);
+    if (itemID == '0') {
+      // Delete the Item from Avatar
+      // URI
+      var uri = Uri.https(API_HOST, '/avatar/' + avatarKey + '/' + itemType);
+      response = await http.put(uri, headers: headers);
+    } else {
+      // Update the Avatar Normally
+      // URI
+      var uri = Uri.https(API_HOST, '/avatar/' + avatarKey + '/' + itemID);
+      response = await http.put(uri, headers: headers);
+    }
 
     if (response.statusCode == 200) {
       Map<String, dynamic> responseMap = jsonDecode(response.body);

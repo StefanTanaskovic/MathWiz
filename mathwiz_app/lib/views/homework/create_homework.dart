@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:mathwiz_app/views/homework/publish_homework.dart';
@@ -17,7 +17,7 @@ class CreateHomeworkScreen extends StatefulWidget {
 }
 
 class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
-  File _image;
+  Uint8List _image;
   final OCRURL = 'https://api.ocrestful.com/k0qyj/res';
   var getOCR;
   var OCRText;
@@ -28,11 +28,28 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
     var pickedFile =
         await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
 
+    var byteArray = _readFileByte(pickedFile.path);
+
     setState(() {
-      _image = File(pickedFile.path);
+      _image = byteArray;
     });
   }
 
+  Uint8List _readFileByte(String filePath) {
+    Uri myUri = Uri.parse(filePath);
+    File audioFile = new File.fromUri(myUri);
+    Uint8List bytes;
+    audioFile.readAsBytes().then((value) {
+      bytes = Uint8List.fromList(value);
+      print('reading of bytes is completed');
+    }).catchError((onError) {
+      print('Exception Error while reading audio from path:' +
+          onError.toString());
+    });
+    return bytes;
+  }
+
+/*
   Future uploadFile() async {
     var fileName = _image.path.split('/').last;
     try {
@@ -55,7 +72,7 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
       print("Exception Caught:" + e);
     }
   }
-
+*/
   Future getFile() async {
     try {
       Dio dio = new Dio();
@@ -114,7 +131,7 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(kSecondaryColor)),
                 onPressed: () {
-                  uploadFile();
+                  //uploadFile();
                 },
               ),
               ElevatedButton(
@@ -131,7 +148,7 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
                         fontSize: 20,
                       ))
                   : Container(),
-              _image != null ? Image.asset(_image.path) : Container(),
+              _image != null ? Image.memory(_image) : Container(),
               ElevatedButton(
                 child: Text("Continue to Publish"),
                 style: ButtonStyle(

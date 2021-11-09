@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
-import 'package:mathwiz_app/model/class_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/class_list/create_class_screen.dart';
-import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
+import 'package:mathwiz_app/views/homepage/student/homepage_student.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/ham_menu_start.dart';
 import 'package:mathwiz_app/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
-class ClassListScreen extends StatelessWidget {
+class ClassListScreen extends StatefulWidget {
+  @override
+  State<ClassListScreen> createState() => _ClassListScreenState();
+}
+
+class _ClassListScreenState extends State<ClassListScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final classList = Provider.of<List<ClassModel>>(context) ?? [];
 
-    if (classList.isEmpty) {
+    if (context.watch<FirestoreDatabaseService>().classList.isEmpty) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Class List'),
@@ -25,6 +29,9 @@ class ClassListScreen extends StatelessWidget {
         body: LoadingIndicator(),
       );
     } else {
+      FirestoreDatabaseService fsDatabase =
+          Provider.of<FirestoreDatabaseService>(context, listen: false);
+      final classList = fsDatabase.classList;
       return Scaffold(
           appBar: AppBar(
             title: Text('Class List'),
@@ -49,14 +56,16 @@ class ClassListScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return HomepageTeacherScreen();
-                              },
-                            ),
-                          );
+                          fsDatabase.getClassAvatars(index).then((value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return HomepageStudentScreen();
+                                },
+                              ),
+                            );
+                          });
                         },
                         child: Container(
                           decoration: BoxDecoration(

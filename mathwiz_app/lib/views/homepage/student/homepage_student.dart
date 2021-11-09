@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/views/homepage/teacher/homework_check_homepage_box.dart';
 import 'package:mathwiz_app/views/homepage/student/race_to_top_homepage_box_student.dart';
 import 'package:mathwiz_app/views/homepage/student/trivia_homepage_box_student.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class HomepageStudentScreen extends StatefulWidget {
@@ -22,7 +24,21 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    FirestoreDatabaseService fsDatabase =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
+
+    print(fsDatabase.user);
+    print(fsDatabase.classList);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    FirestoreDatabaseService fsDatabase =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
+    final avatarList = fsDatabase.avatarIDList;
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -44,15 +60,21 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
                   mainAxisSpacing: 1,
                   crossAxisSpacing: 1,
                   crossAxisCount: 6,
-                  children: List.generate(30, (index) {
+                  children: List.generate(avatarList.length, (index) {
                     return Align(
                         child: Container(
                       child: Card(
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Image.asset(
-                          'assets/images/avatar.png',
-                          fit: BoxFit.fill,
+                        child:
+                            // Image.asset(
+                            //   'assets/images/avatar.png',
+                            //   fit: BoxFit.fill,
+                            // ),
+                            Image.network(
+                          "https://www.doppelme.com/" +
+                              avatarList[index].toString() +
+                              "/cropb.png",
                         ),
                       ),
                     ));

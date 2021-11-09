@@ -21,6 +21,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
+    ChangeNotifierProvider(create: (_) => RaceListNotifier()),
+    ChangeNotifierProvider(create: (_) => TriviaListNotifier()),
+    ChangeNotifierProvider(create: (_) => AvatarNotifier()),
+    ChangeNotifierProvider(create: (_) => HomeworkListNotifier()),
     StreamProvider<UserModel>.value(
         value: AuthService().user,
         initialData: null,
@@ -31,11 +36,6 @@ void main() async {
         value: HomepageStudentController().raceList, initialData: null),
     StreamProvider<List<ClassModel>>.value(
         value: ClassListNotifier().classList, initialData: null),
-    ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
-    ChangeNotifierProvider(create: (_) => RaceListNotifier()),
-    ChangeNotifierProvider(create: (_) => TriviaListNotifier()),
-    ChangeNotifierProvider(create: (_) => AvatarNotifier()),
-    ChangeNotifierProvider(create: (_) => HomeworkListNotifier()),
   ], child: MyApp()));
 }
 

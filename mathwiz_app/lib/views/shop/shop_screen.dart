@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
-import 'package:mathwiz_app/model/avatar/tops_model.dart';
 import 'package:mathwiz_app/services/avatar_api.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
@@ -17,21 +17,28 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   void initState() {
     super.initState();
+    AvatarNotifier avatarNotifier =
+        Provider.of<AvatarNotifier>(context, listen: false);
+
+    avatarNotifier.getItems(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    AvatarNotifier avatarNotifier =
-        Provider.of<AvatarNotifier>(context, listen: false);
-    avatarNotifier.getItems(context);
-
     Size size = MediaQuery.of(context).size;
 
-    if (context.watch<AvatarNotifier>().masterItemsModel == null) {
+    if (context.watch<AvatarNotifier>().masterItemsModel == null ||
+        context.watch<FirestoreDatabaseService>().user.avatarID == null) {
       return Scaffold(
         body: LoadingIndicator(),
       );
     } else {
+      FirestoreDatabaseService fsDatabase =
+          Provider.of<FirestoreDatabaseService>(context, listen: false);
+      AvatarNotifier avatarNotifier =
+          Provider.of<AvatarNotifier>(context, listen: false);
+      avatarNotifier.setAvatarUrl(fsDatabase.user.avatarID.toString());
+
       return Scaffold(
         body: DefaultTabController(
           length: 2,

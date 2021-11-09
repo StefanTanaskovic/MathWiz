@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/services/auth.dart';
+import 'package:mathwiz_app/views/signup/create_avatar_screen.dart';
+import 'package:mathwiz_app/views/welcome_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/box_pass_field.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 //import 'body.dart';
 
 class SignUpScreen extends StatefulWidget {
-
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -18,8 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final AuthService _auth = AuthService();
 
-  String _email; 
-  String _password; 
+  String _email;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +30,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .size; // provides total hieght and width of screen
     return Scaffold(
         body: Form(
-          key: _formKey,
-          child: Container(
-      child: Column(
+      key: _formKey,
+      child: Container(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               "SIGN UP WITH",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: kSecondaryColor),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: kSecondaryColor),
             ),
             Image.asset(
               "assets/images/math_logo.png",
@@ -59,10 +62,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onChanged: (value) {},
             ),
             BoxPassFeild(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter your password';
-              }
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter your password';
+                }
                 return null;
               },
               onSaved: (value) {
@@ -78,9 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 }
                 return null;
               },
-              onSaved: (value) {
-                
-              },
+              onSaved: (value) {},
               hintText: "Confirm Password",
               onChanged: (value) {},
             ),
@@ -89,12 +90,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               press: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  dynamic result =  await _auth.signUpEmail(_email, _password);
-                  if(result == null){
+                  dynamic result = await _auth.signUpEmail(_email, _password);
+                  if (result == null) {
                     print("error");
-                  }else{
+                  } else {
                     print("signed in");
                     print(result);
+                    //Navigator.pop(context);
+
+                    AvatarNotifier avatarNotifier =
+                        Provider.of<AvatarNotifier>(context, listen: false);
+                    avatarNotifier.createAvatar().then((value) => () {
+                          // TO DO: Store the AvatarID in the firabse realtime database for the user.
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateAvatarScreen(),
+                              ));
+                        });
                   }
                 }
               },
@@ -121,8 +135,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             //OrDivider(),
           ],
+        ),
       ),
-    ),
-        ));
+    ));
   }
 }

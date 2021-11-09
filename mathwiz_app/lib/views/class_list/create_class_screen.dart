@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/model/class_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
+import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/text_field_container.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +24,8 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
 
   @override
   Widget build(BuildContext context) {
-  final classList = Provider.of<List<ClassModel>>(context) ?? [];
+    FirestoreDatabaseService fsDatabase =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           title: Text('Create New Class'),
@@ -81,20 +84,21 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                     press: () {
                       if (!_classFormKey.currentState.validate()) return;
                       _classFormKey.currentState.save();
-                      classList.add(ClassModel(
-                          code: randomAlpha(6),
-                          title: _title,
-                          teacher: _teacher,
-                          stundetIDs: []
-                      ));
                       ClassModel newClass = ClassModel(
                           code: randomAlpha(6),
                           title: _title,
                           teacher: _teacher,
-                          stundetIDs: []
-                          );
-                      classList.add(newClass);
-                      ClassListNotifier().addClass(newClass);
+                          stundetIDs: []);
+                      fsDatabase.addClass(newClass);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ClassListScreen();
+                          },
+                        ),
+                      );
                     }),
               ]),
             ),

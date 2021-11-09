@@ -21,10 +21,10 @@ class _ShopTabState extends State<ShopTab> {
   Widget build(BuildContext context) {
     return ListView.builder(
         padding: EdgeInsets.only(top: 10),
-        itemCount: 10,
+        itemCount: 9,
         itemBuilder: (BuildContext context, int count) {
           if (count == 0) {
-            title = "Faces";
+            title = "Face Paint";
             assets = widget.items.faces;
           } else if (count == 1) {
             title = "Hair";
@@ -42,15 +42,12 @@ class _ShopTabState extends State<ShopTab> {
             title = "Shoes";
             assets = widget.items.shoes;
           } else if (count == 6) {
-            title = "Accessorie";
-            assets = widget.items.accessories;
-          } else if (count == 7) {
             title = "Extras";
             assets = widget.items.extras;
-          } else if (count == 8) {
+          } else if (count == 7) {
             title = "Eyewear";
             assets = widget.items.eyes;
-          } else if (count == 9) {
+          } else if (count == 8) {
             title = "Backgrounds";
             assets = widget.items.backgrounds;
           }
@@ -116,32 +113,40 @@ class _ShopTabState extends State<ShopTab> {
 
   tryAvatarItem(count, index, widget, context) {
     var tapped;
+    var type;
     if (count == 0) {
       tapped = widget.items.faces[index];
+      type = 'face';
     } else if (count == 1) {
       tapped = widget.items.hairs[index];
+      type = 'hair';
     } else if (count == 2) {
       tapped = widget.items.hats[index];
+      type = 'hat';
     } else if (count == 3) {
       tapped = widget.items.tops[index];
+      type = 'top';
     } else if (count == 4) {
       tapped = widget.items.bottoms[index];
+      type = 'bottom';
     } else if (count == 5) {
       tapped = widget.items.shoes[index];
+      type = 'foot';
     } else if (count == 6) {
-      tapped = widget.items.accessories[index];
-    } else if (count == 7) {
       tapped = widget.items.extras[index];
-    } else if (count == 8) {
+      type = 'facial';
+    } else if (count == 7) {
       tapped = widget.items.eyes[index];
-    } else if (count == 9) {
+      type = 'eye';
+    } else if (count == 8) {
       tapped = widget.items.backgrounds[index];
+      type = 'background';
     }
-    print(tapped);
+
     tapped = tapped.replaceAll(new RegExp(r'[^0-9]'), '');
 
     AvatarNotifier avatarNotifier =
         Provider.of<AvatarNotifier>(context, listen: false);
-    avatarNotifier.updateAvatar('DM1800598KZRELL', tapped);
+    avatarNotifier.updateAvatar(tapped, type);
   }
 }
