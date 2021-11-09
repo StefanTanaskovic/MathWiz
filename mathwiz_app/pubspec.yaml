@@ -62,7 +62,6 @@ flutter:
     - assets/avatar/bottoms/
     - assets/avatar/shoes/
     - assets/avatar/extras/
-    - assets/avatar/accessories/
     - assets/avatar/backgrounds/
 
   # The following line ensures that the Material Icons font is
