@@ -80,9 +80,9 @@ PODS:
   - GoogleUtilities/Reachability (7.5.2):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.0)
-  - image_picker (0.0.1):
+  - image_gallery_saver (1.5.0):
     - Flutter
-  - image_picker_saver (0.0.1):
+  - image_picker (0.0.1):
     - Flutter
   - leveldb-library (1.22.1)
   - nanopb (2.30908.0):
@@ -105,8 +105,8 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.7.0`)
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
+  - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - image_picker_saver (from `.symlinks/plugins/image_picker_saver/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
@@ -143,10 +143,10 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
+  image_gallery_saver:
+    :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
-  image_picker_saver:
-    :path: ".symlinks/plugins/image_picker_saver/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -175,8 +175,8 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
-  image_picker_saver: 4f28bd70e1efdca68ad88beab0f11d22cffe04f6
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
@@ -185,4 +185,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 695a998c16381e86327954fe93548c3e4803455b
 
-COCOAPODS: 1.11.0
+COCOAPODS: 1.10.1

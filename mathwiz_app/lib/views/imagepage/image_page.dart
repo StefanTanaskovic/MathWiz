@@ -1,9 +1,13 @@
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:mathwiz_app/model/firebasefile_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+
 
 class ImagePage extends StatelessWidget {
   final FirebaseFile file;
@@ -13,21 +17,18 @@ class ImagePage extends StatelessWidget {
     this.file,
   }) : super(key: key);
 
-    static void saveImage(String url) async {
-      try {
-        var uri = Uri.parse(url);
-        var response = await http
-        .get(uri);
+    Future<File> saveFile(String url,String filename) async {
+   var response = await Dio().get(
+           url,
+           options: Options(responseType: ResponseType.bytes));
+   final result = await ImageGallerySaver.saveImage(
+           Uint8List.fromList(response.data),
+           quality: 60,
+           name: "hello");
+   print(result);
+  }
 
 
-    var filePath = await ImagePickerSaver.saveFile(
-        fileData: response.bodyBytes);
-    var savedFile = File.fromUri(Uri.file(filePath));
-      }
-      catch (e){
-        print("An Error Occurred:" + e.toString());
-      }
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class ImagePage extends StatelessWidget {
     actions: [
       IconButton(icon: Icon(Icons.file_download),
       onPressed: () async {
-        await saveImage(file.url);
+        saveFile(file.url,file.name);
       },
       ),
       const SizedBox(width: 12),
