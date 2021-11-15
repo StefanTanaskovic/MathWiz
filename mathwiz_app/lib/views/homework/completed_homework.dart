@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mathwiz_app/constants.dart';
@@ -52,25 +51,31 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
         .size; // provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         title: Text(
           "Completed Homeworks",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: size.height * 0.025,
-              color: Colors.black),
+              color: Colors.white),
         ),
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Row(children: [
-           Text("Homeworks",
+            SizedBox(
+              height: size.height * 0.03,
+              child: Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+           Text("All Homeworks",
         style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: size.height * 0.022,
-            )),
-            ],),
+
+              fontWeight: FontWeight.bold,
+              fontSize: size.height * 0.022,
+              )),
+              ],),
+            ),
             Container(height: size.height*0.7,
             width: size.width,
                 padding: const EdgeInsets.all(5),
