@@ -49,12 +49,13 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
         .size; // provides total hieght and width of screen
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         title: Text(
           "Completed Homeworks",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: size.height * 0.025,
-              color: Colors.black),
+              color: Colors.white),
         ),
       ),
       body: SafeArea(

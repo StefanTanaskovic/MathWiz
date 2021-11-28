@@ -61,7 +61,7 @@ class _ClassListScreenState extends State<ClassListScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return HomepageStudentScreen();
+                                  return HomepageTeacherScreen();
                                 },
                               ),
                             );

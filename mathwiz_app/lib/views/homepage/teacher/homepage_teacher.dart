@@ -170,7 +170,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
             Icons.auto_awesome,
             color: Colors.white,
           ),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: kSecondaryColor,
           label: 'Achievements',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () => Navigator.push(
