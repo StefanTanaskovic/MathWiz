@@ -3,6 +3,7 @@ import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
 import 'package:mathwiz_app/model/asteroid_model.dart';
+import 'package:mathwiz_app/controllers/achievement_notifier.dart';
 import 'package:mathwiz_app/model/class_model.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
@@ -19,6 +20,8 @@ import 'controllers/homepage_student_controller.dart';
 import 'controllers/main_notifier.dart';
 import 'controllers/race_to_top_creator_notifier.dart';
 import 'controllers/trivia_activity_notifier.dart';
+import 'model/achievement_model.dart';
+import 'model/homework_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +44,12 @@ void main() async {
         updateShouldNotify: (_, __) => true),
     StreamProvider<List<ClassModel>>.value(
         value: ClassListNotifier().classList, initialData: null),
+    ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
+    ChangeNotifierProvider(create: (_) => RaceListNotifier()),
+    ChangeNotifierProvider(create: (_) => TriviaListNotifier()),
+    ChangeNotifierProvider(create: (_) => AvatarNotifier()),
+    ChangeNotifierProvider(create: (_) => HomeworkListNotifier()),
+    ChangeNotifierProvider(create: (_) => AchievementNotifier()),
   ], child: MyApp()));
 }
 

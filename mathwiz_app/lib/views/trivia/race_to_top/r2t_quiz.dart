@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:mathwiz_app/controllers/achievement_notifier.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/user.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
@@ -108,6 +109,8 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
   }
 
 List <Widget> _buildQuiz(int i) {
+  AchievementNotifier achievementNotifier =
+  Provider.of<AchievementNotifier>(context,listen: false); 
   Size size = MediaQuery.of(context).size;
   final raceList = Provider.of<List<RaceTopModel>>(context) ?? [];
   UserModel user = Provider.of<UserModel>(context);
@@ -115,6 +118,7 @@ List <Widget> _buildQuiz(int i) {
           Provider.of<FirestoreDatabaseService>(context, listen: false);
   fsDatabase.updateBank(quiz.minReward);
   if(questionIndex == quiz.questions.length){
+    achievementNotifier.addPointsHomework().addPointsActivity();
     _timer.cancel();
     return <Widget>[
       Text("Congrats!",

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/homework_model.dart';
 import 'package:mathwiz_app/controllers/publish_homework_notifier.dart';
 import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
+import 'package:mathwiz_app/controllers/homepage_teacher_controller.dart';
 import 'dart:ui' as ui;
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
@@ -9,12 +10,12 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 class PublishHomeworkScreen extends StatefulWidget {
-  final String text;
-  PublishHomeworkScreen({Key key, @required this.text}) : super(key: key);
+  final HomeworkModel homework;
+  PublishHomeworkScreen({this.homework});
 
   @override
   State<StatefulWidget> createState() {
-    return _PublishHomeworkScreenState();
+    return _PublishHomeworkScreenState(homework: homework);
   }
 }
 
@@ -22,15 +23,22 @@ List<Widget> children;
 
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
   
-  Map selected = new Map();
-  final String text;
+  final myController = TextEditingController();
+  HomeworkModel homework;
   int goldAmount;
   String homeworkDescription;
   String homeworkTitle;
 
-  final _formKey = GlobalKey<FormState>();
 
-  _PublishHomeworkScreenState({this.text});
+  _PublishHomeworkScreenState({this.homework});
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     HomeworkListNotifier homeworkListNotifier =
@@ -51,7 +59,7 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Text(widget.text.isEmpty ? 'No text found': widget.text,
+              Text(widget.homework.ocrtext.isEmpty ? 'No text found': widget.homework.ocrtext,
               style: TextStyle(fontSize: 20),),
               BoxInputFeild(
                 hintText: "Title",
@@ -72,6 +80,7 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               Container(
                 width: size.width * 0.8,
                 child: TextField(
+                  controller: myController,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: kPrimaryColor)),
@@ -79,7 +88,9 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                           borderSide: BorderSide(color: kPrimaryColor)),
                       hintText: 'Description'),
                   maxLines: 5,
-                  onChanged: (value) {}
+                  onChanged: (value) {
+                    this.homeworkDescription = myController.text;
+                  }
                 ),
               ),
               BoxButton(
@@ -91,7 +102,7 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                     title: homeworkTitle, 
                     status: "Drafts",
                     gold:goldAmount, 
-                    description: homeworkDescription)
+                    description: myController.text)
                   );
                   Navigator.push(
                       context,
@@ -113,7 +124,7 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                     title: homeworkTitle, 
                     status: "Publish",
                     gold:goldAmount, 
-                    description: homeworkDescription)
+                    description: myController.text)
                   );
                   Navigator.push(
                       context,

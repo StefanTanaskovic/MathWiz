@@ -5,6 +5,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/homework/create_homework.dart';
 import 'package:mathwiz_app/views/trivia/asteroids/asteroids_prev.dart';
+import 'package:mathwiz_app/views/homework/completed_homework.dart';
+import 'package:mathwiz_app/views/homework/create_homework.dart';
+import 'package:mathwiz_app/views/achievements/create_achievement.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
 import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_prev.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
@@ -13,6 +16,7 @@ import 'package:mathwiz_app/views/homepage/teacher/race_to_top_homepage_box_teac
 import 'package:mathwiz_app/views/homepage/teacher/trivia_homepage_box_teacher.dart';
 import 'package:mathwiz_app/widgets/ham_menu_start.dart';
 import 'package:provider/provider.dart';
+import 'package:mathwiz_app/views/homepage/teacher/achievement_homepage_box_teacher.dart';
 import '../../../constants.dart';
 import 'asteroids_homepage_box.dart';
 

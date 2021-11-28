@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
+import 'package:mathwiz_app/model/homework_model.dart';
 import 'package:mathwiz_app/views/homework/publish_homework.dart';
 
 import '../../constants.dart';
@@ -91,13 +92,21 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
   }
 
   sendToPublish() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PublishHomeworkScreen(
-            text: OCRText,
-          ),
-        ));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return PublishHomeworkScreen(
+                            homework: HomeworkModel(
+                              ocrtext: OCRText,
+                              gold: 0,
+                              status: "",
+                              description: ""
+                            )
+                          );
+                        },
+                      ),
+                    );;
   }
 
   @override

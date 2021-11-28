@@ -7,6 +7,7 @@ import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/homepage/student/asteroids_homepage_box_student.dart';
+import 'package:mathwiz_app/views/homepage/student/achievement_homepage_box_student.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/views/homepage/student/homework_check_homepage_box_student.dart';
 import 'package:mathwiz_app/views/homepage/student/race_to_top_homepage_box_student.dart';
@@ -36,7 +37,8 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
     //HomeworkCheckHomepageBoxStudent(),
     RaceToTopHomepageBoxStudent(),
     TriviaHomepageBoxStudent(),
-    AsteroidsHomepageBoxStudent()
+    AsteroidsHomepageBoxStudent(),
+    AchievementHomepageBoxStudent()
   ];
   
   @override

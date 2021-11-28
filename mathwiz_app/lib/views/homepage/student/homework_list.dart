@@ -59,7 +59,7 @@ class _HomeworkListState extends State<HomeworkList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return AssignedHomeworkScreen();
+                            return AssignedHomeworkScreen(homework: homeworkList[index]);
                           },
                         ),
                       );

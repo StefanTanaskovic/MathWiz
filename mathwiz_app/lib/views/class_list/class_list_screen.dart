@@ -6,6 +6,7 @@ import 'package:mathwiz_app/model/asteroid_model.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/class_list/class_list_wrapper.dart';
 import 'package:mathwiz_app/views/class_list/create_class_screen.dart';
+import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
 import 'package:mathwiz_app/views/homepage/student/homepage_student.dart';
 import 'package:mathwiz_app/views/homepage/teacher/homepage_teacher.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
