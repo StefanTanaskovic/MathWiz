@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
-import 'package:mathwiz_app/controllers/class_list_notifier.dart';
 import 'package:mathwiz_app/model/class_model.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/class_list/class_list_screen.dart';
@@ -8,7 +7,6 @@ import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/text_field_container.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
-import 'dart:math' show Random;
 
 class CreateClassScreen extends StatefulWidget {
   @override

@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
@@ -11,7 +10,6 @@ import 'package:mathwiz_app/model/user.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
-
 
 class AsteroidsQuizScreen extends StatefulWidget {
   final int index;
@@ -44,7 +42,6 @@ class _AsteroidsQuizScreenState extends State<AsteroidsQuizScreen> {
   bool questionCorrect = true;
   _AsteroidsQuizScreenState({this.quiz, this.index});
 
-
   void nextQuestion() {
     setState(() {
       questionIndex += 1;
@@ -55,8 +52,7 @@ class _AsteroidsQuizScreenState extends State<AsteroidsQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 11;  
+    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 11;
     final asteroidList = Provider.of<List<AsteroidModel>>(context) ?? [];
     return  Scaffold(
         appBar: AppBar(
@@ -209,15 +205,15 @@ List <Widget> _buildQuiz(int i) {
                   }else{
                     _checkAnswer(i, index, asteroidList[index].id, user.uid);
                   }
-              },
-              child: Text("${quiz.questions[i].answers[index]}"),
-            );
-          }),
+                },
+                child: Text("${quiz.questions[i].answers[index]}"),
+              );
+            }),
+          ),
         ),
-      ),
-    ];
+      ];
+    }
   }
-}
 
   Future<void> _checkAnswer(int question, int answerPicked, quizID, userID) async {
     if (buttonClicked == false){

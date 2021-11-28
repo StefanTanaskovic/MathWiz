@@ -21,10 +21,14 @@ class FirestoreDatabaseService extends ChangeNotifier {
     var currentAmount = _userM.bank;
     currentAmount = currentAmount + (amount);
     ref
-    .doc(_userM.uid)
-    .update({'bank': currentAmount})
-    .then((value) => print("Money Updated"))
-    .catchError((error) => print("Failed to update user: $error"));
+        .doc(_userM.uid)
+        .update({'bank': currentAmount})
+        .then((value) => print("Money Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+
+    // Update User Model
+    user.bank = user.bank + amount;
+    notifyListeners();
   }
 
   Future getClassAvatars(int index) async {

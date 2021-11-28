@@ -4,7 +4,6 @@ import 'package:mathwiz_app/services/auth.dart';
 import 'package:mathwiz_app/services/avatar_api.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/signup/create_avatar_screen.dart';
-import 'package:mathwiz_app/views/welcome_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/box_pass_field.dart';

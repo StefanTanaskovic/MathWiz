@@ -17,6 +17,7 @@ import 'package:mathwiz_app/views/homepage/teacher/trivia_homepage_box_teacher.d
 import 'package:mathwiz_app/widgets/ham_menu_start.dart';
 import 'package:provider/provider.dart';
 import 'package:mathwiz_app/views/homepage/teacher/achievement_homepage_box_teacher.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import 'asteroids_homepage_box.dart';
 
@@ -91,12 +92,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
                       child: Card(
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child:
-                            // Image.asset(
-                            //   'assets/images/avatar.png',
-                            //   fit: BoxFit.fill,
-                            // ),
-                            Image.network(
+                        child: Image.network(
                           "https://www.doppelme.com/" +
                               avatarList[index].toString() +
                               "/cropb.png",

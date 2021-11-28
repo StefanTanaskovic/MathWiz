@@ -1,5 +1,3 @@
-import 'package:mathwiz_app/model/class_model.dart';
-
 class UserModel {
   String uid;
   int bank;

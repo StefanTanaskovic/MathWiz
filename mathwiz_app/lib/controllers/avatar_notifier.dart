@@ -28,12 +28,16 @@ class AvatarNotifier extends ChangeNotifier {
   }
 
   Future getItems(context) async {
-    await getAvatarImages(context).then((value) {
-      if (value != null) {
-        _masterItemsModel = value;
-      }
-    });
-    notifyListeners();
+    if (masterItemsModel == null) {
+      await getAvatarImages(context).then((value) {
+        if (value != null) {
+          _masterItemsModel = value;
+        }
+      });
+      notifyListeners();
+    } else {
+      print('MasterItems not Null!');
+    }
   }
 
   Future createAvatar() async {

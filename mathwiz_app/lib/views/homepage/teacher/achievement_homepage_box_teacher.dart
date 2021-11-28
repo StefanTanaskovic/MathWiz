@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mathwiz_app/controllers/achievement_notifier.dart';
-import 'package:mathwiz_app/views/achievements/view_achievement.dart';
 import 'package:mathwiz_app/views/homepage/teacher/achievement_list.dart';
-import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class AchievementHomepageBoxTeacher extends StatefulWidget {
   @override
-  _AchievementHomepageBoxTeacherState createState() => _AchievementHomepageBoxTeacherState();
+  _AchievementHomepageBoxTeacherState createState() =>
+      _AchievementHomepageBoxTeacherState();
 }
 
-class _AchievementHomepageBoxTeacherState extends State<AchievementHomepageBoxTeacher> {
+class _AchievementHomepageBoxTeacherState
+    extends State<AchievementHomepageBoxTeacher> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,10 +30,9 @@ class _AchievementHomepageBoxTeacherState extends State<AchievementHomepageBoxTe
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,
                     color: Colors.white)),
-                    AchievementList(),
+            AchievementList(),
             SizedBox(height: 10),
           ],
-        )
-    );
+        ));
   }
 }

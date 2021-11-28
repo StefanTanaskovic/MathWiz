@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
-import 'package:mathwiz_app/services/avatar_api.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/widgets/ham_menu_start.dart';
@@ -82,12 +81,26 @@ class _ShopScreenState extends State<ShopScreen> {
                                       margin:
                                           EdgeInsets.symmetric(horizontal: 10),
                                       alignment: Alignment.center,
-                                      child: Text(
-                                        "Gold:",
+                                      child: RichText(
+                                          text: TextSpan(
+                                        text: 'Gold: ',
+                                        children: [
+                                          TextSpan(
+                                              text: context
+                                                  .watch<
+                                                      FirestoreDatabaseService>()
+                                                  .user
+                                                  .bank
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.amber,
+                                                  fontSize: 20)),
+                                        ],
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: kSecondaryColor),
-                                      ),
+                                            color: kSecondaryColor,
+                                            fontSize: 18),
+                                      )),
                                     ),
                                   ),
                                 ],
@@ -97,30 +110,34 @@ class _ShopScreenState extends State<ShopScreen> {
                           Expanded(
                             flex: 2,
                             child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              alignment: Alignment.bottomCenter,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: kPrimaryColor, // background
-                                  onPrimary: Colors.white, // foreground
-                                ),
-                                child: Text("Buy"),
-                                onPressed: () async {
-                                  fsDatabase.updateBank(15);
-                                  // APIService service = new APIService();
+                                // padding: EdgeInsets.symmetric(vertical: 10),
+                                // alignment: Alignment.bottomCenter,
+                                // child: ElevatedButton(
+                                //   style: ElevatedButton.styleFrom(
+                                //     primary: kPrimaryColor, // background
+                                //     onPrimary: Colors.white, // foreground
+                                //   ),
+                                //   child: Text("Buy"),
+                                //   onPressed: () {
+                                //     MasterItemsModel masterList = context
+                                //         .read<AvatarNotifier>()
+                                //         .masterItemsModel;
+                                //     print(masterList.tops[1]);
 
-                                  // await service
-                                  //     .getItemInfo('face')
-                                  //     .then((value) {
-                                  //   value.tops.forEach((element) {
-                                  //     print(element.id +
-                                  //         ' : ' +
-                                  //         element.description);
-                                  //   });
-                                  // });
-                                },
-                              ),
-                            ),
+                                //     // APIService service = new APIService();
+
+                                //     // await service
+                                //     //     .getItemInfo('face')
+                                //     //     .then((value) {
+                                //     //   value.tops.forEach((element) {
+                                //     //     print(element.id +
+                                //     //         ' : ' +
+                                //     //         element.description);
+                                //     //   });
+                                //     // });
+                                //   },
+                                // ),
+                                ),
                           ),
                         ],
                       ),
