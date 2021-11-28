@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:mathwiz_app/controllers/trivia_activity_notifier.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +53,8 @@ class _TriviaScreenState extends State<TriviaScreen> {
 
   TriviaListNotifier triviaListNotifier =
          Provider.of<TriviaListNotifier>(context,listen: false);
-
+FirestoreDatabaseService fsDatabase =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
     triviaListNotifier.setQuestions(amountQuestions);
      
     return Scaffold(
@@ -80,12 +82,12 @@ class _TriviaScreenState extends State<TriviaScreen> {
                   triviaListNotifier.save(
                     value, 
                     TriviaModel(
-                    id: "OCgLkR3W9j32lnFUhW4x",
                     title: quizTitle, 
                     questions: triviaListNotifier.questions,
                     minReward: goldMin,
                     firstReward: goldFirst,
-                    timer: timer)
+                    timer: timer),
+                    fsDatabase.classID
                   );
                 }
               },

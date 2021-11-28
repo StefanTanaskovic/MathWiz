@@ -50,14 +50,14 @@ class _RaceToTopHomepageBoxTeacherState extends State<RaceToTopHomepageBoxTeache
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return RaceQuizScreen(quiz: raceList[index]);
-                                    },
-                                  ),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) {
+                                //       return RaceQuizScreen(quiz: raceList[index], index: index);
+                                //     },
+                                //   ),
+                                // );
                               },
                           ),
                           ),

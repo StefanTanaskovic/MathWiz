@@ -5,25 +5,26 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/model/user.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 
 class TriviaQuizScreen extends StatefulWidget {
-
+  final int index;
   final TriviaModel quiz;
-  TriviaQuizScreen({this.quiz});
+  TriviaQuizScreen({this.quiz, this.index});
 
   @override
   State<StatefulWidget> createState() {
-    return _TriviaQuizScreenState(quiz: quiz);
+    return _TriviaQuizScreenState(quiz: quiz, index: index);
   }
 }
 
 class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
   final fb = FirebaseDatabase.instance;
   int score = 0;
-
+  int index;
   TriviaModel quiz;
   int finalScore = 0;
   List colors = [Colors.red, kPrimaryColor, kSecondaryColor, Colors.blue];
@@ -32,7 +33,7 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
   int questionIndex = 0;
   int timer;
   bool buttonClicked = false;
-  _TriviaQuizScreenState({this.quiz});
+  _TriviaQuizScreenState({this.quiz, this.index});
 
 
   void nextQuestion() {
@@ -56,7 +57,7 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
       ),
       body: SafeArea(
         child: Builder(builder: (BuildContext context){
-          switch(triviaList[0].status) { 
+          switch(triviaList[index].status) { 
             case "Waiting": {  
               return Center(
                 child: Padding(
@@ -87,7 +88,7 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
                   onEnd:(){
                     if (this.mounted) {
                     setState(() {
-                      triviaList[0].status = "Start Quiz";                                   
+                      triviaList[index].status = "Start Quiz";                                   
                     });
                     }
                   },
@@ -114,6 +115,9 @@ List <Widget> _buildQuiz(int i) {
   UserModel user = Provider.of<UserModel>(context);
   Size size = MediaQuery.of(context).size;
   timer = DateTime.now().millisecondsSinceEpoch + 1000 * quiz.timer;
+    FirestoreDatabaseService fsDatabase =
+          Provider.of<FirestoreDatabaseService>(context, listen: false);
+  fsDatabase.updateBank(quiz.minReward);
   if(questionIndex == quiz.questions.length){
     return <Widget>[
       Text("Congrats!",
@@ -167,9 +171,9 @@ List <Widget> _buildQuiz(int i) {
                   style: ElevatedButton.styleFrom(primary: colors[index]),
                   onPressed: () {  
                       if (questionIndex == quiz.questions.length -1){
-                        checkAnswer(i, index, triviaList[0].id, user.uid);
+                        checkAnswer(i, index, triviaList[index].id, user.uid);
                       }else{
-                        checkAnswer(i, index, triviaList[0].id, user.uid);
+                        checkAnswer(i, index, triviaList[index].id, user.uid);
                       }
                   },
                   child: Text("${quiz.questions[i].answers[index]}"),

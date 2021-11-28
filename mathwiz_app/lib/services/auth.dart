@@ -17,7 +17,7 @@ class AuthService {
   }
 
   //register with email and password
-  Future signUpEmail(email, password) async {
+  Future signUpEmail(email, password, type) async {
     try {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -28,7 +28,7 @@ class AuthService {
       sharedPreferences.setString('UID', user.uid);
 
       FirestoreDatabaseService databaseService = new FirestoreDatabaseService();
-      databaseService.createUser();
+      databaseService.createUser(type);
 
       return user;
     } catch (e) {

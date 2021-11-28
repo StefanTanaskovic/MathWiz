@@ -1,63 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mathwiz_app/controllers/race_to_top_creator_notifier.dart';
+import 'package:mathwiz_app/controllers/asteroid_notifier.dart';
+import 'package:mathwiz_app/controllers/trivia_activity_notifier.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
-import 'package:mathwiz_app/model/race_to_top.dart';
+import 'package:mathwiz_app/model/asteroid_model.dart';
+import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import '../../../constants.dart';
 import 'package:provider/provider.dart';
 
-class RaceScreen extends StatefulWidget {
-  final int goldFirst;
-  final int goldMin;
+class AsteroidQuestions extends StatefulWidget {
+  final int timer;
+  final int reward;
   final int amountQuestions;
   final int amountAnswers;
   final String quizTitle;
+  final int lives;
 
-  RaceScreen({this.amountQuestions, this.amountAnswers, this.quizTitle, this.goldFirst, this.goldMin});
+  AsteroidQuestions({this.timer, this.amountQuestions, this.amountAnswers, this.quizTitle, this.reward, this.lives});
 
   @override
   State<StatefulWidget> createState() {
-    return _RaceScreenState(
+    return _AsteroidQuestionsState(
       amountAnswers: amountAnswers, 
       amountQuestions: amountQuestions, 
       quizTitle: quizTitle, 
-      goldFirst:goldFirst, 
-      goldMin: goldMin
+      reward:reward, 
+      timer: timer,
+      lives: lives,
     );
   }
 }
 
 List<Widget> children;
 
-class _RaceScreenState extends State<RaceScreen> {
-  Map selected = new Map();
-  final int goldFirst;
-  final int goldMin;
+class _AsteroidQuestionsState extends State<AsteroidQuestions> {
+  final int lives;
+  final int timer;
+  final int reward;
   final int amountQuestions;
   final int amountAnswers;
   final String quizTitle;
   final _formKey = GlobalKey<FormState>();
   
-  _RaceScreenState({this.amountQuestions, 
+  _AsteroidQuestionsState({this.amountQuestions, 
                     this.amountAnswers,
                     this.quizTitle, 
-                    this.goldFirst, 
-                    this.goldMin});
+                    this.reward, 
+                    this.timer, 
+                    this.lives
+                    });
 
   @override
   Widget build(BuildContext context) {
 
-  RaceListNotifier raceListNotifier =
-         Provider.of<RaceListNotifier>(context,listen: false);
+  AsteroidListNotifier asteroidListNotifier =
+         Provider.of<AsteroidListNotifier>(context,listen: false);
 FirestoreDatabaseService fsDatabase =
         Provider.of<FirestoreDatabaseService>(context, listen: false);
-    raceListNotifier.setQuestions(amountQuestions);
+    asteroidListNotifier.setQuestions(amountQuestions);
      
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: const Text('Race to the Top Creator'),
+        title: const Text('Trivia Creator'),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 5),
@@ -75,17 +81,18 @@ FirestoreDatabaseService fsDatabase =
               onChanged: (String value) {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  raceListNotifier.setCorrectAns(raceListNotifier.questions);
-                  raceListNotifier.save(
+                  asteroidListNotifier.setCorrectAns(asteroidListNotifier.questions);
+                  asteroidListNotifier.save(
                     value, 
-                    RaceTopModel(
-                      status: "Waiting",
+                    AsteroidModel(
                     title: quizTitle, 
-                    questions: raceListNotifier.questions,
-                    minReward: goldMin,
-                    firstReward: goldFirst),
-                    fsDatabase.classID
-                  );
+                    questions: asteroidListNotifier.questions,
+                    reward: reward,
+                    timer: timer,
+                    lives: lives
+                    ),
+
+                  fsDatabase.classID);
                 }
               },
               items: <String>['Publish', 'Drafts']
@@ -122,14 +129,14 @@ FirestoreDatabaseService fsDatabase =
   }
 
   Widget _buildCreator() {
-    RaceListNotifier raceListNotifier =
-         Provider.of<RaceListNotifier>(context);
+    AsteroidListNotifier asteroidListNotifier =
+         Provider.of<AsteroidListNotifier>(context);
     return ExpansionPanelList.radio(
       initialOpenPanelValue: 0,
       expansionCallback: (int index, bool isExpanded) {
-        raceListNotifier.expansion(raceListNotifier.questions[index], isExpanded);
+        asteroidListNotifier.expansion(asteroidListNotifier.questions[index], isExpanded);
       },
-      children: raceListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswerModel item) {
+      children: asteroidListNotifier.questions.map<ExpansionPanelRadio>((QuestionAnswerModel item) {
         return ExpansionPanelRadio(
           value: item.id,
           headerBuilder: (BuildContext context, bool isExpanded) {
@@ -172,9 +179,9 @@ FirestoreDatabaseService fsDatabase =
                 child:
                 Radio(
                   value: i, 
-                  groupValue: raceListNotifier.selected[item.id] != null ? raceListNotifier.selected[item.id] : "",
+                  groupValue: asteroidListNotifier.selected[item.id] != null ? asteroidListNotifier.selected[item.id] : "",
                   onChanged: (value) {
-                    raceListNotifier.radioValueChanged(item.id, value);
+                    asteroidListNotifier.radioValueChanged(item.id, value);
                   },
                 )
               ),

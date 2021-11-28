@@ -2,28 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/homework/create_homework.dart';
+import 'package:mathwiz_app/views/trivia/asteroids/asteroids_prev.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_prev.dart';
 import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_prev.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
 import 'package:mathwiz_app/views/homepage/teacher/homework_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/race_to_top_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/trivia_homepage_box_teacher.dart';
+import 'package:mathwiz_app/widgets/ham_menu_start.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
+import 'asteroids_homepage_box.dart';
 
 class HomepageTeacherScreen extends StatefulWidget {
+      final int index;
+  HomepageTeacherScreen({this.index});
   @override
   State<StatefulWidget> createState() {
-    return _HomepageTeacherScreenState();
+    return _HomepageTeacherScreenState(index: index);
   }
 }
 
 class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
+    int index;
+  _HomepageTeacherScreenState({this.index});
   int _current = 0;
   final List<Widget> items = [
-    HomeworkHomepageBoxTeacher(),
+    //HomeworkHomepageBoxTeacher(),
     RaceToTopHomepageBoxTeacher(),
-    TriviaHomepageBoxTeacher()
+    TriviaHomepageBoxTeacher(),
+    AsteroidsHomepageBoxTeacher()
   ];
   bool dialVisible = true;
   ScrollController scrollController;
@@ -46,55 +56,67 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    FirestoreDatabaseService fsDatabase =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
+    final avatarList = fsDatabase.avatarIDList;
 
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Math Class Grade 8 - Mr. Stefan",
-              style: TextStyle(
-                fontSize: 16,
-              )),
-          backgroundColor: kPrimaryColor,
-        ),
-        drawer: HamMenu(size: size),
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 10.0),
-                height: size.height * 0.45,
+      appBar: AppBar(
+        title: Text("${fsDatabase.classList[index].title}",
+            style: TextStyle(
+              fontSize: 16,
+            )),
+        backgroundColor: kPrimaryColor,
+      ),
+      drawer: HamMenuStart(size: size),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
                 child: GridView.count(
                   mainAxisSpacing: 1,
                   crossAxisSpacing: 1,
                   crossAxisCount: 6,
-                  children: List.generate(30, (index) {
+                  children: List.generate(avatarList.length, (index) {
                     return Align(
                         child: Container(
-                      height: 60,
-                      width: 60,
                       child: Card(
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Image.asset(
-                          'assets/images/avatar.png',
-                          fit: BoxFit.fill,
+                        child:
+                            // Image.asset(
+                            //   'assets/images/avatar.png',
+                            //   fit: BoxFit.fill,
+                            // ),
+                            Image.network(
+                          "https://www.doppelme.com/" +
+                              avatarList[index].toString() +
+                              "/cropb.png",
                         ),
                       ),
                     ));
                   }),
                 ),
               ),
-              CarouselSlider(
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20),
+              child: CarouselSlider(
                   options: CarouselOptions(
-                      height: 260.0,
+                      height: 250.0,
                       onPageChanged: (index, reason) {
                         setState(() {
                           _current = index;
                         });
                       }),
                   items: items),
-              Row(
+            ),
+            Container(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: items.map((url) {
                   int index = items.indexOf(url);
@@ -112,10 +134,12 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
                   );
                 }).toList(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        floatingActionButton: buildSpeedDial());
+      ),
+      floatingActionButton: buildSpeedDial()
+    );
   }
 
   SpeedDial buildSpeedDial() {
@@ -139,6 +163,23 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
       elevation: 8.0,
       shape: CircleBorder(),
       children: [
+         SpeedDialChild(
+          child: Icon(
+            Icons.assignment_outlined,
+            color: Colors.white,
+          ),
+          backgroundColor: kPrimaryColor,
+          label: 'Asteroids',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return AsteroidRequirements();
+              },
+            ),
+          ),
+        ),
         SpeedDialChild(
           child: Icon(
             Icons.assignment_outlined,

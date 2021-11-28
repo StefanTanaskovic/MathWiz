@@ -6,32 +6,33 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/user.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 
 class RaceQuizScreen extends StatefulWidget {
-
+  final int index;
   final RaceTopModel quiz;
-  RaceQuizScreen({this.quiz});
+  RaceQuizScreen({this.quiz, this.index});
 
   @override
   State<StatefulWidget> createState() {
-    return _RaceQuizScreenState(quiz: quiz);
+    return _RaceQuizScreenState(quiz: quiz, index: index);
   }
 }
 
 class _RaceQuizScreenState extends State<RaceQuizScreen> {
   final fb = FirebaseDatabase.instance;
   int score = 0;
-
+  int index;
   RaceTopModel quiz;
   int finalScore = 0;
   List colors = [Colors.red, kPrimaryColor, kSecondaryColor, Colors.blue];
   Random random = new Random();
   int colorIndex = 0;
   int questionIndex = 0;
-  _RaceQuizScreenState({this.quiz});
+  _RaceQuizScreenState({this.quiz, this.index});
   int _counter = 0;
   Timer _timer;
   bool timerFlag = false;
@@ -46,7 +47,8 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
       ),
       body: SafeArea(
         child: Builder(builder: (BuildContext context){
-          switch(raceList[0].status) { 
+          print(index);
+          switch(raceList[index].status) { 
             case "Waiting": {  
               return 
               Center(
@@ -80,7 +82,7 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
                   onEnd:(){
                     if (this.mounted) {
                       setState(() {
-                        raceList[0].status = "Start Quiz";                                   
+                        raceList[index].status = "Start Quiz";                                   
                       });
                     }
                   },
@@ -109,6 +111,9 @@ List <Widget> _buildQuiz(int i) {
   Size size = MediaQuery.of(context).size;
   final raceList = Provider.of<List<RaceTopModel>>(context) ?? [];
   UserModel user = Provider.of<UserModel>(context);
+  FirestoreDatabaseService fsDatabase =
+          Provider.of<FirestoreDatabaseService>(context, listen: false);
+  fsDatabase.updateBank(quiz.minReward);
   if(questionIndex == quiz.questions.length){
     _timer.cancel();
     return <Widget>[
@@ -151,10 +156,10 @@ List <Widget> _buildQuiz(int i) {
                   onPressed: () {  
                     setState(() {
                       if (questionIndex == quiz.questions.length -1){
-                        checkAnswer(i, index, raceList[0].id, user.uid);
+                        checkAnswer(i, index, raceList[index].id, user.uid);
                         questionIndex += 1;
                       }else{
-                        checkAnswer(i, index, raceList[0].id, user.uid);
+                        checkAnswer(i, index, raceList[index].id, user.uid);
                         questionIndex += 1;
                       }
                     });

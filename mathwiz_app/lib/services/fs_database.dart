@@ -5,16 +5,31 @@ import 'package:mathwiz_app/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirestoreDatabaseService extends ChangeNotifier {
+  
   UserModel _userM;
   List<ClassModel> _classList = [];
+  String _classID;
   List<String> _avatarIDsInClass = [];
-
+  
   UserModel get user => _userM;
   List<ClassModel> get classList => _classList;
+  String get classID => _classID;
   List<String> get avatarIDList => _avatarIDsInClass;
+
+  updateBank(int amount){
+    CollectionReference ref = FirebaseFirestore.instance.collection('users');
+    var currentAmount = _userM.bank;
+    currentAmount = currentAmount + (amount);
+    ref
+    .doc(_userM.uid)
+    .update({'bank': currentAmount})
+    .then((value) => print("Money Updated"))
+    .catchError((error) => print("Failed to update user: $error"));
+  }
 
   Future getClassAvatars(int index) async {
     _avatarIDsInClass = [];
+    print(_classList[0].stundetIDs);
     await FirebaseFirestore.instance
         .collection('users')
         .get()
@@ -29,13 +44,19 @@ class FirestoreDatabaseService extends ChangeNotifier {
     //notifyListeners();
   }
 
-  createUser() async {
+  createUser(String type) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     FirebaseFirestore.instance
         .collection('users')
         .doc(sharedPreferences.getString('UID'))
-        .set({"id": sharedPreferences.getString('UID'), "class_list": []});
+        .set({
+            "id": sharedPreferences.getString('UID'), 
+            "class_list": [],
+            "avatar_id": "",
+            "bank": 100,
+            "type": type
+          });
   }
 
   setUser() async {
@@ -46,19 +67,16 @@ class FirestoreDatabaseService extends ChangeNotifier {
         .doc(sharedPreferences.getString('UID'))
         .get()
         .then((DocumentSnapshot snapshot) {
-      print("-----");
-      print(snapshot.data());
-      print("-----");
 
       UserModel _userModel = new UserModel(
         uid: snapshot.data()['id'],
         classList: snapshot.data()['class_list'],
         avatarID: snapshot.data()['avatar_id'],
+        bank: snapshot.data()['bank'],
+        type: snapshot.data()['type']
       );
 
       _userM = _userModel;
-
-      setClassList();
       notifyListeners();
     });
   }
@@ -113,6 +131,45 @@ class FirestoreDatabaseService extends ChangeNotifier {
     notifyListeners();
   }
 
+  addClassCode(String code) async {
+        await FirebaseFirestore.instance
+        .collection('classrooms')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) {
+            if(doc["class_code"] == code){
+               _classList.add(ClassModel(
+                  id: doc['class_id'],
+                  code: doc['class_code'],
+                  title: doc['class_title'],
+                  teacher: doc['teacher_id'],
+                  stundetIDs: doc['student_ids']));
+              var userRef = FirebaseFirestore.instance
+              .collection('users')
+              .doc(_userM.uid.toString());
+              userRef.update({
+                'class_list': FieldValue.arrayUnion([doc["class_id"]])
+              });
+
+              var classRef = FirebaseFirestore.instance
+              .collection('classrooms')
+              .doc(doc["class_id"]);
+              classRef.update({
+                'student_ids': FieldValue.arrayUnion([_userM.uid.toString()])
+              });
+              }
+          });
+        });
+        setClassList();
+        notifyListeners();
+  }
+
+  setAvatarID(value){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(_userM.uid.toString()).update({'avatar_id': value});
+  }
+
   deleteClass(index) {
     _classList
         .removeWhere((_classModel) => _classModel.id == classList[index].id);
@@ -121,5 +178,9 @@ class FirestoreDatabaseService extends ChangeNotifier {
 
   clearClassList() {
     _classList = [];
+  }
+
+  setClassID(int index){
+    _classID = classList[index].id;
   }
 }

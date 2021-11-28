@@ -1,4 +1,8 @@
+import 'package:mathwiz_app/controllers/homepage_student_controller.dart';
+import 'package:mathwiz_app/model/asteroid_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/homepage/student/asteroids_list.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +14,7 @@ class AsteroidsHomepageBoxStudent extends StatefulWidget {
 class _AsteroidsHomepageBoxStudentState extends State<AsteroidsHomepageBoxStudent> {
    @override
   Widget build(BuildContext context) {
-  
+    
     return Container(
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.symmetric(horizontal: 5.0),

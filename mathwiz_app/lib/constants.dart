@@ -26,3 +26,7 @@ const kBackgroundColor = Colors.white;
 // Gold Colors
 Color goldColorGold = HexColor("#ffbf00");
 Color goldColorGoldlight = HexColor("#FFEBAD");
+
+// Red Colors
+Color redColor = HexColor("#f24438");
+Color redColorlight = HexColor("#ff8178");

@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
 import '../model/race_to_top.dart';
@@ -34,13 +36,10 @@ class RaceListNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  save(type, quiz) {
-    for(var i = 0; i < quiz.questions.length; i++){
-      print(quiz.questions[i].answers);
-    }
+  save(type, RaceTopModel quiz, classID) {
     switch(type) { 
-      case "Publish": {  
-        quiz.status = "Publish";
+      case "Publish": { 
+        quiz.published = true;
       _raceQuizList.add(quiz);
       _selected = {};
       questions = [];
@@ -48,13 +47,19 @@ class RaceListNotifier extends ChangeNotifier {
       break; 
     
       case "Drafts": { 
-        quiz.status = "Drafts";
+        quiz.published = false;
         _raceQuizList.add(quiz);
         _selected = {};
         questions = [];
       } 
       break; 
     } 
+    quiz.status = "Waiting";
+    FirebaseFirestore.instance
+        .collection('classrooms')
+        .doc(classID).collection('races').add(
+          json.decode(jsonEncode(quiz)),
+        );
     notifyListeners();
   }
 

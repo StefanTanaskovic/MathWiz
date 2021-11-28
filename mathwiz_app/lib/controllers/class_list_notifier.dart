@@ -34,7 +34,6 @@ class ClassListNotifier {
       "student_ids": newClass.stundetIDs,
     });
     classListID.add(ref.id);
-    print(classListID);
   }
 
   // deleteClass(index) {

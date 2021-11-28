@@ -19,4 +19,19 @@ class AsteroidModel {
   String status;
   int timer;
   int lives;
+
+    Map toJson(){
+    List<Map> jsonquestions =
+        this.questions != null ? this.questions.map((i) => i.toJson()).toList() : null;
+    return {
+      'asteroid_lives': lives,
+      'asteroid_published':published,
+      'asteroid_reward': reward,
+      'asteroid_status': status,
+      'asteroid_title': title ,
+      'questions':jsonquestions,
+      
+      
+    };
+  }
 }

@@ -8,6 +8,8 @@ class HomeworkCheckHomepageBoxStudent extends StatefulWidget {
 }
 
 class _HomeworkCheckHomepageBoxStudentState extends State<HomeworkCheckHomepageBoxStudent> {
+  _HomeworkCheckHomepageBoxStudentState();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +34,8 @@ class _HomeworkCheckHomepageBoxStudentState extends State<HomeworkCheckHomepageB
             HomeworkList(),
             SizedBox(height: 10),
           ],
+
+        
         )
     );
   }

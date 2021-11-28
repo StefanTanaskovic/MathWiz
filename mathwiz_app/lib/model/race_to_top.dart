@@ -17,4 +17,17 @@ class RaceTopModel {
   int firstReward;
   String status;
   bool published;
+
+  Map toJson(){
+    List<Map> jsonquestions =
+        this.questions != null ? this.questions.map((i) => i.toJson()).toList() : null;
+    return {
+      'race_first_reward': minReward,
+      'race_min_reward': firstReward,
+      'race_published':published,
+      'race_questions':jsonquestions,
+      'race_status': status,
+      'race_title': title ,
+    };
+  }
 }

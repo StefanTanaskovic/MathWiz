@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
-import 'package:mathwiz_app/model/trivia_model.dart';
+import 'package:mathwiz_app/model/asteroid_model.dart';
+import '../model/race_to_top.dart';
 
-class TriviaListNotifier extends ChangeNotifier {
-  List<TriviaModel> _triviaList = [];
+class AsteroidListNotifier extends ChangeNotifier {
+  List<AsteroidModel> _asteroidList = [];
   Map _selected = Map();
   List<QuestionAnswerModel> questions = [];
 
@@ -21,9 +22,8 @@ class TriviaListNotifier extends ChangeNotifier {
   }
 
   Map get selected => _selected;
-
-  UnmodifiableListView<TriviaModel> get triviaList =>
-      UnmodifiableListView(_triviaList);
+  UnmodifiableListView<AsteroidModel> get asteroidList =>
+      UnmodifiableListView(_asteroidList);
 
   radioValueChanged(id, value) {
     selected[id] = value;
@@ -37,11 +37,11 @@ class TriviaListNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  save(type, TriviaModel quiz, classID) {
+  save(type, AsteroidModel quiz, classID) {
     switch(type) { 
       case "Publish": { 
         quiz.published = true;
-      _triviaList.add(quiz);
+      _asteroidList.add(quiz);
       _selected = {};
       questions = [];
       } 
@@ -49,7 +49,7 @@ class TriviaListNotifier extends ChangeNotifier {
     
       case "Drafts": { 
         quiz.published = false;
-        _triviaList.add(quiz);
+        _asteroidList.add(quiz);
         _selected = {};
         questions = [];
       } 
@@ -58,14 +58,14 @@ class TriviaListNotifier extends ChangeNotifier {
     quiz.status = "Waiting";
     FirebaseFirestore.instance
         .collection('classrooms')
-        .doc(classID).collection('trivias').add(
+        .doc(classID).collection('asteroids').add(
           json.decode(jsonEncode(quiz)),
         );
     notifyListeners();
   }
 
   changeStatus(status, index){
-    triviaList[index].status = status;
+    _asteroidList[index].status = status;
     notifyListeners();
   }
 
@@ -75,7 +75,7 @@ class TriviaListNotifier extends ChangeNotifier {
   }
 
   deleteRace(index) {
-    _triviaList.removeAt(index);
+    _asteroidList.removeAt(index);
     notifyListeners();
   }
 }

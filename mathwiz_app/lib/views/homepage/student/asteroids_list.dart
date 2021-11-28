@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/asteroid_model.dart';
 import 'package:mathwiz_app/views/trivia/asteroids/asteroids_quiz.dart';
+import 'package:mathwiz_app/views/trivia/asteroids/asteroids_wrapper.dart';
 import 'package:provider/provider.dart';
 
 class AsteroidsList extends StatefulWidget {
@@ -57,7 +58,7 @@ class _AsteroidsListState extends State<AsteroidsList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return AsteroidsQuizScreen(quiz: asteroidList[index]);
+                            return AsteroidsWrapper(quiz: asteroidList[index]);
                           },
                         ),
                       );

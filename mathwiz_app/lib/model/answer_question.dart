@@ -16,4 +16,10 @@ class QuestionAnswerModel {
   bool isExpanded;
   int answersAmount;
   int correctAnswer;
+
+    Map toJson() => {
+        'answers': answers,
+        'correct_answer': correctAnswer,
+        'question' : question
+      };
 }

@@ -14,7 +14,9 @@ import 'package:mathwiz_app/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
 
+import 'controllers/asteroid_notifier.dart';
 import 'controllers/homepage_student_controller.dart';
+import 'controllers/main_notifier.dart';
 import 'controllers/race_to_top_creator_notifier.dart';
 import 'controllers/trivia_activity_notifier.dart';
 
@@ -22,21 +24,21 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => MainNotifier()),
     ChangeNotifierProvider(create: (_) => FirestoreDatabaseService()),
     ChangeNotifierProvider(create: (_) => RaceListNotifier()),
+    ChangeNotifierProvider(create: (_) => AsteroidListNotifier()),
     ChangeNotifierProvider(create: (_) => TriviaListNotifier()),
     ChangeNotifierProvider(create: (_) => AvatarNotifier()),
+    ChangeNotifierProvider(create: (_) => HomepageStudentController()),
     ChangeNotifierProvider(create: (_) => HomeworkListNotifier()),
+    StreamProvider<List<TriviaModel>>(create: (context) =>
+          HomepageStudentController().triviaList, initialData: null
+        ),
     StreamProvider<UserModel>.value(
         value: AuthService().user,
         initialData: null,
         updateShouldNotify: (_, __) => true),
-    StreamProvider<List<TriviaModel>>.value(
-        value: HomepageStudentController().triviaList, initialData: null),
-    StreamProvider<List<AsteroidModel>>.value(
-        value: HomepageStudentController().asteroidsList, initialData: null),
-    StreamProvider<List<RaceTopModel>>.value(
-        value: HomepageStudentController().raceList, initialData: null),
     StreamProvider<List<ClassModel>>.value(
         value: ClassListNotifier().classList, initialData: null),
   ], child: MyApp()));

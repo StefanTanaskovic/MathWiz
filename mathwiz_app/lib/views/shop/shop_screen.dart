@@ -4,6 +4,7 @@ import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/services/avatar_api.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/widgets/ham_menu.dart';
+import 'package:mathwiz_app/widgets/ham_menu_start.dart';
 import 'package:mathwiz_app/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import 'components/shop_tab.dart';
@@ -47,7 +48,7 @@ class _ShopScreenState extends State<ShopScreen> {
               title: Text('Shop'),
               backgroundColor: kPrimaryColor,
             ),
-            drawer: HamMenu(size: size),
+            drawer: HamMenuStart(size: size),
             body: SafeArea(
                 child: Column(
               children: [
@@ -105,17 +106,18 @@ class _ShopScreenState extends State<ShopScreen> {
                                 ),
                                 child: Text("Buy"),
                                 onPressed: () async {
-                                  APIService service = new APIService();
+                                  fsDatabase.updateBank(15);
+                                  // APIService service = new APIService();
 
-                                  await service
-                                      .getItemInfo('face')
-                                      .then((value) {
-                                    value.tops.forEach((element) {
-                                      print(element.id +
-                                          ' : ' +
-                                          element.description);
-                                    });
-                                  });
+                                  // await service
+                                  //     .getItemInfo('face')
+                                  //     .then((value) {
+                                  //   value.tops.forEach((element) {
+                                  //     print(element.id +
+                                  //         ' : ' +
+                                  //         element.description);
+                                  //   });
+                                  // });
                                 },
                               ),
                             ),

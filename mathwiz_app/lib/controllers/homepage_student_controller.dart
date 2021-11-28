@@ -1,18 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:mathwiz_app/model/answer_question.dart';
 import 'package:mathwiz_app/model/asteroid_model.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
 
-class HomepageStudentController {
+class HomepageStudentController extends ChangeNotifier {
 
-  String classID = 'Ppipys4C6HhPXSoWbRvs';
-  
+  String classID;  
+  HomepageStudentController({this.classID});
+
   //get triva quizzes 
   Stream<List<TriviaModel>> get triviaList{
     CollectionReference triviaListCollection = FirebaseFirestore.instance.collection('classrooms')
     .doc(classID).collection('trivias');
-
+    print("stream");
     return triviaListCollection.snapshots().map(_triviaList);
   }
 
@@ -52,7 +54,7 @@ class HomepageStudentController {
   List<RaceTopModel> _raceList (QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
       List<QuestionAnswerModel> raceQuestions = [];
-
+      
       doc.data()['race_questions'].forEach((element){
         raceQuestions.add(
           QuestionAnswerModel(
@@ -95,7 +97,6 @@ class HomepageStudentController {
           )
           
         );
-        print(asteroidQuestions[0].correctAnswer);
         });
       return AsteroidModel(
         id: doc.id,

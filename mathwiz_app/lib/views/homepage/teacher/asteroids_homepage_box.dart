@@ -1,22 +1,21 @@
-import 'package:mathwiz_app/controllers/homepage_teacher_controller.dart';
-import 'package:mathwiz_app/model/trivia_model.dart';
-
-import '../../../constants.dart';
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/controllers/homepage_teacher_controller.dart';
+import 'package:mathwiz_app/model/asteroid_model.dart';
+import 'package:mathwiz_app/model/race_to_top.dart';
+import 'package:mathwiz_app/views/trivia/asteroids/asteroids_quiz.dart';
+import 'package:mathwiz_app/views/trivia/race_to_top/r2t_quiz.dart';
 import 'package:provider/provider.dart';
-import 'package:mathwiz_app/controllers/trivia_activity_notifier.dart';
-import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_quiz_screen.dart';
+import '../../../constants.dart';
 
-
-class TriviaHomepageBoxTeacher extends StatefulWidget {
+class AsteroidsHomepageBoxTeacher extends StatefulWidget {
   @override
-  _TriviaHomepageBoxTeacherState createState() => _TriviaHomepageBoxTeacherState();
+  _AsteroidsHomepageBoxTeacherState createState() => _AsteroidsHomepageBoxTeacherState();
 }
 
-class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
+class _AsteroidsHomepageBoxTeacherState extends State<AsteroidsHomepageBoxTeacher> {
   @override
   Widget build(BuildContext context) {
-    final triviaList = Provider.of<List<TriviaModel>>(context) ?? [];
+    final asteroidsList = Provider.of<List<AsteroidModel>>(context) ?? [];
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -29,7 +28,7 @@ class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 10),
-            Text('Trivia',
+            Text('Asteroids',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -38,29 +37,29 @@ class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
 
             Expanded(
               child: ListView.builder(
-                itemCount: triviaList.length,
+                itemCount: asteroidsList.length,
                 itemBuilder: (context, index) {
-                  if(triviaList[index].published == true){
+                  if(asteroidsList[index].published == true){
                     return Row(
                       children: [
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(left: 10,right: 10),
                             child: ElevatedButton(
-                              child: Text('${triviaList[index].title}'),
+                              child: Text('${asteroidsList[index].title}'),
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.white,
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) {
-                                //       return TriviaQuizScreen(quiz: triviaList[index]);
-                                //     },
-                                //   ),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return AsteroidsQuizScreen(quiz: asteroidsList[index]);
+                                    },
+                                  ),
+                                );
                               },
                           ),
                           ),
@@ -74,7 +73,7 @@ class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
                               onPrimary: Colors.black,
                             ),
                             onPressed: () {
-                              HomepageTeacherController().changeStatusRace("Drafts",triviaList[index].id);
+                              HomepageTeacherController().changeStatusRace("Drafts",asteroidsList[index].id);
                             },
                           ),
                         ),
@@ -87,7 +86,7 @@ class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                HomepageTeacherController().startRace(triviaList[index].id);
+                                HomepageTeacherController().startRace(asteroidsList[index].id);
                               },
                             ),
                           ),
@@ -100,7 +99,7 @@ class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
                             child: Padding(
                               padding: EdgeInsets.only(left: 10,right: 10),
                               child: ElevatedButton(
-                                child: Text('${triviaList[index].title}'),
+                                child: Text('${asteroidsList[index].title}'),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.white.withOpacity(0.7),
                                   onPrimary: Colors.black,
@@ -118,7 +117,7 @@ class _TriviaHomepageBoxTeacherState extends State<TriviaHomepageBoxTeacher> {
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                HomepageTeacherController().changeStatusRace("Publish",triviaList[index].id);
+                                HomepageTeacherController().changeStatusRace("Publish",asteroidsList[index].id);
                               },
                             ),
                           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/views/trivia/race_to_top/r2t_quiz.dart';
+import 'package:mathwiz_app/views/trivia/race_to_top/rtt_wrapper.dart';
 import 'package:provider/provider.dart';
 
 class RaceList extends StatefulWidget {
@@ -57,12 +58,12 @@ class _RaceListState extends State<RaceList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return RaceQuizScreen(quiz: raceList[index]);
+                            return RaceWrapper(quiz: raceList[index], index: index);
                           },
                         ),
                       );
                     },
-                ),
+                  ),
                 ),
               ),
             ]
