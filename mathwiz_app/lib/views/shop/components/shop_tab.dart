@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/model/avatar/items_model.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:provider/provider.dart';
 
 class ShopTab extends StatefulWidget {
@@ -15,7 +16,7 @@ class ShopTab extends StatefulWidget {
 
 class _ShopTabState extends State<ShopTab> {
   var title;
-  var assets;
+  List<ItemModel> assets;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,7 @@ class _ShopTabState extends State<ShopTab> {
                           child: Container(
                             decoration: BoxDecoration(
                               image: new DecorationImage(
-                                image: AssetImage(assets[index]),
+                                image: AssetImage(assets[index].imagePath),
                               ),
                               border: Border.all(
                                 color: kPrimaryColor,
@@ -95,6 +96,14 @@ class _ShopTabState extends State<ShopTab> {
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
+                                  child: Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: Wrap(
+                                      children: [
+                                        checkCost(assets, index),
+                                      ],
+                                    ),
+                                  ),
                                   splashColor: kSecondaryColor,
                                   onTap: () {
                                     tryAvatarItem(
@@ -111,8 +120,8 @@ class _ShopTabState extends State<ShopTab> {
         });
   }
 
-  tryAvatarItem(count, index, widget, context) {
-    var tapped;
+  tryAvatarItem(count, index, widget, BuildContext context) {
+    ItemModel tapped;
     var type;
     if (count == 0) {
       tapped = widget.items.faces[index];
@@ -143,10 +152,31 @@ class _ShopTabState extends State<ShopTab> {
       type = 'background';
     }
 
-    tapped = tapped.replaceAll(new RegExp(r'[^0-9]'), '');
+    if (tapped.itemCost <= context.read<FirestoreDatabaseService>().user.bank) {
+      print("Afforded! Buy!");
+      FirestoreDatabaseService fsDatabase =
+          Provider.of<FirestoreDatabaseService>(context, listen: false);
+      AvatarNotifier avatarNotifier =
+          Provider.of<AvatarNotifier>(context, listen: false);
 
-    AvatarNotifier avatarNotifier =
-        Provider.of<AvatarNotifier>(context, listen: false);
-    avatarNotifier.updateAvatar(tapped, type);
+      avatarNotifier.updateAvatar(tapped.itemID, type);
+      fsDatabase.updateBank(-tapped.itemCost);
+    } else {
+      print("You're too poor!");
+    }
+  }
+}
+
+checkCost(assets, index) {
+  if (assets[index].itemCost == 0) {
+    return Container();
+  } else {
+    return Container(
+        color: Colors.black.withOpacity(0.5),
+        child: Text(
+          assets[index].itemCost.toString(),
+          style: TextStyle(
+              color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 16),
+        ));
   }
 }

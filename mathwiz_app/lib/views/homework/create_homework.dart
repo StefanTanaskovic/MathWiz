@@ -92,21 +92,16 @@ class _CreateHomeworkScreenState extends State<CreateHomeworkScreen> {
   }
 
   sendToPublish() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return PublishHomeworkScreen(
-                            homework: HomeworkModel(
-                              ocrtext: OCRText,
-                              gold: 0,
-                              status: "",
-                              description: ""
-                            )
-                          );
-                        },
-                      ),
-                    );;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return PublishHomeworkScreen(
+              homework: HomeworkModel(
+                  ocrtext: OCRText, gold: 0, status: "", description: ""));
+        },
+      ),
+    );
   }
 
   @override

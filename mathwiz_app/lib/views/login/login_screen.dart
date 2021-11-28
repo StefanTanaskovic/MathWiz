@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/services/auth.dart';
-import 'package:mathwiz_app/views/shop/shop_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/box_pass_field.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:mathwiz_app/services/fs_database.dart';
 import 'package:mathwiz_app/views/homework/completed_homework.dart';
 import 'package:mathwiz_app/views/homework/create_homework.dart';
 import 'package:mathwiz_app/views/achievements/create_achievement.dart';
@@ -12,6 +13,7 @@ import 'package:mathwiz_app/views/homepage/teacher/homework_homepage_box_teacher
 import 'package:mathwiz_app/views/homepage/teacher/race_to_top_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/trivia_homepage_box_teacher.dart';
 import 'package:mathwiz_app/views/homepage/teacher/achievement_homepage_box_teacher.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class HomepageTeacherScreen extends StatefulWidget {
@@ -28,7 +30,6 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
     RaceToTopHomepageBoxTeacher(),
     TriviaHomepageBoxTeacher(),
     AchievementHomepageBoxTeacher()
-
   ];
   bool dialVisible = true;
   ScrollController scrollController;
@@ -51,6 +52,10 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FirestoreDatabaseService fsDatabase =
+        Provider.of<FirestoreDatabaseService>(context, listen: false);
+    final avatarList = fsDatabase.avatarIDList;
+
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -73,17 +78,16 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
                   mainAxisSpacing: 1,
                   crossAxisSpacing: 1,
                   crossAxisCount: 6,
-                  children: List.generate(30, (index) {
+                  children: List.generate(avatarList.length, (index) {
                     return Align(
                         child: Container(
-                      height: 60,
-                      width: 60,
                       child: Card(
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Image.asset(
-                          'assets/images/avatar.png',
-                          fit: BoxFit.fill,
+                        child: Image.network(
+                          "https://www.doppelme.com/" +
+                              avatarList[index].toString() +
+                              "/cropb.png",
                         ),
                       ),
                     ));
@@ -144,7 +148,7 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
       elevation: 8.0,
       shape: CircleBorder(),
       children: [
-          SpeedDialChild(
+        SpeedDialChild(
           child: Icon(
             Icons.assignment_outlined,
             color: Colors.white,

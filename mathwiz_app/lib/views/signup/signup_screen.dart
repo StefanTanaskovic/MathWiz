@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
 import 'package:mathwiz_app/services/auth.dart';
 import 'package:mathwiz_app/views/signup/create_avatar_screen.dart';
-import 'package:mathwiz_app/views/welcome_screen.dart';
 import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/box_input_field.dart';
 import 'package:mathwiz_app/widgets/box_pass_field.dart';
@@ -88,29 +87,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
             BoxButton(
               text: "SIGN UP",
               press: () async {
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
-                  dynamic result = await _auth.signUpEmail(_email, _password);
-                  if (result == null) {
-                    print("error");
-                  } else {
-                    print("signed in");
-                    print(result);
-                    //Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateAvatarScreen(),
+                    ));
 
-                    AvatarNotifier avatarNotifier =
-                        Provider.of<AvatarNotifier>(context, listen: false);
-                    avatarNotifier.createAvatar().then((value) => () {
-                          // TO DO: Store the AvatarID in the firabse realtime database for the user.
+                // if (_formKey.currentState.validate()) {
+                //   _formKey.currentState.save();
+                //   dynamic result = await _auth.signUpEmail(_email, _password);
+                //   if (result == null) {
+                //     print("error");
+                //   } else {
+                //     print("signed in");
+                //     print(result);
+                //     //Navigator.pop(context);
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateAvatarScreen(),
-                              ));
-                        });
-                  }
-                }
+                //     AvatarNotifier avatarNotifier =
+                //         Provider.of<AvatarNotifier>(context, listen: false);
+                //     avatarNotifier.createAvatar().then((value) => () {
+                //           // TO DO: Store the AvatarID in the firabse realtime database for the user.
+
+                //           Navigator.push(
+                //               context,
+                //               MaterialPageRoute(
+                //                 builder: (context) => CreateAvatarScreen(),
+                //               ));
+                //         });
+                //   }
+                // }
               },
             ),
             SizedBox(

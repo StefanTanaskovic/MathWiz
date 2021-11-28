@@ -13,6 +13,22 @@ class FirestoreDatabaseService extends ChangeNotifier {
   List<ClassModel> get classList => _classList;
   List<String> get avatarIDList => _avatarIDsInClass;
 
+  updateBank(int amount) {
+    // Update Firebase
+    CollectionReference ref = FirebaseFirestore.instance.collection('users');
+    var currentAmount = _userM.bank;
+    currentAmount = currentAmount + (amount);
+    ref
+        .doc(_userM.uid)
+        .update({'bank': currentAmount})
+        .then((value) => print("Money Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+
+    // Update User Model
+    user.bank = user.bank + amount;
+    notifyListeners();
+  }
+
   Future getClassAvatars(int index) async {
     _avatarIDsInClass = [];
     await FirebaseFirestore.instance
@@ -54,6 +70,7 @@ class FirestoreDatabaseService extends ChangeNotifier {
         uid: snapshot.data()['id'],
         classList: snapshot.data()['class_list'],
         avatarID: snapshot.data()['avatar_id'],
+        bank: snapshot.data()['bank'],
       );
 
       _userM = _userModel;
