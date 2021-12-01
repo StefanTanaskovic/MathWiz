@@ -5,26 +5,28 @@ import 'package:mathwiz_app/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirestoreDatabaseService extends ChangeNotifier {
-  
   UserModel _userM;
   List<ClassModel> _classList = [];
   String _classID;
   List<String> _avatarIDsInClass = [];
-  
+
   UserModel get user => _userM;
   List<ClassModel> get classList => _classList;
   String get classID => _classID;
   List<String> get avatarIDList => _avatarIDsInClass;
 
-  updateBank(int amount){
+  updateBank(int amount) {
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
     var currentAmount = _userM.bank;
     currentAmount = currentAmount + (amount);
     ref
-    .doc(_userM.uid)
-    .update({'bank': currentAmount})
-    .then((value) => print("Money Updated"))
-    .catchError((error) => print("Failed to update user: $error"));
+        .doc(_userM.uid)
+        .update({'bank': currentAmount})
+        .then((value) => print("Money Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+
+    // Update User
+    _userM.bank = currentAmount;
   }
 
   Future getClassAvatars(int index) async {
@@ -50,12 +52,12 @@ class FirestoreDatabaseService extends ChangeNotifier {
         .collection('users')
         .doc(sharedPreferences.getString('UID'))
         .set({
-            "id": sharedPreferences.getString('UID'), 
-            "class_list": [],
-            "avatar_id": "",
-            "bank": 100,
-            "type": type
-          });
+      "id": sharedPreferences.getString('UID'),
+      "class_list": [],
+      "avatar_id": "",
+      "bank": 100,
+      "type": type
+    });
   }
 
   setUser() async {
@@ -66,14 +68,12 @@ class FirestoreDatabaseService extends ChangeNotifier {
         .doc(sharedPreferences.getString('UID'))
         .get()
         .then((DocumentSnapshot snapshot) {
-
       UserModel _userModel = new UserModel(
-        uid: snapshot.data()['id'],
-        classList: snapshot.data()['class_list'],
-        avatarID: snapshot.data()['avatar_id'],
-        bank: snapshot.data()['bank'],
-        type: snapshot.data()['type']
-      );
+          uid: snapshot.data()['id'],
+          classList: snapshot.data()['class_list'],
+          avatarID: snapshot.data()['avatar_id'],
+          bank: snapshot.data()['bank'],
+          type: snapshot.data()['type']);
 
       _userM = _userModel;
 
@@ -133,40 +133,42 @@ class FirestoreDatabaseService extends ChangeNotifier {
   }
 
   addClassCode(String code) async {
-        await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('classrooms')
         .get()
         .then((QuerySnapshot querySnapshot) {
-          querySnapshot.docs.forEach((doc) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc["class_code"] == code) {
+          var classRef = FirebaseFirestore.instance
+              .collection('classrooms')
+              .doc(doc["class_id"]);
+          classRef.update({
+            'student_ids': FieldValue.arrayUnion([_userM.uid.toString()])
+          });
+          _classList.add(ClassModel(
+              id: doc['class_id'],
+              code: doc['class_code'],
+              title: doc['class_title'],
+              teacher: doc['teacher_id'],
+              stundetIDs: doc['student_ids'] + [_userM.uid.toString()]));
 
-            if(doc["class_code"] == code){
-              var classRef = FirebaseFirestore.instance.collection('classrooms').doc(doc["class_id"]);
-              classRef.update({
-                'student_ids': FieldValue.arrayUnion([_userM.uid.toString()])
-              });
-               _classList.add(ClassModel(
-                  id: doc['class_id'],
-                  code: doc['class_code'],
-                  title: doc['class_title'],
-                  teacher: doc['teacher_id'],
-                  stundetIDs: doc['student_ids'] + [_userM.uid.toString()]));
-
-              var userRef = FirebaseFirestore.instance
+          var userRef = FirebaseFirestore.instance
               .collection('users')
               .doc(_userM.uid.toString());
-              userRef.update({
-                'class_list': FieldValue.arrayUnion([doc["class_id"]])
-              });
-              }
+          userRef.update({
+            'class_list': FieldValue.arrayUnion([doc["class_id"]])
           });
-        });
-        notifyListeners();
+        }
+      });
+    });
+    notifyListeners();
   }
 
-  setAvatarID(value){
+  setAvatarID(value) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(_userM.uid.toString()).update({'avatar_id': value});
+        .doc(_userM.uid.toString())
+        .update({'avatar_id': value});
     _userM.avatarID = value;
   }
 
@@ -180,7 +182,7 @@ class FirestoreDatabaseService extends ChangeNotifier {
     _classList = [];
   }
 
-  setClassID(int index){
+  setClassID(int index) {
     _classID = classList[index].id;
   }
 }

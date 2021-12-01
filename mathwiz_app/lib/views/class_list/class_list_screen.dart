@@ -31,6 +31,7 @@ class _ClassListScreenState extends State<ClassListScreen> {
           Provider.of<FirestoreDatabaseService>(context, listen: false);
       final classList = fsDatabase.classList;
       if(context.watch<FirestoreDatabaseService>().user == null){
+        print("type null");
         return LoadingIndicator();
       }else{
         print(fsDatabase.user.type);
