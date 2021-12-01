@@ -30,6 +30,10 @@ class _ClassListScreenState extends State<ClassListScreen> {
       FirestoreDatabaseService fsDatabase =
           Provider.of<FirestoreDatabaseService>(context, listen: false);
       final classList = fsDatabase.classList;
+      if(context.watch<FirestoreDatabaseService>().user == null){
+        return LoadingIndicator();
+      }else{
+        print(fsDatabase.user.type);
       return Scaffold(
           appBar: AppBar(
             title: Text('Class List'),
@@ -55,13 +59,13 @@ class _ClassListScreenState extends State<ClassListScreen> {
                     return InkWell(
                         onTap: () {
                           fsDatabase.getClassAvatars(index).then((value) {
+                              MainNotifier mainNotifier = Provider.of<MainNotifier>(context,listen: false);
+                              mainNotifier.getNewBuildKey();
+                              fsDatabase.setClassID(index);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  MainNotifier mainNotifier = Provider.of<MainNotifier>(context,listen: false);
-                                  mainNotifier.getNewBuildKey();
-                                  fsDatabase.setClassID(index);
                                     return ClassListWrapper(index: index);
                                 },
                               ),
@@ -142,6 +146,8 @@ class _ClassListScreenState extends State<ClassListScreen> {
               height: size.height * 0.05,
             ),
           ])));
+      }
+
     }
   }
 
