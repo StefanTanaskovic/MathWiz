@@ -50,8 +50,6 @@ class AvatarNotifier extends ChangeNotifier {
         print('Error!');
       }
     });
-
-    
   }
 
   void updateAvatar(String itemID, String itemType) async {
