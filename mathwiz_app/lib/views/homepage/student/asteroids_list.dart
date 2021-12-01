@@ -58,7 +58,7 @@ class _AsteroidsListState extends State<AsteroidsList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return AsteroidsWrapper(quiz: asteroidList[index]);
+                            return AsteroidsWrapper(quiz: asteroidList[index], index: index);
                           },
                         ),
                       );

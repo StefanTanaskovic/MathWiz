@@ -21,31 +21,26 @@ class FirestoreDatabaseService extends ChangeNotifier {
     var currentAmount = _userM.bank;
     currentAmount = currentAmount + (amount);
     ref
-        .doc(_userM.uid)
-        .update({'bank': currentAmount})
-        .then((value) => print("Money Updated"))
-        .catchError((error) => print("Failed to update user: $error"));
-
-    // Update User Model
-    user.bank = user.bank + amount;
-    notifyListeners();
+    .doc(_userM.uid)
+    .update({'bank': currentAmount})
+    .then((value) => print("Money Updated"))
+    .catchError((error) => print("Failed to update user: $error"));
   }
 
   Future getClassAvatars(int index) async {
     _avatarIDsInClass = [];
-    print(_classList[0].stundetIDs);
     await FirebaseFirestore.instance
         .collection('users')
         .get()
         .then((QuerySnapshot collection) {
       collection.docs.forEach((doc) {
         if (_classList[index].stundetIDs.contains(doc['id'])) {
+          print(_classList[index].stundetIDs);
           _avatarIDsInClass.add(doc['avatar_id']);
         }
       });
     });
-
-    //notifyListeners();
+    notifyListeners();
   }
 
   createUser(String type) async {
@@ -81,6 +76,8 @@ class FirestoreDatabaseService extends ChangeNotifier {
       );
 
       _userM = _userModel;
+
+      setClassList();
       notifyListeners();
     });
   }
@@ -141,30 +138,28 @@ class FirestoreDatabaseService extends ChangeNotifier {
         .get()
         .then((QuerySnapshot querySnapshot) {
           querySnapshot.docs.forEach((doc) {
+
             if(doc["class_code"] == code){
+              var classRef = FirebaseFirestore.instance.collection('classrooms').doc(doc["class_id"]);
+              classRef.update({
+                'student_ids': FieldValue.arrayUnion([_userM.uid.toString()])
+              });
                _classList.add(ClassModel(
                   id: doc['class_id'],
                   code: doc['class_code'],
                   title: doc['class_title'],
                   teacher: doc['teacher_id'],
-                  stundetIDs: doc['student_ids']));
+                  stundetIDs: doc['student_ids'] + [_userM.uid.toString()]));
+
               var userRef = FirebaseFirestore.instance
               .collection('users')
               .doc(_userM.uid.toString());
               userRef.update({
                 'class_list': FieldValue.arrayUnion([doc["class_id"]])
               });
-
-              var classRef = FirebaseFirestore.instance
-              .collection('classrooms')
-              .doc(doc["class_id"]);
-              classRef.update({
-                'student_ids': FieldValue.arrayUnion([_userM.uid.toString()])
-              });
               }
           });
         });
-        setClassList();
         notifyListeners();
   }
 
@@ -172,6 +167,7 @@ class FirestoreDatabaseService extends ChangeNotifier {
     FirebaseFirestore.instance
         .collection('users')
         .doc(_userM.uid.toString()).update({'avatar_id': value});
+    _userM.avatarID = value;
   }
 
   deleteClass(index) {
