@@ -19,21 +19,21 @@ class RaceQuizScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _RaceQuizScreenState(quiz: quiz, index: index);
+    return _RaceQuizScreenState(quiz: quiz, quizIndex: index);
   }
 }
 
 class _RaceQuizScreenState extends State<RaceQuizScreen> {
   final fb = FirebaseDatabase.instance;
   int score = 0;
-  int index;
+  int quizIndex;
   RaceTopModel quiz;
   int finalScore = 0;
   List colors = [Colors.red, kPrimaryColor, kSecondaryColor, Colors.blue];
   Random random = new Random();
   int colorIndex = 0;
   int questionIndex = 0;
-  _RaceQuizScreenState({this.quiz, this.index});
+  _RaceQuizScreenState({this.quiz, this.quizIndex});
   int _counter = 0;
   Timer _timer;
   bool timerFlag = false;
@@ -48,8 +48,8 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
       ),
       body: SafeArea(
         child: Builder(builder: (BuildContext context){
-          print(index);
-          switch(raceList[index].status) { 
+          print(quizIndex);
+          switch(raceList[quizIndex].status) { 
             case "Waiting": {  
               return 
               Center(
@@ -83,7 +83,7 @@ class _RaceQuizScreenState extends State<RaceQuizScreen> {
                   onEnd:(){
                     if (this.mounted) {
                       setState(() {
-                        raceList[index].status = "Start Quiz";                                   
+                        raceList[quizIndex].status = "Start Quiz";                                   
                       });
                     }
                   },
@@ -116,9 +116,10 @@ List <Widget> _buildQuiz(int i) {
   UserModel user = Provider.of<UserModel>(context);
   FirestoreDatabaseService fsDatabase =
           Provider.of<FirestoreDatabaseService>(context, listen: false);
-  fsDatabase.updateBank(quiz.minReward);
+  
   if(questionIndex == quiz.questions.length){
-    achievementNotifier.addPointsHomework().addPointsActivity();
+    fsDatabase.updateBank(quiz.minReward);
+    //achievementNotifier.addPointsHomework().addPointsActivity();
     _timer.cancel();
     return <Widget>[
       Text("Congrats!",
@@ -160,10 +161,10 @@ List <Widget> _buildQuiz(int i) {
                   onPressed: () {  
                     setState(() {
                       if (questionIndex == quiz.questions.length -1){
-                        checkAnswer(i, index, raceList[index].id, user.uid);
+                        checkAnswer(i, index, raceList[quizIndex].id, user.uid);
                         questionIndex += 1;
                       }else{
-                        checkAnswer(i, index, raceList[index].id, user.uid);
+                        checkAnswer(i, index, raceList[quizIndex].id, user.uid);
                         questionIndex += 1;
                       }
                     });

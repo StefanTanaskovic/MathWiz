@@ -18,14 +18,14 @@ class TriviaQuizScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _TriviaQuizScreenState(quiz: quiz, index: index);
+    return _TriviaQuizScreenState(quiz: quiz, quizIndex: index);
   }
 }
 
 class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
   final fb = FirebaseDatabase.instance;
   int score = 0;
-  int index;
+  int quizIndex;
   TriviaModel quiz;
   int finalScore = 0;
   List colors = [Colors.red, kPrimaryColor, kSecondaryColor, Colors.blue];
@@ -34,7 +34,7 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
   int questionIndex = 0;
   int timer;
   bool buttonClicked = false;
-  _TriviaQuizScreenState({this.quiz, this.index});
+  _TriviaQuizScreenState({this.quiz, this.quizIndex});
 
 
   void nextQuestion() {
@@ -58,7 +58,7 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
       ),
       body: SafeArea(
         child: Builder(builder: (BuildContext context){
-          switch(triviaList[index].status) { 
+          switch(triviaList[quizIndex].status) { 
             case "Waiting": {  
               return Center(
                 child: Padding(
@@ -89,7 +89,7 @@ class _TriviaQuizScreenState extends State<TriviaQuizScreen> {
                   onEnd:(){
                     if (this.mounted) {
                     setState(() {
-                      triviaList[index].status = "Start Quiz";                                   
+                      triviaList[quizIndex].status = "Start Quiz";                                   
                     });
                     }
                   },
@@ -120,9 +120,9 @@ List <Widget> _buildQuiz(int i) {
   timer = DateTime.now().millisecondsSinceEpoch + 1000 * quiz.timer;
     FirestoreDatabaseService fsDatabase =
           Provider.of<FirestoreDatabaseService>(context, listen: false);
-  fsDatabase.updateBank(quiz.minReward);
   if(questionIndex == quiz.questions.length){
-    achievementNotifier.addPointsHomework().addPointsActivity();
+    fsDatabase.updateBank(quiz.minReward);
+    //achievementNotifier.addPointsHomework().addPointsActivity();
     return <Widget>[
       Text("Congrats!",
         textAlign: TextAlign.center,        
@@ -175,9 +175,9 @@ List <Widget> _buildQuiz(int i) {
                   style: ElevatedButton.styleFrom(primary: colors[index]),
                   onPressed: () {  
                       if (questionIndex == quiz.questions.length -1){
-                        checkAnswer(i, index, triviaList[index].id, user.uid);
+                        checkAnswer(i, index, triviaList[quizIndex].id, user.uid);
                       }else{
-                        checkAnswer(i, index, triviaList[index].id, user.uid);
+                        checkAnswer(i, index, triviaList[quizIndex].id, user.uid);
                       }
                   },
                   child: Text("${quiz.questions[i].answers[index]}"),

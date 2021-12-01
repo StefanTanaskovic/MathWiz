@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_quiz_screen.dart';
+import 'package:mathwiz_app/views/trivia/trivia_activity/trivia_wrapper.dart';
 import 'package:provider/provider.dart';
 
 class TriviaList extends StatefulWidget {
@@ -57,7 +58,7 @@ class _TriviaListState extends State<TriviaList> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return TriviaQuizScreen(quiz: triviaList[index]);
+                            return TriviaWrapper(quiz: triviaList[index],index:index );
                           },
                         ),
                       );

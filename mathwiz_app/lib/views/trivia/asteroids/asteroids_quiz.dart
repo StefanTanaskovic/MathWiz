@@ -18,7 +18,7 @@ class AsteroidsQuizScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _AsteroidsQuizScreenState(quiz: quiz, index: index);
+    return _AsteroidsQuizScreenState(quiz: quiz, quizIndex: index);
   }
 }
 
@@ -28,7 +28,7 @@ class _AsteroidsQuizScreenState extends State<AsteroidsQuizScreen> {
     super.initState();
     _setLives(quiz.id,quiz.lives);
   }
-  int index;
+  int quizIndex;
   final fb = FirebaseDatabase.instance;
   int score = 0;
   AsteroidModel quiz;
@@ -40,7 +40,7 @@ class _AsteroidsQuizScreenState extends State<AsteroidsQuizScreen> {
   int timer;
   bool buttonClicked = false;
   bool questionCorrect = true;
-  _AsteroidsQuizScreenState({this.quiz, this.index});
+  _AsteroidsQuizScreenState({this.quiz, this.quizIndex});
 
   void nextQuestion() {
     setState(() {
@@ -61,7 +61,7 @@ class _AsteroidsQuizScreenState extends State<AsteroidsQuizScreen> {
         ),
         body: SafeArea(
           child: Builder(builder: (BuildContext context){
-            switch(asteroidList[index].status) { 
+            switch(asteroidList[quizIndex].status) { 
               case "Waiting": {  
                 return Center(
                   child: Padding(
@@ -92,7 +92,7 @@ class _AsteroidsQuizScreenState extends State<AsteroidsQuizScreen> {
                     onEnd:(){
                       if (this.mounted) {
                       setState(() {
-                        asteroidList[index].status = "Start Quiz";                                   
+                        asteroidList[quizIndex].status = "Start Quiz";                                   
                       });
                       }
                     },
@@ -123,16 +123,23 @@ List <Widget> _buildQuiz(int i) {
   
   if(questionIndex == quiz.questions.length){
     fsDatabase.updateBank(quiz.reward);
-    return <Widget>[
-      Text("Lives left: $lives",
-        textAlign: TextAlign.center,        
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: kSecondaryColor),
-      ),
-      Text(
-        "The Earth lived, Congrats!!",
-        textAlign: TextAlign.center,  
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 24),
+    return [
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Lives left: $lives",
+              textAlign: TextAlign.center,        
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: kSecondaryColor),
+            ),
+            Text(
+              "The Earth lived, Congrats!!",
+              textAlign: TextAlign.center,  
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+          ],
+        ),
       ),
     ];
   }
@@ -201,9 +208,9 @@ List <Widget> _buildQuiz(int i) {
               style: ElevatedButton.styleFrom(primary: colors[index]),
               onPressed: () {  
                   if (questionIndex == quiz.questions.length -1){
-                    _checkAnswer(i, index, asteroidList[index].id, user.uid);
+                    _checkAnswer(i, index, asteroidList[quizIndex].id, user.uid);
                   }else{
-                    _checkAnswer(i, index, asteroidList[index].id, user.uid);
+                    _checkAnswer(i, index, asteroidList[quizIndex].id, user.uid);
                   }
                 },
                 child: Text("${quiz.questions[i].answers[index]}"),

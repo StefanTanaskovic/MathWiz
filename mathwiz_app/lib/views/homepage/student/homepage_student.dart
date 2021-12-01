@@ -38,7 +38,7 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
     RaceToTopHomepageBoxStudent(),
     TriviaHomepageBoxStudent(),
     AsteroidsHomepageBoxStudent(),
-    AchievementHomepageBoxStudent()
+    //AchievementHomepageBoxStudent()
   ];
   
   @override
