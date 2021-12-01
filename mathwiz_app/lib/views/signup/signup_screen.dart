@@ -87,33 +87,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center, 
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.account_circle,
                   color: kSecondaryColor,
                   size: 24.0,
                 ),
-                SizedBox(width:15),
+                SizedBox(width: 15),
                 DropdownButton<String>(
-                  focusColor:Colors.white,
+                  focusColor: Colors.white,
                   value: _chosenValue,
                   style: TextStyle(color: Colors.white),
-                  iconEnabledColor:Colors.black,
+                  iconEnabledColor: Colors.black,
                   items: <String>[
                     'Teacher',
                     'Student',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value,style:TextStyle(color:Colors.black),),
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.black),
+                      ),
                     );
                   }).toList(),
-                  hint:Text(
+                  hint: Text(
                     "Please choose account type",
                     style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 17,),
+                      color: Colors.grey,
+                      fontSize: 17,
+                    ),
                   ),
                   onChanged: (String value) {
                     setState(() {
@@ -128,22 +132,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
               press: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  dynamic result = await _auth.signUpEmail(_email, _password,_chosenValue );
+                  dynamic result =
+                      await _auth.signUpEmail(_email, _password, _chosenValue);
                   if (result == null) {
                     print("error");
                   } else {
-                        FirestoreDatabaseService fsNotifier =
-                        Provider.of<FirestoreDatabaseService>(context, listen: false);
-                        APIService apiService = new APIService();
-                      apiService.createAvatar().then((value) {
+                    FirestoreDatabaseService fsNotifier =
+                        Provider.of<FirestoreDatabaseService>(context,
+                            listen: false);
+                    AvatarNotifier avatarNotifier =
+                        Provider.of<AvatarNotifier>(context, listen: false);
+                    APIService apiService = new APIService();
+                    apiService.createAvatar().then((value) {
                       if (value != null) {
                         print("Avatar Created: " + value.avatarID);
-                          fsNotifier.setAvatarID(value.avatarID);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateAvatarScreen(),
-                              ));               
+                        avatarNotifier.setAvatarUrl(value.avatarID);
+                        fsNotifier.setAvatarID(value.avatarID);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateAvatarScreen(),
+                            ));
                       } else {
                         print('Error!');
                       }

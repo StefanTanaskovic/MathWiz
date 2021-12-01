@@ -44,8 +44,10 @@ Future<MasterItemsModel> getAvatarImages(context) async {
     int cost;
     if (i == 0) {
       cost = 0;
-    } else if (i < 5) {
-      cost = 20;
+    } else if (i < 3) {
+      cost = 0;
+    } else if (i >= 3 && i < 6) {
+      cost = 0;
     } else {
       cost = 50;
     }
@@ -125,8 +127,10 @@ Future<MasterItemsModel> getAvatarImages(context) async {
     int cost;
     if (i == 0) {
       cost = 0;
-    } else if (i < 5) {
-      cost = 20;
+    } else if (i < 3) {
+      cost = 0;
+    } else if (i >= 3 && i < 6) {
+      cost = 0;
     } else {
       cost = 50;
     }
@@ -152,8 +156,10 @@ Future<MasterItemsModel> getAvatarImages(context) async {
     int cost;
     if (i == 0) {
       cost = 0;
-    } else if (i < 5) {
-      cost = 20;
+    } else if (i < 3) {
+      cost = 0;
+    } else if (i >= 3 && i < 6) {
+      cost = 0;
     } else {
       cost = 50;
     }
@@ -179,8 +185,10 @@ Future<MasterItemsModel> getAvatarImages(context) async {
     int cost;
     if (i == 0) {
       cost = 0;
-    } else if (i < 5) {
-      cost = 20;
+    } else if (i < 3) {
+      cost = 0;
+    } else if (i >= 3 && i < 6) {
+      cost = 0;
     } else {
       cost = 50;
     }

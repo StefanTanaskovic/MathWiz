@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/controllers/avatar_notifier.dart';
+import 'package:mathwiz_app/views/signup/components/basic_items.dart';
+import 'package:mathwiz_app/widgets/box_button.dart';
 import 'package:mathwiz_app/widgets/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -45,10 +47,20 @@ class _CreateAvatarScreenState extends State<CreateAvatarScreen> {
                 ),
               ),
               Expanded(
-                flex: 2,
+                  flex: 2,
+                  child: BasicItems(
+                    items: context.watch<AvatarNotifier>().masterItemsModel,
+                  )),
+              Container(
                 child: Column(
                   children: [
-                    ElevatedButton(onPressed: () {}, child: Text("Finsih"))
+                    BoxButton(
+                      text: "FINISH",
+                      press: () {
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                      },
+                    )
                   ],
                 ),
               ),
