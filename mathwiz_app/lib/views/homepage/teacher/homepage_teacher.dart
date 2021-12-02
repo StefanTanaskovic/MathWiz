@@ -35,10 +35,11 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
   _HomepageTeacherScreenState({this.index});
   int _current = 0;
   final List<Widget> items = [
-    //HomeworkHomepageBoxTeacher(),
+    HomeworkHomepageBoxTeacher(),
     RaceToTopHomepageBoxTeacher(),
     TriviaHomepageBoxTeacher(),
-    AsteroidsHomepageBoxTeacher()
+    AsteroidsHomepageBoxTeacher(),
+    AchievementHomepageBoxTeacher()
   ];
   bool dialVisible = true;
   ScrollController scrollController;

@@ -106,7 +106,7 @@ class _AssignedHomeworkScreenState extends State<AssignedHomeworkScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16)),
                               Icon(
-                                Icons.attach_money,
+                                Icons.circle,
                                 color: Colors.yellow[800],
                               ),
                             ],

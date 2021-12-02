@@ -123,9 +123,9 @@ class _CompletedHomeworkScreenState extends State<CompletedHomeworkScreen> {
         ),
         trailing:
             Image.network(file.url, width: 100, height: 100, fit: BoxFit.cover),
-        // onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => ImagePage(file: file),
-        //)),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ImagePage(file: file),
+        )),
       ));
 }
 
