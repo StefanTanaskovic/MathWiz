@@ -12,7 +12,9 @@ class _AchievementHomepageBoxStudentState
     extends State<AchievementHomepageBoxStudent> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
+      
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
@@ -30,9 +32,11 @@ class _AchievementHomepageBoxStudentState
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,
                     color: Colors.white)),
+
             AchievementList(),
             SizedBox(height: 10),
           ],
-        ));
+        )
+    );
   }
 }

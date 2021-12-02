@@ -80,14 +80,6 @@ class _HomeworkListState extends State<HomeworkList> {
                                   onPrimary: Colors.black,
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return PublishHomeworkScreen(homework: homeworkList[index]);
-                                    },
-                                  ),
-                                );
                                 },
                             ),
                             ),

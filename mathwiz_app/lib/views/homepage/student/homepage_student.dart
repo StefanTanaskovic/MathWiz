@@ -35,11 +35,11 @@ class _HomepageStudentScreenState extends State<HomepageStudentScreen> {
   _HomepageStudentScreenState({this.index});
 
   List<Widget> items = [
-    //HomeworkCheckHomepageBoxStudent(),
+    HomeworkCheckHomepageBoxStudent(),
     RaceToTopHomepageBoxStudent(),
     TriviaHomepageBoxStudent(),
     AsteroidsHomepageBoxStudent(),
-    //AchievementHomepageBoxStudent()
+    AchievementHomepageBoxStudent()
   ];
 
   @override

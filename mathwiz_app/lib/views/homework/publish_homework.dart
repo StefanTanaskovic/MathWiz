@@ -9,33 +9,28 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 class PublishHomeworkScreen extends StatefulWidget {
-  final HomeworkModel homework;
-  PublishHomeworkScreen({this.homework});
+  final String text;
+  PublishHomeworkScreen({Key key, @required this.text}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _PublishHomeworkScreenState(homework: homework);
+    return _PublishHomeworkScreenState();
   }
 }
 
 List<Widget> children;
 
 class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
-  final myController = TextEditingController();
-  HomeworkModel homework;
+  
+  Map selected = new Map();
+  final String text;
   int goldAmount;
   String homeworkDescription;
   String homeworkTitle;
 
-  _PublishHomeworkScreenState({this.homework});
+  final _formKey = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
-
+  _PublishHomeworkScreenState({this.text});
   @override
   Widget build(BuildContext context) {
     HomeworkListNotifier homeworkListNotifier =
@@ -56,54 +51,43 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Text(
-                widget.homework.ocrtext.isEmpty
-                    ? 'No text found'
-                    : widget.homework.ocrtext,
-                style: TextStyle(fontSize: 20),
-              ),
+              Text(widget.text.isEmpty ? 'No text found': widget.text,
+              style: TextStyle(fontSize: 20),),
               BoxInputFeild(
                 hintText: "Title",
                 icon: Icons.title,
                 onChanged: (value) {
-                  homeworkTitle = value;
-                  print(goldAmount);
+                homeworkTitle = value;
                 },
               ),
               BoxInputFeild(
                 hintText: "Coins",
                 icon: Icons.attach_money,
                 onChanged: (value) {
-                  goldAmount = int.parse(value);
-                  print(goldAmount);
+                goldAmount = int.parse(value);
                 },
               ),
-              Container(
-                width: size.width * 0.8,
-                child: TextField(
-                    controller: myController,
-                    decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: kPrimaryColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: kPrimaryColor)),
-                        hintText: 'Description'),
-                    maxLines: 5,
-                    onChanged: (value) {
-                      this.homeworkDescription = myController.text;
-                    }),
+              BoxInputFeild(
+                hintText: "Description",
+                icon: Icons.description,
+                onChanged: (value) {
+                homeworkDescription = value;
+                },
               ),
               BoxButton(
-                  text: "Save To Drafts",
-                  press: () {
+                text: "Save To Drafts",
+                press: () {
+                    print(text);
                     homeworkListNotifier.save(
-                        "Drafts",
-                        HomeworkModel(
-                            title: homeworkTitle,
-                            status: "Drafts",
-                            gold: goldAmount,
-                            description: myController.text));
-                    Navigator.push(
+                    "Drafts", 
+                    HomeworkModel(
+                    ocrtext: widget.text,
+                    title: homeworkTitle, 
+                    status: "Drafts",
+                    gold:goldAmount, 
+                    description: homeworkDescription)
+                  );
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
@@ -115,13 +99,16 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               BoxButton(
                 text: "Publish",
                 press: () {
-                  homeworkTitle = homeworkListNotifier.save(
-                      "Publish",
-                      HomeworkModel(
-                          title: homeworkTitle,
-                          status: "Publish",
-                          gold: goldAmount,
-                          description: myController.text));
+                    homeworkTitle = 
+                    homeworkListNotifier.save(
+                    "Publish", 
+                    HomeworkModel(
+                    ocrtext: widget.text,
+                    title: homeworkTitle, 
+                    status: "Publish",
+                    gold:goldAmount, 
+                    description: homeworkDescription)
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(

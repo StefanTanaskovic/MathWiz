@@ -16,6 +16,10 @@ class AchievementNotifier extends ChangeNotifier {
 
     save(achievement) {
       _achievementList.add(achievement);
+      var newAchievement = FirebaseFirestore.instance.collection('classrooms').doc(classID).collection('achievements');
+      newAchievement.add({'achievement_current' : achievement.currentPoints,
+                          'achievement_goal': achievement.pointsMax,
+                          'achievement_title': achievement.title});
       notifyListeners();
     } 
 

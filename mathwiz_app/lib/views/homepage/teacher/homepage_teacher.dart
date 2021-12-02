@@ -231,6 +231,40 @@ class _HomepageTeacherScreenState extends State<HomepageTeacherScreen> {
             ),
           ),
         ),
+        SpeedDialChild(
+          child: Icon(
+            Icons.star_border_outlined,
+            color: Colors.white,
+          ),
+          backgroundColor: kPrimaryColor,
+          label: 'Achievements',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CreateAchievementScreen();
+              },
+            ),
+          ),
+        ),
+                SpeedDialChild(
+          child: Icon(
+            Icons.check_outlined,
+            color: Colors.white,
+          ),
+          backgroundColor: kPrimaryColor,
+          label: 'Completed Homework',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CompletedHomeworkScreen();
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

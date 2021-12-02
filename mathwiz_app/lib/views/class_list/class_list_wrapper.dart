@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mathwiz_app/controllers/homepage_student_controller.dart';
 import 'package:mathwiz_app/controllers/main_notifier.dart';
+import 'package:mathwiz_app/model/achievement_model.dart';
 import 'package:mathwiz_app/model/asteroid_model.dart';
+import 'package:mathwiz_app/model/homework_model.dart';
 import 'package:mathwiz_app/model/race_to_top.dart';
 import 'package:mathwiz_app/model/trivia_model.dart';
 import 'package:mathwiz_app/services/fs_database.dart';
@@ -38,6 +40,12 @@ class _ClassListWrapperState extends State<ClassListWrapper> {
         
         StreamProvider<List<TriviaModel>>.value(
         value: HomepageStudentController(classID: fsDatabase.classID).triviaList, initialData: null),
+
+        StreamProvider<List<HomeworkModel>>.value(
+        value: HomepageStudentController(classID: fsDatabase.classID).homeworksList, initialData: null),
+
+        StreamProvider<List<AchievementModel>>.value(
+        value: HomepageStudentController(classID: fsDatabase.classID).achievementList, initialData: null),
       ],
       child: chooseHome()
     );
