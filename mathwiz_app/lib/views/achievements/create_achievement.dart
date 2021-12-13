@@ -60,21 +60,12 @@ class _CreateAchievementScreenState extends State<CreateAchievementScreen> {
               BoxButton(
                 text: "Create",
                 press: () {
-                    achievementTitle = 
                     achievementNotifier.save(
                     AchievementModel(
                     title: achievementTitle, 
                     pointsMax: points,
                     currentPoints: 0)
                   ); 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return HomepageTeacherScreen();
-                        },
-                      ),
-                    );
                 },
               ),
               SizedBox(

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mathwiz_app/constants.dart';
 import 'package:mathwiz_app/model/firebasefile_model.dart';
 import 'package:image_save/image_save.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class ImagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(title: Text(file.name),
     centerTitle: true,
+    backgroundColor: kPrimaryColor,
     actions: [
       IconButton(icon: Icon(Icons.file_download),
       onPressed: () async {

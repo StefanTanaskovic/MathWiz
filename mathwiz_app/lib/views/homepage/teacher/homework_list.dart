@@ -27,7 +27,7 @@ class _HomeworkListState extends State<HomeworkList> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 10,right: 10),
                             child: ElevatedButton(
-                              child: Text('${homeworkList[index].title}'),
+                              child: Text('${homeworkList[index].id}'),
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.white,
                                 onPrimary: Colors.black,
@@ -61,7 +61,7 @@ class _HomeworkListState extends State<HomeworkList> {
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                context.read<HomeworkListNotifier>().deleteHomework(index);
+                                context.read<HomeworkListNotifier>().deleteHomework(homeworkList[index].id);
                               },
                             ),
                           ),

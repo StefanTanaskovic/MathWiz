@@ -99,7 +99,6 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
               BoxButton(
                 text: "Publish",
                 press: () {
-                    homeworkTitle = 
                     homeworkListNotifier.save(
                     "Publish", 
                     HomeworkModel(
@@ -108,14 +107,6 @@ class _PublishHomeworkScreenState extends State<PublishHomeworkScreen> {
                     status: "Publish",
                     gold:goldAmount, 
                     description: homeworkDescription)
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomepageTeacherScreen();
-                      },
-                    ),
                   );
                 },
               ),

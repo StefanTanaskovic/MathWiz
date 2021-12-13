@@ -54,7 +54,7 @@ class _AchievementListState extends State<AchievementList> {
                                 onPrimary: Colors.black,
                               ),
                               onPressed: () {
-                                context.read<AchievementNotifier>().deleteAchievement(index);
+                                context.read<AchievementNotifier>().deleteAchievement(achievementList[index].id);
                               },
                             ),
                           ),
